@@ -211,7 +211,11 @@ El/Los autor/autores de este trabajo final de carrera declara(n) que es/son el/l
 
 \hyperref[motivaciuxf3n]{Motivación}\dotfill\pageref{motivaciuxf3n}
 
-\hyperref[objetivo-general]{Objetivo General}\dotfill\pageref{objetivo-general}
+\hyperref[objetivo-general]{Objetivos generales}\dotfill\pageref{objetivo-general}
+
+\hyperref[objetivos-especificos]{Objetivos específicos}\dotfill\pageref{objetivos-especificos}
+
+\hyperref[restricciones]{Restricciones}\dotfill\pageref{restricciones}
 \end{quote}
 
 \hyperref[marco-teorico]{\textbf{1. Marco Teorico}}\dotfill\textbf{\pageref{marco-teorico}}
@@ -443,9 +447,73 @@ Por otro lado, la altura alcanzada por el dispositivo permitirá registrar grand
 
 El proyecto nos da la oportunidad de adquirir experiencia práctica en el diseño de sistemas de comunicación, integración de hardware y software, y análisis de datos en condiciones cercanas a las espaciales. Esto contribuye a la formación académica y a la generación de conocimiento para futuras investigaciones y desarrollos en la industria aeroespacial y de telecomunicaciones.
 
-\subsection{Objetivo General}\label{objetivo-general}
+\subsection{Objetivos generales}\label{objetivo-general}
 
 Desarrollar un sistema de transmisión para enviar datos de telemetría y video en tiempo real desde un globo sonda en la estratosfera hasta una estación terrena que minimice el consumo de energía y maximice la calidad del streaming. La misión terminará una vez encontrado el globo sonda y habiendo obtenido todos los datos.
+
+\subsection{Objetivos específicos}\label{objetivos-especificos}
+
+Para cumplir con el objetivo general planteado, se definió una serie de objetivos específicos orientados al diseño, implementación y validación del sistema de comunicación del globo sonda:
+
+\begin{itemize}
+\item
+  Desarrollar un dispositivo capaz de soportar las condiciones atmosféricas hasta 30 km de altura desde el suelo.
+\item
+  La arquitectura del dispositivo debe ser robusta ante fallas inesperadas.
+  \begin{itemize}
+  \item
+    Falla en GPS, unidad de procesamiento, transmisor o cámara.
+  \item
+    Falla de energía o bajo nivel de batería por pico de consumo debido a sobreconsumo de algún componente.
+  \item
+    Explosión temprana del globo.
+  \end{itemize}
+\item
+  Con un globo sonda, subir el dispositivo hasta la estratosfera.
+\item
+  Habrá un tiempo máximo de vuelo de 3 horas. Una vez transcurrido el tiempo se construirá un sistema de amortiguación para el dispositivo.
+\item
+  En caso de ruptura del globo o salida de un área especificada, también se forzará la caída y se comenzará el descenso.
+\item
+  En todo momento, desde la salida hasta el aterrizaje, el dispositivo debe sensar datos de telemetría, guardarlos localmente y además enviarlos a la estación terrena al menos cada 10 segundos.
+\item
+  Telemetría:
+  \begin{itemize}
+  \item
+    Temperatura exterior e interior (sensor de temperatura).
+  \item
+    Posición (GPS).
+  \item
+    Presión atmosférica (barómetro).
+  \item
+    Estado de batería.
+  \end{itemize}
+\item
+  Cuando llegue a la estratosfera se abrirá una ventana de al menos 20 minutos para transmitir el video en tiempo real.
+\item
+  Disminuir las funcionalidades dependiendo del consumo de la batería.
+\item
+  Desarrollar una estación terrena con una antena direccional que reciba los datos de telemetría y de fotos/video, y que los envíe a la nube para ser mostrados en el dashboard. Se deberá implementar un sistema de orientación de antena y estructura de soporte. Tendrá integrada una calculadora para mediciones de la calidad del enlace.
+\item
+  Desarrollar un dashboard con arquitectura segura y tolerante a fallos para observar la telemetría, fotos/video en tiempo real y calidad de enlace.
+\item
+  El sistema deberá cumplir con las regulaciones aeronáuticas y de telecomunicaciones actuales.
+\item
+  Implementar un sistema para acotar la ubicación del dispositivo cuando está por aterrizar.
+\end{itemize}
+
+\subsection{Restricciones}\label{restricciones}
+
+El diseño y desarrollo del sistema se encuentra principalmente condicionado por las siguientes restricciones:
+
+\begin{itemize}
+\item
+  \textbf{Presupuesto:} el proyecto cuenta con un presupuesto menor a USD 2.500.
+\item
+  \textbf{Peso y capacidad de elevación:} la capacidad de carga está limitada por el empuje del helio. Esto impone una restricción de peso en el dispositivo, ya que la carga útil no debe superar cierto peso, para alcanzar el objetivo de altura de 30 km.
+\item
+  \textbf{Autonomía de la batería:} las baterías en conjunto deben tener una autonomía suficiente para poder ubicarlo cuando aterrice, como mínimo 10 horas.
+\end{itemize}
 
 \subsection{}\label{section-4}
 
