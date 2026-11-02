@@ -1,4 +1,5 @@
 # Compilación de LaTeX
+*.pdf
 *.aux
 *.bbl
 *.bcf
