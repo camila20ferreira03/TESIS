@@ -15,8 +15,16 @@
 *.synctex.gz
 *.toc
 *.xdv
+texput.log
+
+# Python (scripts auxiliares)
+__pycache__/
+*.pyc
 
 # Sistema y editor
 .DS_Store
 *~
 *.swp
+
+# Fotos originales sin recortar (las que usa la tesis estan en latex/imagenes/)
+latex/imagenes_originales/
