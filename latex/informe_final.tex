@@ -93,8 +93,11 @@
   pdfcreator={LaTeX via pandoc}}
 
 
+\usepackage{csquotes}
 \usepackage[style=ieee,backend=biber,sorting=none,language=american]{biblatex}
 \addbibresource{referencias.bib}
+\DeclareDelimFormat{multicitedelim}{\addcomma\space}
+\DeclareDelimFormat{multisitedelim}{\addcomma\space}
 \usepackage{setspace}
 \onehalfspacing % interlineado 1,5
 
@@ -682,19 +685,19 @@ Esto está confirmado en la documentación técnica de High Altitude Science. Pa
 
 \subsubsection{2.3.1 LoRa}\label{lora}
 
-Long Range, desarrollada por Semtech, es una tecnología de transmisión de paquetes de datos pequeños a largas distancias, con baja potencia, bajo consumo de energía y una baja tasa de transmisión de datos. Utiliza una modulación basada en Chirp Spread Spectrum (CSS). Esta técnica permite transmitir pequeños paquetes de datos a largas distancias con alta robustez frente al ruido y a señales débiles \cite{ref29}\cite{ref31}.
+Long Range, desarrollada por Semtech, es una tecnología de transmisión de paquetes de datos pequeños a largas distancias, con baja potencia, bajo consumo de energía y una baja tasa de transmisión de datos. Utiliza una modulación basada en Chirp Spread Spectrum (CSS). Esta técnica permite transmitir pequeños paquetes de datos a largas distancias con alta robustez frente al ruido y a señales débiles \cite{ref29,ref31}.
 
-En aplicaciones terrestres, LoRa puede alcanzar distancias aproximadas de entre 2 y 15 km \cite{ref29}mientras que en enlaces aire-tierra con línea de vista, como en proyectos de globos estratosféricos, pueden alcanzarse distancias del orden de 100--300 km. Una de las principales ventajas de LoRa es su elevada sensibilidad, permitiendo detectar señales extremadamente débiles, típicamente entre −116 dBm y −136 dBm dependiendo de la configuración utilizada \cite{ref31}.
+En aplicaciones terrestres, LoRa puede alcanzar distancias aproximadas de entre 2 y 15 km \cite{ref29} mientras que en enlaces aire-tierra con línea de vista, como en proyectos de globos estratosféricos, pueden alcanzarse distancias del orden de 100--300 km. Una de las principales ventajas de LoRa es su elevada sensibilidad, permitiendo detectar señales extremadamente débiles, típicamente entre −116 dBm y −136 dBm dependiendo de la configuración utilizada \cite{ref31}.
 
 Los parámetros de configuración son el ancho de banda, spreading factor y tasa de codificación. Puede manejar tasas de datos típicas comprendidas aproximadamente entre 0.3 kbps y 50 kbps \cite{ref31}.
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image79.png}
 
-\cite{ref30}Opera en las bandas ISM de 433, 868 o 915 MHz, dependiendo de la región donde se implemente. Además, cada transmisión puede transportar una carga útil de entre 2 y 255 octetos \cite{ref31}.
+Opera en las bandas ISM de 433, 868 o 915 MHz, dependiendo de la región donde se implemente. Además, cada transmisión puede transportar una carga útil de entre 2 y 255 octetos \cite{ref30,ref31}.
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image66.png}
 
-\cite{ref31}\subsubsection{2.3.2 Narrowband IoT}\label{narrowband-iot}
+\subsubsection{2.3.2 Narrowband IoT}\label{narrowband-iot}
 
 Es un estándar de comunicación inalámbrica diseñado para conectar dispositivos de bajo consumo a redes celulares usando una franja de banda muy angosta, apenas 180 kHz \cite{ref67}. Como menciona Antel, Nb-IoT es una evolución de LTE enfocados en la optimización de batería. Fue pensado específicamente para dispositivos que envían poca información (bajo ancho de banda) y con poca frecuencia \cite{ref68}.
 
@@ -731,7 +734,7 @@ DVB-S2 es compatible con servicios de televisión codificados MPEG-2 y MPEG-4 \c
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image15.png}
 
-\cite{ref42}\subsubsection{2.3.4 Radios definidos por software}\label{radios-definidos-por-software}
+\subsubsection{2.3.4 Radios definidos por software}\label{radios-definidos-por-software}
 
 Un SDR es un sistema de comunicación por radio donde los componentes que tradicionalmente se implementan en hardware (como filtros, amplificadores y moduladores) se definen mediante software \cite{ref49}.
 
@@ -950,7 +953,7 @@ SPI (Serial Peripheral Interface) es un protocolo de comunicación digital utili
   MISO (Subnode → Main): En cada flanco de subida del reloj (línea naranja), el Main lee (samplea) el bit enviado por el Subnode. En cada flanco de bajada (línea azul), el Subnode actualiza la línea MISO con el siguiente bit a transmitir (shift).
 \end{enumerate}
 
-\cite{ref80}La configuración de si se lee en la subida o bajada del clock depende de los parámetros CPOL (Clock Polarity) y CPHA (Clock Phase) que tanto el Main como el Subnode deben configurarse previamente con el mismo modo SPI para que la comunicación funcione. Hay 4 modos diferentes \cite{ref80}.
+\cite{ref80} La configuración de si se lee en la subida o bajada del clock depende de los parámetros CPOL (Clock Polarity) y CPHA (Clock Phase) que tanto el Main como el Subnode deben configurarse previamente con el mismo modo SPI para que la comunicación funcione. Hay 4 modos diferentes \cite{ref80}.
 
 \textbf{Múltiples subnodos SPI}
 
@@ -1056,7 +1059,7 @@ UART (Universal Asynchronous Receiver-Transmitter) es un protocolo de comunicaci
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image19.png}
 
-\cite{ref83}El Databus quiere enviar los bits en paralelo y la interfaz UART se encarga de transmitirlos de forma serial (uno atrás del otro). Este protocolo es entre dos dispositivos y no más. El TX de uno está conectado al RX del otro \cite{ref83}.
+\cite{ref83} El Databus quiere enviar los bits en paralelo y la interfaz UART se encarga de transmitirlos de forma serial (uno atrás del otro). Este protocolo es entre dos dispositivos y no más. El TX de uno está conectado al RX del otro \cite{ref83}.
 
 Para que la comunicación funcione correctamente, ambos dispositivos deben configurarse previamente con el mismo baud rate. El baud rate indica la velocidad a la que se transmiten los bits por segundo. Cada dispositivo utiliza su propio reloj interno para enviar y muestrear los datos, por lo que la clave es que ambos tengan configuraciones compatibles para minimizar errores \cite{ref83}.
 
@@ -1064,7 +1067,7 @@ La línea UART permanece en estado HIGH por defecto. Cuando el transmisor desea 
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image57.png}
 
-\cite{ref83}La estructura de una trama UART se divide de la siguiente manera \cite{ref83}:
+\cite{ref83} La estructura de una trama UART se divide de la siguiente manera \cite{ref83}:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1126,7 +1129,7 @@ La línea UART permanece en estado HIGH por defecto. Cuando el transmisor desea 
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image14.png}
 
-\cite{ref84}En UART no se puede mandar una cantidad variable de bits de datos dentro de una misma configuración. La cantidad de bits de datos, la presencia o no de bit de paridad, la cantidad de bits de parada y el baud rate deben configurarse previamente en ambos extremos. Como no existe una señal de reloj ni información adicional que indique dónde terminan los datos y dónde comienzan los bits de paridad o parada, el receptor necesita conocer de antemano el formato exacto de cada trama \cite{ref83}.
+\cite{ref84} En UART no se puede mandar una cantidad variable de bits de datos dentro de una misma configuración. La cantidad de bits de datos, la presencia o no de bit de paridad, la cantidad de bits de parada y el baud rate deben configurarse previamente en ambos extremos. Como no existe una señal de reloj ni información adicional que indique dónde terminan los datos y dónde comienzan los bits de paridad o parada, el receptor necesita conocer de antemano el formato exacto de cada trama \cite{ref83}.
 
 \subsection{2.7 Energía: baterías y conversores}\label{energia-fundamentos}
 
@@ -1140,7 +1143,7 @@ En general, existen dos grupos de celdas: de alta energía y de alta potencia. L
 
 Las baterías típicas de Li-ion presentan un rango de temperatura de operación de -20 °C a 60 °C. Esto puede no cumplir con los requisitos de misiones que requieren operar a temperaturas más bajas. Entre las baterías destinadas a aplicaciones de baja temperatura se encuentran \cite{ref39}:
 
-\includegraphics[width=2.1875in,keepaspectratio]{./imagenes/image33_1.png}\includegraphics[width=1.2917in,keepaspectratio]{./imagenes/image33_2.png}\cite{ref39}En proyectos anteriores, \cite{ref2,ref3,ref99}se prefirieron las baterías de ion-litio. El equipo del proyecto Zephyrus X utilizó baterías de ion-litio 18650 como fuente de energía principal debido a su bajo peso, alta capacidad de potencia, posibilidad de recarga y amplio rango de temperatura de operación. Sin embargo, experiencias anteriores indicaron que el uso de baterías recargables no era la mejor opción. Si la batería se descargaba excesivamente, no podía volver a cargarse y, en algunos casos, llegaba a explotar {[}citar experiencia John{]}.
+\includegraphics[width=2.1875in,keepaspectratio]{./imagenes/image33_1.png}\includegraphics[width=1.2917in,keepaspectratio]{./imagenes/image33_2.png}\cite{ref39} En proyectos anteriores, \cite{ref2,ref3,ref99} se prefirieron las baterías de ion-litio. El equipo del proyecto Zephyrus X utilizó baterías de ion-litio 18650 como fuente de energía principal debido a su bajo peso, alta capacidad de potencia, posibilidad de recarga y amplio rango de temperatura de operación. Sin embargo, experiencias anteriores indicaron que el uso de baterías recargables no era la mejor opción. Si la batería se descargaba excesivamente, no podía volver a cargarse y, en algunos casos, llegaba a explotar {[}citar experiencia John{]}.
 
 \subsubsection{2.7.2 Conversor de voltaje}\label{conversor-de-voltaje}
 
@@ -1165,11 +1168,11 @@ Un conversor elevador también presenta una alta eficiencia, con valores que com
 
 La conductividad térmica representa la capacidad de un material para transmitir calor. Se define como la cantidad de energía térmica que atraviesa una unidad de espesor del material, por unidad de área y por cada unidad de diferencia de temperatura. La elevada conductividad térmica del aluminio puro se debe principalmente al movimiento eficaz de los electrones libres \cite{ref85}.
 
-La capacidad calorífica específica es una propiedad física que indica la cantidad de energía térmica requerida para aumentar en un grado Celsius (o un Kelvin) la temperatura de una unidad de masa de una sustancia. Esta propiedad es fundamental para la gestión térmica de los materiales, ya que determina la velocidad con la que estos absorben o liberan calor durante su operación. El aluminio puro destaca por su capacidad calorífica específica relativamente alta, que es de aproximadamente 0,900 kJ/(kg.K) a temperatura ambiente \cite{ref85}es decir, requiere una gran cantidad de energía térmica (calor) para elevar su temperatura en un grado Kelvin o Celsius.
+La capacidad calorífica específica es una propiedad física que indica la cantidad de energía térmica requerida para aumentar en un grado Celsius (o un Kelvin) la temperatura de una unidad de masa de una sustancia. Esta propiedad es fundamental para la gestión térmica de los materiales, ya que determina la velocidad con la que estos absorben o liberan calor durante su operación. El aluminio puro destaca por su capacidad calorífica específica relativamente alta, que es de aproximadamente 0,900 kJ/(kg.K) a temperatura ambiente \cite{ref85} es decir, requiere una gran cantidad de energía térmica (calor) para elevar su temperatura en un grado Kelvin o Celsius.
 
 \includegraphics[width=3.3071in,keepaspectratio]{./imagenes/image90.png}
 
-\cite{ref86}Si bien el aluminio es ampliamente reconocido por su alta capacidad para conducir el calor, también puede actuar como un excelente aislante frente a la radiación térmica gracias a su elevada reflectividad. En particular, es capaz de reflejar entre el 90 \% y el 95 \% de la radiación infrarroja incidente, reduciendo considerablemente la cantidad de energía térmica absorbida por el material \cite{ref85}.
+\cite{ref86} Si bien el aluminio es ampliamente reconocido por su alta capacidad para conducir el calor, también puede actuar como un excelente aislante frente a la radiación térmica gracias a su elevada reflectividad. En particular, es capaz de reflejar entre el 90 \% y el 95 \% de la radiación infrarroja incidente, reduciendo considerablemente la cantidad de energía térmica absorbida por el material \cite{ref85}.
 
 Comparación de la conductividad térmica entre el cobre y el aluminio: El cobre y el aluminio son materiales ampliamente utilizados en aplicaciones de transferencia de calor, como radiadores e intercambiadores térmicos. Aunque el cobre presenta una conductividad térmica superior, el aluminio suele ser la opción preferida debido a su menor costo, menor densidad y mayor facilidad de fabricación y mecanizado \cite{ref85}.
 
@@ -1233,7 +1236,7 @@ Para definir la distancia máxima de transmisión, se investigaron proyectos de 
 
 \includegraphics[width=3.7830in,keepaspectratio]{./imagenes/image85.png}
 
-\cite{ref36}Recorrido vuelo GloboSat 02
+\cite{ref36} Recorrido vuelo GloboSat 02
 
 \begin{itemize}
 \item
@@ -1242,23 +1245,23 @@ Para definir la distancia máxima de transmisión, se investigaron proyectos de 
 
 \includegraphics[width=3.0875in,keepaspectratio]{./imagenes/image49.png}
 
-\cite{ref36}Recorrido vuelo GloboSat 03
+\cite{ref36} Recorrido vuelo GloboSat 03
 
 Para la distancia del enlace de comunicación se tomó en cuenta el peor de los casos. Se realizó una predicción de la trayectoria utilizando la herramienta de Strato Flights \cite{ref37}. La herramienta utiliza las condiciones climáticas y del viento de la fecha ingresada para la predicción. Es evidente que no es exacto. En base a los lanzamientos de GloboSat, puede pasar cualquier cosa, porque depende de factores ambientales que no son predecibles. También depende de factores controlables como la velocidad de ascenso y descenso. Sin embargo, la predicción es útil para tomar como referencia el peor caso.
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image84.png}
 
-Utilizando la herramienta de SondeHub Predictor \cite{ref38}con los mismo parámetros, se realizó otra predicción, la cual dio muy similar a la anterior.
+Utilizando la herramienta de SondeHub Predictor \cite{ref38} con los mismo parámetros, se realizó otra predicción, la cual dio muy similar a la anterior.
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image50.png}
 
-\cite{ref17,ref19,ref20,ref32}también confirman una distancia recorrida posible por arriba de los 100 km. Como la telemetría se debe recibir durante todo el trayecto, en base a las predicciones, se estima una distancia máxima de transmisión de 250 km. Aunque las predicciones establecen más distancia, se va a restringir la distancia recorrida para que no se vaya del país. En el caso del video, idealmente la transmisión solo se da en una ventana dentro de la estratosfera, es decir, aproximadamente a los 12 km de altura debe comenzar a transmitir. Según \cite{ref38}demora aproximadamente 40 minutos en llegar a la estratosfera habiendo recorrido 40 km. Y 1 hora y 20 minutos en llegar a los 25 km de altura habiendo recorrido 100 km. En base a esto, se estimó una máxima distancia de transmisión de video de 150 km.
+\cite{ref17,ref19,ref20,ref32} también confirman una distancia recorrida posible por arriba de los 100 km. Como la telemetría se debe recibir durante todo el trayecto, en base a las predicciones, se estima una distancia máxima de transmisión de 250 km. Aunque las predicciones establecen más distancia, se va a restringir la distancia recorrida para que no se vaya del país. En el caso del video, idealmente la transmisión solo se da en una ventana dentro de la estratosfera, es decir, aproximadamente a los 12 km de altura debe comenzar a transmitir. Según \cite{ref38} demora aproximadamente 40 minutos en llegar a la estratosfera habiendo recorrido 40 km. Y 1 hora y 20 minutos en llegar a los 25 km de altura habiendo recorrido 100 km. En base a esto, se estimó una máxima distancia de transmisión de video de 150 km.
 
 \subsection{\texorpdfstring{4.2 Selección de bandas }{4.2 Selección de bandas }}\label{banda}
 
 Una vez que se resolvió la distancia de transmisión, se determinó la banda que se utilizará para transmitir. Los enlaces son unidireccionales, desde la sonda hasta la superficie terrestre. Como se mencionó antes, los módulos LoRa operan en las bandas ISM de 433, 868 o 915 MHz. Como es muy importante asegurar que la telemetría llegue a la estación terrena, se seleccionó la banda de 433 mhz por tener la mayor propagación.
 
-Según el Reglamento del Servicio de Radioaficionados \cite{ref41}las bandas de ATV son las siguientes:
+Según el Reglamento del Servicio de Radioaficionados \cite{ref41} las bandas de ATV son las siguientes:
 
 \begin{itemize}
 \item
@@ -1408,11 +1411,11 @@ Se consideraron varios tipos de sensores, teniendo en cuenta el rango operativo 
 
   \begin{itemize}
   \item
-    DHT22: Fabricado por Aosong Electronics, es un sensor digital de temperatura y humedad muy utilizado en proyectos. Se usa en proyectos educativos porque se considera de baja complejidad. Su rango operativo declarado es de −40 °C a +80 °C, con una precisión típica de ±0,5 °C. Ensayos experimentales hechos por Lay et al. \cite{ref3}indican que el DHT22 se congela y deja de responder exactamente a −40 °C.
+    DHT22: Fabricado por Aosong Electronics, es un sensor digital de temperatura y humedad muy utilizado en proyectos. Se usa en proyectos educativos porque se considera de baja complejidad. Su rango operativo declarado es de −40 °C a +80 °C, con una precisión típica de ±0,5 °C. Ensayos experimentales hechos por Lay et al. \cite{ref3} indican que el DHT22 se congela y deja de responder exactamente a −40 °C.
   \item
     BME280: Desarrollado por Bosch Sensortec, es un sensor MEMS que mide presión, humedad y temperatura, con un rango térmico de −40 °C a +85 °C y una precisión aproximada de ±1,0 °C para temperatura. El BMP280 tiene las mismas características que el BME280 solo que además mide humedad \cite{ref9}.
   \item
-    DS18B20: Desarrollado por Maxim Integrated \cite{ref5}se destaca como una solución específicamente adecuada para entornos extremos. Tiene un rango de funcionamiento de −55 °C a +125 °C, con una precisión típica de ±0,5 °C. En aplicaciones reales de globos estratosféricos, este sensor ha sido probado con éxito, siendo usado como sensor exterior en múltiples vuelos del proyecto Overlook Horizon HAB \cite{ref6}.
+    DS18B20: Desarrollado por Maxim Integrated \cite{ref5} se destaca como una solución específicamente adecuada para entornos extremos. Tiene un rango de funcionamiento de −55 °C a +125 °C, con una precisión típica de ±0,5 °C. En aplicaciones reales de globos estratosféricos, este sensor ha sido probado con éxito, siendo usado como sensor exterior en múltiples vuelos del proyecto Overlook Horizon HAB \cite{ref6}.
   \item
     SHT31: Fabricado por Sensirion, ofrece un rango térmico de −40 °C a +125 °C y una alta precisión de hasta ±0,3 °C. Está orientado a aplicaciones que requieren alta exactitud en la medición ambiental \cite{ref7}.
   \item
@@ -1423,7 +1426,7 @@ Se consideraron varios tipos de sensores, teniendo en cuenta el rango operativo 
 
   \begin{itemize}
   \item
-    BME280: Con un rango de presión especificado de entre 300 y 1100 hPa \cite{ref9}serviría si solo fuéramos a una altura máxima de 9 km aproximadamente.
+    BME280: Con un rango de presión especificado de entre 300 y 1100 hPa \cite{ref9} serviría si solo fuéramos a una altura máxima de 9 km aproximadamente.
   \item
     BMP388: Elaborado por Bosch Sensortec, es una evolución del anterior con mejor precisión, alcanzando valores del orden de ±0,5 hPa. A pesar de esta mejora, su rango de presión sigue comenzando en 300 hPa \cite{ref10}.
   \item
@@ -1531,9 +1534,9 @@ Los módulos LoRa se destacan por ser extremadamente baratos. Debido a la gran d
 \hline
 EBYTE LoRa\newline E22-900MM22S & SX1262 & 850--930 MHz & +21.5 dBm & -147 dBm & 1.8--3.7 V\newline (típ. 3.3 V) & -40 °C a\newline +85 °C & --- & \cite{ref56}\\
 \hline
-EBYTE LoRa\newline E77-400M22S & STM32WLE5\newline + SX1262 & 410--510 MHz & +21.5 dBm & -118 dBm & 1.8--3.6 V\newline (típ. 3.3 V) & -40 °C a\newline +85 °C & --- & \cite{ref19}\cite{ref58}\\
+EBYTE LoRa\newline E77-400M22S & STM32WLE5\newline + SX1262 & 410--510 MHz & +21.5 dBm & -118 dBm & 1.8--3.6 V\newline (típ. 3.3 V) & -40 °C a\newline +85 °C & --- & \cite{ref19,ref58}\\
 \hline
-RAK5205\newline WisTrio\newline LPWAN & SX1276 & EU433, EU868,\newline CN470, US915,\newline AS923, AU915,\newline KR920, IN865 & +20 dBm & --- & 3.7--5 V & -35 °C a\newline +80 °C & 174 mA\newline (20 dBm\newline + GPS) & \cite{ref44}\cite{ref58}\\
+RAK5205\newline WisTrio\newline LPWAN & SX1276 & EU433, EU868,\newline CN470, US915,\newline AS923, AU915,\newline KR920, IN865 & +20 dBm & --- & 3.7--5 V & -35 °C a\newline +80 °C & 174 mA\newline (20 dBm\newline + GPS) & \cite{ref44,ref58}\\
 \hline
 EBYTE LoRa\newline E22-400T22S & SX1262 & 410.125--\newline 493.125 MHz & +22 dBm & -147 dBm & 2.1--5.5 V\newline (típ. 5 V) & -40 °C a\newline +85 °C & 133 mA & \cite{ref60}\\
 \hline
@@ -1542,13 +1545,13 @@ EBYTE LoRa\newline E22-400T33S & SX1262 & 410.125--\newline 493.125 MHz & +33 dB
 \end{tabular}
 \par}
 
-El módulo EBYTE LoRa E77-400M22S fue utilizado por el equipo SF-HAB \cite{ref19}en su cuarto lanzamiento para rastrear su globo. Transmitieron LoRa a +22 dBm (\textasciitilde150 mW) en 433.775 MHz a una antena ¼ de onda. Tenían 5 estaciones terrenas y el paquete más lejano que recibieron fue a aproximadamente 500 km, con el globo a 27km de altura \cite{ref19}. Tiene integrado el microcontrolador STM32WLE5 para ser programable.
+El módulo EBYTE LoRa E77-400M22S fue utilizado por el equipo SF-HAB \cite{ref19} en su cuarto lanzamiento para rastrear su globo. Transmitieron LoRa a +22 dBm (\textasciitilde150 mW) en 433.775 MHz a una antena ¼ de onda. Tenían 5 estaciones terrenas y el paquete más lejano que recibieron fue a aproximadamente 500 km, con el globo a 27km de altura \cite{ref19}. Tiene integrado el microcontrolador STM32WLE5 para ser programable.
 
 \hl{El equipo del Horus Project} \cite{ref44}\hl{utilizó RAK5205 WisTrio LPWAN para transmitir la ubicación del globo a cada 3 minutos. Transmitieron en la banda 915 MHz - 928 MHz con una potencia de 50 mW. El hardware incluye GPS, sensor BME680 incorporado (presión, humedad, temperatura) y un sensor acelerómetro LIS3DH de 3 ejes. Sin embargo, es la que tiene menor potencia de transmisión.}
 
 \hl{Se prefirió el EBYTE LoRa E22-400T22S sobre el E22-400T33S por su menor consumo energético a la hora de transmitir. Se optó por tener menos potencia de transmisión, ahorrando energía, y tener mejor sensibilidad en el receptor para compensar por la pérdida de potencia. Además, se prefirió por sobre el RAK5205 ya que tiene menor consumo energético y mayor potencia de transmisión.}
 
-Otras tecnologías para transmitir telemetría, como APRS \cite{ref3,ref32,ref34}RTTY \cite{ref2,ref22}Sigfox \cite{ref35}son muy utilizadas en globos estratosféricos. Seleccionamos LoRa por ser una tecnología nueva y muy relevante en el mundo creciente de IoT. Además, fue muy utilizada en los proyectos estratosféricos Zephyrus \cite{ref2,ref33}respaldado por el programa Innovation to Flight del Laboratorio de Propulsión de la NASA.
+Otras tecnologías para transmitir telemetría, como APRS \cite{ref3,ref32,ref34} RTTY \cite{ref2,ref22} Sigfox \cite{ref35} son muy utilizadas en globos estratosféricos. Seleccionamos LoRa por ser una tecnología nueva y muy relevante en el mundo creciente de IoT. Además, fue muy utilizada en los proyectos estratosféricos Zephyrus \cite{ref2,ref33} respaldado por el programa Innovation to Flight del Laboratorio de Propulsión de la NASA.
 
 \subsection{5.4 E22-400T22S}\label{e22-400t22s}
 
@@ -1556,7 +1559,7 @@ Otras tecnologías para transmitir telemetría, como APRS \cite{ref3,ref32,ref34
 
 \cite{ref60}\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image42.png}
 
-\cite{ref60}El módulo E22-400T22S solo permite modificar el Air Data Rate y con esto automáticamente ajusta los parámetros de transmisión, como el Spreading Factor, para lograr la tasa determinada. Además, tiene tamaños de paquetes configurables 32/64/128/240 y un buffer de 1000 bytes que, en caso que los datos superen el largo configurado, parte la información en distintos paquetes y usa el buffer para almacenarlos momentáneamente \cite{ref60}.
+\cite{ref60} El módulo E22-400T22S solo permite modificar el Air Data Rate y con esto automáticamente ajusta los parámetros de transmisión, como el Spreading Factor, para lograr la tasa determinada. Además, tiene tamaños de paquetes configurables 32/64/128/240 y un buffer de 1000 bytes que, en caso que los datos superen el largo configurado, parte la información en distintos paquetes y usa el buffer para almacenarlos momentáneamente \cite{ref60}.
 
 \subsubsection{\texorpdfstring{\textbf{5.4.1 PCB Adaptador}}{5.4.1 PCB Adaptador}}\label{pcb-adaptador}
 
@@ -1579,11 +1582,11 @@ Una de las principales restricciones que tiene el proyecto es el consumo de ener
 
 \subsection{6.1 Cámaras}\label{cuxe1maras}
 
-La mayoría de los proyectos similares en estos últimos años, utilizaron cámaras GoPro o cámaras RasPi. Las cámaras GoPro son reconocidas por tener un tamaño chico, son livianas y resistentes frente a golpes \cite{ref14}. Varios proyectos, como \cite{ref16,ref18,ref19,ref20,ref33}utilizaron una GoPro. Se encontraron varias opciones: GoPro Hero 5, Hero 7, Hero 8, la Insta360 One R. Todos tienen un mismo rango de operación de temperatura entre -10 °C y 35 °C \cite{ref14}. No fueron diseñadas para condiciones tan extremas, pero con algo de insolación se logra usar. De todas estas GoPro, se destacó la Hero 7 por ser la más liviana, pesando unos 116 gramos, y la más barata. La cámara también tiene una tecnología llamada HyperSmooth, que minimiza el efecto de movimientos bruscos \cite{ref15}.
+La mayoría de los proyectos similares en estos últimos años, utilizaron cámaras GoPro o cámaras RasPi. Las cámaras GoPro son reconocidas por tener un tamaño chico, son livianas y resistentes frente a golpes \cite{ref14}. Varios proyectos, como \cite{ref16,ref18,ref19,ref20,ref33} utilizaron una GoPro. Se encontraron varias opciones: GoPro Hero 5, Hero 7, Hero 8, la Insta360 One R. Todos tienen un mismo rango de operación de temperatura entre -10 °C y 35 °C \cite{ref14}. No fueron diseñadas para condiciones tan extremas, pero con algo de insolación se logra usar. De todas estas GoPro, se destacó la Hero 7 por ser la más liviana, pesando unos 116 gramos, y la más barata. La cámara también tiene una tecnología llamada HyperSmooth, que minimiza el efecto de movimientos bruscos \cite{ref15}.
 
 Por otro lado están las cámaras RasPi. También son muy utilizadas porque son muy ligeras, compactas, baratas y graban con buena calidad. Además, son muy compatibles y fáciles de usar con las micro computadoras Raspberry Pi. Proyectos exitosos como \cite{ref2,ref17,ref21,ref22}, usaron cámaras RasPi. Se encontraron las siguientes opciones: Raspberry Pi Module 1, 2, 3, Camera Module 3 Wide, High Qualit.
 
-Se adquirió la RasPi Module 3 por ser barata, moderna y, lo más importante, es compacta y ligera, pesando solo 4 gramos \cite{ref23}. Se descartaron las GoPro porque, a diferencia con las cámaras RasPi, son más costosas y suman más peso y complejidad al sistema. Algo que se tomó en cuenta, como menciona \cite{ref24}es que las cámaras RasPi en general pierden el foco cuando se exponen a temperaturas muy bajas.
+Se adquirió la RasPi Module 3 por ser barata, moderna y, lo más importante, es compacta y ligera, pesando solo 4 gramos \cite{ref23}. Se descartaron las GoPro porque, a diferencia con las cámaras RasPi, son más costosas y suman más peso y complejidad al sistema. Algo que se tomó en cuenta, como menciona \cite{ref24} es que las cámaras RasPi en general pierden el foco cuando se exponen a temperaturas muy bajas.
 
 \subsection{6.2 Soporte Cámara}\label{soporte-cuxe1mara}
 
@@ -1603,7 +1606,7 @@ El bitrate del video en tiempo real se calcula con la siguiente fórmula \cite{r
 
 \(R_{video}\  = width \times \ height\  \times \ fps \times \ bpp\)
 
-Según \cite{ref45}un valor de \emph{Bits Per Pixel} típicamente varía entre 0.05 y 0.15, dependiendo de la cantidad de movimiento entre las capturas. Cuando más movimiento hay, mayor es el BPP. La cámara va a tener un movimiento considerable. La estructura tiende a girar y oscilar en forma de péndulo. Como el peor de los casos, se toma un BPP de 0.15.
+Según \cite{ref45} un valor de \emph{Bits Per Pixel} típicamente varía entre 0.05 y 0.15, dependiendo de la cantidad de movimiento entre las capturas. Cuando más movimiento hay, mayor es el BPP. La cámara va a tener un movimiento considerable. La estructura tiende a girar y oscilar en forma de péndulo. Como el peor de los casos, se toma un BPP de 0.15.
 
 \(R_{video}\  = 720\  \times \ 480\  \times \ 30\  \times \ 0.15\  = 1.555.200\ bps\ \)
 
@@ -1627,11 +1630,11 @@ Alpha es el \emph{Roll-off Factor.} DVB-S2 permite los valores de 0.35, 0.25 y 0
 
 \subsection{6.5 Arquitectura de transmisión de video}\label{arquitectura-transmisiuxf3n-de-video}
 
-Según \cite{ref40}el sistema de transmisión se compone de un transmisor, seguido de un filtro pasabanda, seguido de otros componentes como amplificadores, splitters, entre otros, y finalizado con la antena.
+Según \cite{ref40} el sistema de transmisión se compone de un transmisor, seguido de un filtro pasabanda, seguido de otros componentes como amplificadores, splitters, entre otros, y finalizado con la antena.
 
 \includegraphics[width=5.1667in,keepaspectratio]{./imagenes/image70.png}
 
-\cite{ref40}La arquitectura inicial es la siguiente:
+\cite{ref40} La arquitectura inicial es la siguiente:
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image89.png}
 
@@ -1725,7 +1728,7 @@ El enlace es unidireccional, desde el globo hacia la estación terrena. En el gl
 
 \includegraphics[width=3.3741in,keepaspectratio]{./imagenes/image77.png}
 
-\cite{ref44}Se prefirio un monopolo debido a la forma geométrica que tiene. Una antena monopolo es un radiador vertical que representa "una mitad" de un dipolo, utilizando la tierra o un sistema de cables (radiales) como plano de referencia para actuar como la otra mitad. El diseño más común es el que mide un cuarto de la longitud de la onda que se quiere transmitir. Su parámetro más crítico para la eficiencia es el sistema de tierra. La tierra actúa como un "espejo" eléctrico que completa la antena. Si el sistema de tierra es pobre, gran parte de la potencia del transmisor se desperdiciará en forma de calor, se altera la impedancia y por ende se desajusta la Relación de Onda Estacionaria. Además, se degrada el patrón de radiación \cite{ref70}.
+\cite{ref44} Se prefirio un monopolo debido a la forma geométrica que tiene. Una antena monopolo es un radiador vertical que representa "una mitad" de un dipolo, utilizando la tierra o un sistema de cables (radiales) como plano de referencia para actuar como la otra mitad. El diseño más común es el que mide un cuarto de la longitud de la onda que se quiere transmitir. Su parámetro más crítico para la eficiencia es el sistema de tierra. La tierra actúa como un "espejo" eléctrico que completa la antena. Si el sistema de tierra es pobre, gran parte de la potencia del transmisor se desperdiciará en forma de calor, se altera la impedancia y por ende se desajusta la Relación de Onda Estacionaria. Además, se degrada el patrón de radiación \cite{ref70}.
 
 En caso de usar radiales como plano de tierra, se recomienda utilizar de 3 a 4 radiales que midan también un cuarto de la longitud de onda. En el proyecto GLOBOSAT01 se utilizaron 3 elementos radiales \cite{ref71}. Un monopolo de λ/4 sobre un plano de tierra tiene una impedancia cercana a 37 Ω. Al inclinar los radiales hacia abajo (monopolo vertical) unos 45 grados, la impedancia sube hacia los 50 Ω, lo que permite una conexión directa a un cable coaxial estándar con una ROE muy baja \cite{ref70}.
 
@@ -2218,7 +2221,7 @@ PONER TABLA
 
 \subsection{9.2 Baterias}\label{baterias-1}
 
-Los equipos de los proyectos Horus y SF-HAB utilizaron pilas primarias Energizer Lithium AA debido a su buen desempeño a bajas temperaturas \cite{ref19,ref20,ref44}. Estas baterías son de tipo primario y utilizan un sistema químico basado en litio y disulfuro de hierro (Li-FeS₂). Presentan un rango de temperatura de operación de -40 °C a 60 °C \cite{ref100}comparable al de las baterías presentadas en \cite{ref39}. Entre sus principales ventajas se encuentran \cite{ref100}:
+Los equipos de los proyectos Horus y SF-HAB utilizaron pilas primarias Energizer Lithium AA debido a su buen desempeño a bajas temperaturas \cite{ref19,ref20,ref44}. Estas baterías son de tipo primario y utilizan un sistema químico basado en litio y disulfuro de hierro (Li-FeS₂). Presentan un rango de temperatura de operación de -40 °C a 60 °C \cite{ref100} comparable al de las baterías presentadas en \cite{ref39}. Entre sus principales ventajas se encuentran \cite{ref100}:
 
 \begin{itemize}
 \item
@@ -2229,9 +2232,9 @@ Los equipos de los proyectos Horus y SF-HAB utilizaron pilas primarias Energizer
   \textbf{Alta capacidad bajo carga alta:} mantiene la capacidad aunque aumente la descarga.
 \end{itemize}
 
-Además, ofrecen una mayor capacidad energética por kilogramo que las baterías de ion-litio 18650 utilizadas por \cite{ref2}con valores de aproximadamente 300 Wh/kg y 180 Wh/kg, respectivamente \cite{ref101}.
+Además, ofrecen una mayor capacidad energética por kilogramo que las baterías de ion-litio 18650 utilizadas por \cite{ref2} con valores de aproximadamente 300 Wh/kg y 180 Wh/kg, respectivamente \cite{ref101}.
 
-Por otro lado, si bien las baterías de cloruro de tionilo-litio (LiSOCl₂) ofrecen la mayor energía utilizable por kilogramo \cite{ref102}y permiten operar a temperaturas más bajas \cite{ref39}presentan el problema de la pasivación. Este fenómeno consiste en la formación de una película aislante sobre la superficie del ánodo de litio, producto de la reacción entre el cloruro de tionilo y el litio. En aplicaciones que requieren pulsos de corriente elevados, esta capa de pasivación puede limitar el desempeño de la batería \cite{ref103}.\includegraphics[width=3.3281in,keepaspectratio]{./imagenes/image34.png}
+Por otro lado, si bien las baterías de cloruro de tionilo-litio (LiSOCl₂) ofrecen la mayor energía utilizable por kilogramo \cite{ref102} y permiten operar a temperaturas más bajas \cite{ref39} presentan el problema de la pasivación. Este fenómeno consiste en la formación de una película aislante sobre la superficie del ánodo de litio, producto de la reacción entre el cloruro de tionilo y el litio. En aplicaciones que requieren pulsos de corriente elevados, esta capa de pasivación puede limitar el desempeño de la batería \cite{ref103}.\includegraphics[width=3.3281in,keepaspectratio]{./imagenes/image34.png}
 
 Hablando con Richard Corbo, quien tuvo varias expediciones a Antártida, nos comentó que la capacidad de la batería se reduce drásticamente a temperaturas muy bajas. Contó que su celular se quedaba sin batería mucho antes de lo normal, principalmente porque las temperaturas eran muy bajas. Viendo el datasheet de las baterías L91, se puede observar este comportamiento, a medida que baja la temperatura, baja la capacidad. Este fenómeno ocurre en las baterías en general porque, a temperaturas bajas, la actividad química disminuye \cite{ref104}.
 
@@ -2261,15 +2264,15 @@ En el laboratorio se verificó el correcto funcionamiento del reductor utilizand
 
 \subsection{10.1 Materiales y estructura}\label{materiales-estructura}
 
-En \cite{ref2}utilizaron una carcasa de aluminio 6061 para la disipación de calor que genera un transmisor de 5Ghz. Utilizaron el aluminio porque es ligero. Además, esqueletizaron algunas caras para disminuir aún más el peso del sistema. En las caras restantes, se fijaron los componentes utilizando separadores de aluminio. Proporcionando un camino directo de conducción para transferir el calor generado por los componentes hacia el aluminio.
+En \cite{ref2} utilizaron una carcasa de aluminio 6061 para la disipación de calor que genera un transmisor de 5Ghz. Utilizaron el aluminio porque es ligero. Además, esqueletizaron algunas caras para disminuir aún más el peso del sistema. En las caras restantes, se fijaron los componentes utilizando separadores de aluminio. Proporcionando un camino directo de conducción para transferir el calor generado por los componentes hacia el aluminio.
 
 Adicionalmente, las caras de mayor superficie que no fueron esqueletizadas presentaban una superficie altamente reflectiva. De este modo, la carcasa no sólo disipa el calor generado internamente, sino que también reduce la absorción del calor incidente en forma de luz.\includegraphics[width=2.7267in,keepaspectratio]{./imagenes/image35.png}
 
-En \cite{ref32}utilizaron aluminio para el exterior y poliestireno expandido para el interior de la estructura. El aluminio les permitió tener un diseño fuerte y robusto, pero a costo sobre el presupuesto de peso. Por otro lado, les fue conveniente por lo liviano que es. Además, porque es barato y proporciona cierto aislamiento térmico que el aluminio no ofrece. \cite{ref2}no explica específicamente porque combina las dos, pero se supone que redujeron la cantidad de aluminio y adicionaron poliestireno para mantener la durabilidad y mejorar el aislamiento térmico que es importante para componentes como las baterías.
+En \cite{ref32} utilizaron aluminio para el exterior y poliestireno expandido para el interior de la estructura. El aluminio les permitió tener un diseño fuerte y robusto, pero a costo sobre el presupuesto de peso. Por otro lado, les fue conveniente por lo liviano que es. Además, porque es barato y proporciona cierto aislamiento térmico que el aluminio no ofrece. \cite{ref2} no explica específicamente porque combina las dos, pero se supone que redujeron la cantidad de aluminio y adicionaron poliestireno para mantener la durabilidad y mejorar el aislamiento térmico que es importante para componentes como las baterías.
 
 \includegraphics[width=2.7284in,keepaspectratio]{./imagenes/image63.png}
 
-En \cite{ref3}utilizaron poliestireno expandido para la capa interna de la estructura para proporcionar aislación térmica. Para el prototipo no utilizaron aluminio, pero igualmente construyeron una estructura de aluminio como los establece el estándar del CubeSat para hacer pruebas en el laboratorio. Aclararon que las opciones más comunes para CubeSats son los tipos 5005, 5052, 6061, 7075 de aluminio. Terminaron usando PLA para la capa externa.
+En \cite{ref3} utilizaron poliestireno expandido para la capa interna de la estructura para proporcionar aislación térmica. Para el prototipo no utilizaron aluminio, pero igualmente construyeron una estructura de aluminio como los establece el estándar del CubeSat para hacer pruebas en el laboratorio. Aclararon que las opciones más comunes para CubeSats son los tipos 5005, 5052, 6061, 7075 de aluminio. Terminaron usando PLA para la capa externa.
 
 Para la estructura se implementará un sistema de gestión térmica pasivo y activo. El pasivo no implica el uso de energía, es de bajo costo, volumen y riesgo. En Uruguay no es posible conseguir aluminios de los tipos que establece el estándar CubeSat sin invertir más de lo que se está dispuesto, por lo que se va a resolver con aluminio que se venden en joyerías. Se utilizará aluminio para la capa externa con el objetivo de darle rigidez, absorber y retener el calor generado por componentes, y reducir el calor incidente. Para mantener la temperatura interior dentro de los valores operativos de los componentes, se utilizará una capa de Poliestireno Expandido. Los componentes que más generan calor (amplificadores, transmisores, etc) y que sobrevivan temperaturas bajas, se colocarán contra el aluminio para disipar el calor por conducción. Para el sistema activo, se utilizará el calor que genera el transmisor LoRa E22-400T22S. Se implementará un disipador para aumentar/mantener la temperatura de las baterías. Además, se rodearán con una capa de Poliestireno adicional para asegurar que se contenga la temperatura.
 
@@ -2439,7 +2442,7 @@ Después de llegar a tierra, el dispositivo continúa enviando cada 10 minutos h
 \section{\texorpdfstring{\textbf{12. Estación terrena}}{12. Estación terrena}}\label{arquitectura-recepciuxf3n-de-telemetruxeda-y-video}
 
 
-Según \cite{ref40}el sistema de recepción se compone de la antena, seguido de otros componentes como amplificadores, diplexores, atenuadores, entre otros. Finalizando con un filtro pasa banda, seguido de un LNA y por último el receptor.
+Según \cite{ref40} el sistema de recepción se compone de la antena, seguido de otros componentes como amplificadores, diplexores, atenuadores, entre otros. Finalizando con un filtro pasa banda, seguido de un LNA y por último el receptor.
 
 \includegraphics[width=5.1667in,keepaspectratio]{./imagenes/image7.png}
 
@@ -2490,7 +2493,7 @@ El RTL-SDR tiene un piso de ruido típico entre 3 - 4 dB \cite{ref63}. Se adquie
 
 El efecto que tiene el LNA es el siguiente:
 
-\(T_{R}\  = \ T_{LNA} + \frac{T_{segunda\ etapa}}{G_{LNA}}\) \cite{ref40}Es decir, la temperatura de ruido se reduce según la ganancia del LNA. En este caso, el piso de ruido final queda en:
+\(T_{R}\  = \ T_{LNA} + \frac{T_{segunda\ etapa}}{G_{LNA}}\) \cite{ref40} Es decir, la temperatura de ruido se reduce según la ganancia del LNA. En este caso, el piso de ruido final queda en:
 
 \(T_{R}\  = \ 0.7 + \frac{4}{16}\  = \ 0.95\ dB\)
 
@@ -2499,7 +2502,7 @@ El efecto que tiene el LNA es el siguiente:
 \subsection{12.4 Receptor y demodulación}\label{receptor-cap}
 \subsubsection{12.4.1 Receptor}\label{receptor}
 
-Para recibir el video, se evaluaron varias opciones. \cite{ref49}compara distintos tipos de SDR, de distinto precio, frecuencias de operación y resolución de ADC.
+Para recibir el video, se evaluaron varias opciones. \cite{ref49} compara distintos tipos de SDR, de distinto precio, frecuencias de operación y resolución de ADC.
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image5.png}
 
