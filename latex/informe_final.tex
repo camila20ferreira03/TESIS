@@ -2498,6 +2498,15 @@ El efecto que tiene el LNA es el siguiente:
 \(T_{R}\  = \ 0.7 + \frac{4}{16}\  = \ 0.95\ dB\)
 
 \subsubsection{12.3.2 Filtro pasa banda}\label{filtro-pasa-banda}
+Para rechazar interferencias fuera de banda, evitar saturación e intermodulación, y limitar el ruido. Se adquirió el filtro pasabanda ZX75BP-1205-S+ de MiniCircuits:
+\begin{itemize}
+    \item Banda: 1155 -1255 Mhz
+    \item Máxima potencia de entrada: 10 W
+    \item Impedancia: 50 ohm
+\end{itemize}
+
+\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/respuesta-filtro.png}
+
 
 \subsection{12.4 Receptor y demodulación}\label{receptor-cap}
 \subsubsection{12.4.1 Receptor}\label{receptor}
@@ -2570,6 +2579,16 @@ Se realizó una prueba de larga distancia preliminar en el pasillo de la univers
 Entre el techo de un edificio y el techo de la facultad se realizó la tercera prueba de larga distancia. Se logró recibir telemetría sin atenuadores, con una pérdida de espacio libre de 93 dB. También se recibió telemetría con 50 dB de atenuación adicional. Por otro lado, se recibió vídeo sin atenuación con una pérdida de espacio libre de 103 dB. Se adiciono 10 dB de atenuación y se logró recibir video, pero después de un rato de pruebas, se dejó de recibir video con y sin atenuación. Se sospecha que se debió a una falla con un cable que se descubrió en una prueba posterior.
 
 \subsection{14.6 Simulación con separación de 8,2 km}\label{simulaciuxf3n-larga-distancia-con-separaciuxf3n-de-8.2-km}
+Se realizó una cuarta prueba de larga distancia entre la plaza Virgilio y el faro de punta carretas. Adicionalmente, el objetivo de la prueba era verificar que las antenas funcionan a largas distancias. Para el enlace de telemetría, se tenían 103,45 dB de atenuación de espacio libre a 8,2 kilómetros y se adiciono 40 dB con atenuadores.
+
+\includegraphics[width=3.7510in,keepaspectratio]{./imagenes/prueba-4-sin-atenuadores.png}
+
+\includegraphics[width=3.7510in,keepaspectratio]{./imagenes/prueba-4-con-atenuadores.png}
+
+Para el enlace de video, se tenían 112.58 dB de atenuación de espacio libre. Se logró recibir video, agregando 20 dB de atenuación, es decir, simulando una distancia de 82 kilómetros. Solo se tenian atenuadores de 10 y 20 dB, no se logro recibir video con mas atenuacion.
+
+\includegraphics[width=3.7510in,keepaspectratio]{./imagenes/prueba-4-video-con-atenuadores.png}
+
 
 \section{\texorpdfstring{\textbf{15. Vuelo y resultados}}{15. Vuelo y resultados}}\label{vuelo-resultados}
 
