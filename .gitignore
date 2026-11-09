@@ -1,8 +1,11 @@
-# Compilación de LaTeX
+# Compilación de LaTeX (y respaldos de latexmk/biber ante error)
 *.pdf
 *.aux
 *.bbl
+*.bbl-*
 *.bcf
+*.bcf-*
+*-SAVE-ERROR
 *.blg
 *.fdb_latexmk
 *.fls
@@ -12,10 +15,11 @@
 *.out
 *.run.xml
 *.synctex
-*.synctex.gz
+*.synctex*
 *.toc
 *.xdv
 texput.log
+latex/__pycache__/
 
 # Python (scripts auxiliares)
 __pycache__/

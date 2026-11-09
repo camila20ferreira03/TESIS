@@ -10,7 +10,7 @@
 \newunicodechar{ǫ}{\ensuremath{\epsilon}}
 \usepackage{xcolor}
 \usepackage{amsmath,amssymb}
-\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\setcounter{secnumdepth}{3} % numeracion hasta subsubseccion
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
@@ -101,26 +101,32 @@
 \usepackage{setspace}
 \onehalfspacing % interlineado 1,5
 
+% ---- Titulos numerados automaticamente ----
+\usepackage{titlesec}
+\titleformat{\section}{\bfseries\large}{\thesection.}{0.6em}{}
+\titleformat{\subsection}{\bfseries}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\bfseries}{\thesubsubsection}{0.6em}{}
+
 % ---- Indice automatico: partes + formato ----
 \setcounter{tocdepth}{3}
 \usepackage{titletoc}
 \titlecontents{section}
   [0em]
   {\addvspace{4pt}\bfseries}
-  {}
-  {\bfseries}
+  {\contentslabel{2.2em}}
+  {\hspace*{-2.2em}\bfseries}
   {\titlerule*[0.5pc]{.}\contentspage}
 \titlecontents{subsection}
   [1.5em]
   {}
-  {}
-  {}
+  {\contentslabel{2.8em}}
+  {\hspace*{-2.8em}}
   {\titlerule*[0.5pc]{.}\contentspage}
 \titlecontents{subsubsection}
-  [3.8em]
+  [4.5em]
   {}
-  {}
-  {}
+  {\contentslabel{3.6em}}
+  {\hspace*{-3.6em}}
   {\titlerule*[0.5pc]{.}\contentspage}
 \makeatletter
 \newcommand*\l@parte[2]{%
@@ -262,13 +268,13 @@ El/Los autor/autores de este trabajo final de carrera declara(n) que es/son el/l
 
 \parte{Parte I: Presentación del proyecto}
 
-\section{\texorpdfstring{\textbf{1. Alcance del proyecto}}{1. Alcance del proyecto}}\label{introduccion}
+\section{Alcance del proyecto}\label{introduccion}
 
-\subsection{1.1 Descripción}\label{descripciuxf3n}
+\subsection{Descripción}\label{descripciuxf3n}
 
 En este proyecto se propone un sistema compuesto por un globo sonda y una estación terrena, para transmitir información desde la estratosfera hasta la superficie terrestre. Durante el vuelo, se va a capturar video y datos de telemetría, como la posición, temperatura y presión, que serán procesados y transmitidos a la superficie en tiempo real. Se diseñará un sistema de comunicación que minimice el consumo de energía y maximice la calidad de la transmisión. El dispositivo descenderá de forma controlada para poder recuperarlo, permitiendo su análisis y reutilización. A su vez, incorporará un sistema para visualizar los datos obtenidos.
 
-\subsection{1.2 Motivación}\label{motivaciuxf3n}
+\subsection{Motivación}\label{motivaciuxf3n}
 
 El proyecto permite explorar una área tecnológica emergente con creciente relevancia en el ámbito aeroespacial y de las telecomunicaciones, vinculada al uso de plataformas estratosféricas para la observación, comunicación y experimentos. Estas plataformas presentan desafíos particulares, especialmente en la comunicación eficiente y confiable en entornos dinámicos y con recursos limitados, un problema central que está también presente en satélites de baja órbita (LEO).
 
@@ -276,7 +282,7 @@ Por otro lado, la altura alcanzada por el dispositivo permitirá registrar grand
 
 El proyecto nos da la oportunidad de adquirir experiencia práctica en el diseño de sistemas de comunicación, integración de hardware y software, y análisis de datos en condiciones cercanas a las espaciales. Esto contribuye a la formación académica y a la generación de conocimiento para futuras investigaciones y desarrollos en la industria aeroespacial y de telecomunicaciones.
 
-\subsection{1.3 Objetivo general y objetivos específicos}\label{objetivo-general}
+\subsection{Objetivo general y objetivos específicos}\label{objetivo-general}
 
 Desarrollar un sistema de transmisión para enviar datos de telemetría y video en tiempo real desde un globo sonda en la estratosfera hasta una estación terrena que minimice el consumo de energía y maximice la calidad del streaming. La misión terminará una vez encontrado el globo sonda y habiendo obtenido todos los datos.
 
@@ -332,7 +338,7 @@ Para cumplir con el objetivo general planteado, se definió una serie de objetiv
   Implementar un sistema para acotar la ubicación del dispositivo cuando está por aterrizar.
 \end{itemize}
 
-\subsection{1.4 Restricciones}\label{restricciones}
+\subsection{Restricciones}\label{restricciones}
 
 El diseño y desarrollo del sistema se encuentra principalmente condicionado por las siguientes restricciones:
 
@@ -349,12 +355,14 @@ El diseño y desarrollo del sistema se encuentra principalmente condicionado por
 
 
 
+\section{Solución propuesta}\label{solucion-propuesta}
+
 \newpage
 \parte{Parte II: Fundamentos}
 
-\section{\texorpdfstring{\textbf{2. Marco teórico}}{2. Marco teórico}}\label{marco-teorico}
+\section{Marco teórico}\label{marco-teorico}
 
-\subsection{2.1 Entorno estratosférico}\label{condiciones-ambientales}
+\subsection{Entorno estratosférico}\label{condiciones-ambientales}
 
 La atmósfera de la tierra está compuesta por 5 capas principales. De más baja a más alta son: troposfera, estratosfera, mesosfera, termosfera y exosfera.
 
@@ -372,9 +380,9 @@ Gran parte de los satélites orbitan en la termosfera, llamada Órbita Terrestre
 
 Otro factor determinante para el éxito operativo de los globos estratosféricos es el viento. Debido a su enorme superficie, los globos experimentan un alto arrastre, incluso en la atmósfera reducida de la estratosfera. Los vientos tienden a moverse de forma horizontal, pero su dirección cambia según la altitud. Sin medios activos de resistencia, la tendencia natural de estas naves es moverse a la deriva con los vientos predominantes, lo que constituye su mayor limitación operativa. Además, las ráfagas de viento repentinas son peligrosas, ya que pueden superar la resistencia de los materiales y atentar contra la integridad estructural de la plataforma \cite{ref4}.
 
-\subsection{2.2 Física del vuelo en globo}\label{fisica-del-vuelo}
+\subsection{Física del vuelo en globo}\label{fisica-del-vuelo}
 
-\subsubsection{2.2.1 Fundamento físico del vuelo}\label{fundamento-fuxedsico-del-vuelo}
+\subsubsection{Fundamento físico del vuelo}\label{fundamento-fuxedsico-del-vuelo}
 
 El vuelo del globo se describe con una ecuación de movimiento sobre el eje vertical. La masa total del sistema por su aceleración es igual al balance entre el empuje que lo sube y las fuerzas resistentes:
 
@@ -382,7 +390,7 @@ El vuelo del globo se describe con una ecuación de movimiento sobre el eje vert
 
 La masa total es la suma de los tres componentes: estructura del globo, carga útil (payload) y la masa del helio \cite{ref73}. Para entender el comportamiento del globo durante el ascenso es necesario entender dos relaciones físicas. La primera es la flotabilidad (empuje de Arquímedes) y la otra es la ley de los gases ideales.
 
-\subsubsection{2.2.2 Flotabilidad (empuje de Arquímedes)}\label{flotabilidad-empuje-de-arquuxedmedes}
+\subsubsection{Flotabilidad (empuje de Arquímedes)}\label{flotabilidad-empuje-de-arquuxedmedes}
 
 El helio genera una fuerza hacia arriba porque es menos denso que el aire de alrededor. Por el principio de Arquimedes, la fuerza de empuje es igual al peso del aire desplazado por el volumen del globo. La fuerza neta queda como la diferencia entre la densidad del aire y la del helio, multiplicada por el volumen del globo:
 
@@ -390,7 +398,7 @@ El helio genera una fuerza hacia arriba porque es menos denso que el aire de alr
 
 Esta fuerza neta es la que debe levantar el peso del globo y del payload. Lo que sobra después de vencer ese peso, es lo que hace subir al sistema.
 
-\subsubsection{2.2.3 Ley de gases ideales y altura de explosión}\label{ley-de-gases-ideales-y-altura-de-explosion}
+\subsubsection{Ley de gases ideales y altura de explosión}\label{ley-de-gases-ideales-y-altura-de-explosion}
 
 Cada globo tiene un diámetro de explosion (burst diameter) fijo. Es un dato del fabricante. Mientras el globo sube, la presión atmosférica va bajando. Para compensar esto, por la ley de los gases ideales (Boyle), el helio se expande. El globo va creciendo de manera continua hasta que alcanza su máximo diámetro y explota.
 
@@ -405,9 +413,9 @@ De acá surge una decisión importante en la planificación del vuelo, que depen
 
 Esto está confirmado en la documentación técnica de High Altitude Science. Para dos vuelos con el mismo modelo de globo, el que lleva menos helio revienta a mayor altitud \cite{ref74}.
 
-\subsection{2.3 Tecnologías de comunicación}\label{tecnologias-de-comunicacion}
+\subsection{Tecnologías de comunicación}\label{tecnologias-de-comunicacion}
 
-\subsubsection{2.3.1 LoRa}\label{lora}
+\subsubsection{LoRa}\label{lora}
 
 Long Range, desarrollada por Semtech, es una tecnología de transmisión de paquetes de datos pequeños a largas distancias, con baja potencia, bajo consumo de energía y una baja tasa de transmisión de datos. Utiliza una modulación basada en Chirp Spread Spectrum (CSS). Esta técnica permite transmitir pequeños paquetes de datos a largas distancias con alta robustez frente al ruido y a señales débiles \cite{ref29,ref31}.
 
@@ -421,13 +429,13 @@ Opera en las bandas ISM de 433, 868 o 915 MHz, dependiendo de la región donde s
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image66.png}
 
-\subsubsection{2.3.2 Narrowband IoT}\label{narrowband-iot}
+\subsubsection{Narrowband IoT}\label{narrowband-iot}
 
 Es un estándar de comunicación inalámbrica diseñado para conectar dispositivos de bajo consumo a redes celulares usando una franja de banda muy angosta, apenas 180 kHz \cite{ref67}. Como menciona Antel, Nb-IoT es una evolución de LTE enfocados en la optimización de batería. Fue pensado específicamente para dispositivos que envían poca información (bajo ancho de banda) y con poca frecuencia \cite{ref68}.
 
 NB-IoT tiene un link budget de 164 dB, mientras que GPRS y LTE tienen 144 dB y 142.7 dB respectivamente. Esto permite mucho mayor capacidad de penetración y alcance \cite{ref69}. Por otro lado, Antel tiene una cobertura de casi el 80\% del territorio uruguayo de NB-IoT \cite{ref68}.
 
-\subsubsection{2.3.3 DVB-S2 (Europeo)}\label{dvb-s2-europeo}
+\subsubsection{DVB-S2 (Europeo)}\label{dvb-s2-europeo}
 
 DVB-S2 (\emph{Digital Video Broadcasting} - Segunda Generación) es un sistema flexible de modulación y codificación de canal diseñado para aplicaciones de banda ancha por satélite. Fue desarrollado como sucesor de los estándares DVB-S y DVB-DSNG originales, aprovechando los avances tecnológicos para ofrecer aproximadamente un 30\% más de capacidad bajo las mismas condiciones de ancho de banda y potencia del transpondedor \cite{ref27}.
 
@@ -458,13 +466,13 @@ DVB-S2 es compatible con servicios de televisión codificados MPEG-2 y MPEG-4 \c
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image15.png}
 
-\subsubsection{2.3.4 Radios definidos por software}\label{radios-definidos-por-software}
+\subsubsection{Radios definidos por software}\label{radios-definidos-por-software}
 
 Un SDR es un sistema de comunicación por radio donde los componentes que tradicionalmente se implementan en hardware (como filtros, amplificadores y moduladores) se definen mediante software \cite{ref49}.
 
 \hl{A diferencia de los dispositivos de radio convencionales, que son estrictamente de hardware y tienen especificaciones fijas (como rangos de frecuencia y filtros predeterminados), un SDR ofrece una gran flexibilidad. Esto nos permite ajustar parámetros como la frecuencia, el ancho de banda y el método de modulación o demodulación utilizando programas informáticos sin necesidad de cambiar o comprar más componentes físicos.}
 
-\subsubsection{2.3.5 Elección de banda}\label{elecciuxf3n-de-banda}
+\subsubsection{Elección de banda}\label{elecciuxf3n-de-banda}
 
 Los factores involucrados en la elección de banda son los siguientes:
 
@@ -528,9 +536,9 @@ Las bandas superiores (X, Ka) ofrecen un ancho de banda mucho mayor, permitiendo
   \hl{Atenuación Atmosférica y Ruido: Las frecuencias superiores sufren una mayor atenuación por gases atmosféricos y lluvia debido a la interacción física entre las ondas electromagnéticas de longitud de onda corta y las moléculas presentes en la atmósfera} \cite{ref40}\hl{.}
 \end{enumerate}
 
-\subsection{2.4 Video digital}\label{video-digital}
+\subsection{Video digital}\label{video-digital}
 
-\subsubsection{2.4.1 Codificación de video}\label{codificaciuxf3n-de-video}
+\subsubsection{Codificación de video}\label{codificaciuxf3n-de-video}
 
 La codificación de video es el proceso mediante el cual se comprime y se transforma el formato de un contenido de video sin procesar en un archivo digital, de modo que pueda reproducirse en distintos dispositivos y plataformas.
 
@@ -544,7 +552,7 @@ El códec H.264 (AVC) destaca por su buena eficiencia de compresión, permitiend
 
 El códec H.265 (HEVC) presenta como principal ventaja su alta eficiencia de compresión, ya que permite obtener la misma calidad de video utilizando aproximadamente un 40--50\% menos de bitrate que H.264, lo que reduce significativamente el consumo de ancho de banda y el tamaño de los archivos. Sin embargo, requiere una mayor capacidad de procesamiento, lo que implica tiempos de codificación más largos y mayores exigencias de hardware.
 
-\subsubsection{2.4.2 Encapsulamiento}\label{encapsulamiento}
+\subsubsection{Encapsulamiento}\label{encapsulamiento}
 
 La encapsulación es el proceso de envolver datos de video codificados en unidades estructuradas y paquetizadas para facilitar su transmisión, almacenamiento y sincronización en distintos sistemas multimedia. En el caso de los estándares HEVC (H.265) y AVC (H.264), ambos utilizan una capa de abstracción, llamada Network Abstraction Layer, para cumplir esta función \cite{ref26}.
 
@@ -556,9 +564,9 @@ El MPEG-2 Transport Stream (TS) es un estándar global utilizado para la difusi�
 
 Los datos codificados (unidades NAL) se empaquetan primero en PES (Packetized Elementary Stream). El encabezado PES contiene información de temporización esencial, como una base de reloj común y marcas de tiempo para indicar cuándo se deben decodificar (DTS) y presentar (PTS) los datos. Los paquetes PES se fragmentan en unidades de longitud fija de 188 bytes. Esta estructura de longitud fija es fundamental para entornos donde es probable que ocurran errores, ya que facilita que el receptor mantenga la sincronización en canales con pérdidas. Cada paquete TS incluye un PID en su encabezado para identificar a qué componente (video, audio o datos) pertenece, permitiendo al receptor demultiplexar los servicios \cite{ref26}.
 
-\subsection{2.5 Componentes de RF}\label{componentes-rf}
+\subsection{Componentes de RF}\label{componentes-rf}
 
-\subsubsection{2.5.1 Amplificador de potencia}\label{amplificador-de-potencia}
+\subsubsection{Amplificador de potencia}\label{amplificador-de-potencia}
 
 Un amplificador de potencia (PA) convierte señales de baja potencia en una de mayor potencia \cite{ref88}. Los parámetros clave que se toman en cuenta para seleccionar amplificadores son los siguientes:
 
@@ -582,15 +590,15 @@ Un amplificador de potencia (PA) convierte señales de baja potencia en una de m
   Frecuencia de operación: Define el espectro de frecuencias dentro del cual un amplificador de potencia de RF mantiene el rendimiento especificado \cite{ref93}.
 \end{itemize}
 
-\subsubsection{2.5.2 Amplificador de bajo ruido}\label{amplificador-de-bajo-ruido}
+\subsubsection{Amplificador de bajo ruido}\label{amplificador-de-bajo-ruido}
 
 Un Amplificador de Bajo Ruido (LNA) es un componente electrónico fundamental ubicado en la etapa inicial de un receptor. Su función es amplificar las señales débiles captadas por la antena, incorporando la menor cantidad posible de ruido interno. Se utiliza principalmente para minimizar la temperatura de ruido total del sistema. Reduce de forma efectiva la contribución de ruido de todas las etapas posteriores de la cadena de recepción. Al amplificar la señal desde el comienzo y disminuir el efecto del ruido térmico generado por los componentes subsiguientes, el LNA permite mantener una relación señal-ruido (SNR) suficientemente alta para que el receptor pueda recuperar correctamente los datos transmitidos del ruido de fondo \cite{ref40}.
 
-\subsubsection{2.5.3 Atenuadores}\label{atenuadores}
+\subsubsection{Atenuadores}\label{atenuadores}
 
 Un atenuador es un componente pasivo que introduce una pérdida conocida y fija (en dB) entre el transmisor y el receptor. La idea es reemplazar el espacio libre por un atenuador calibrado que simule la atenuación que tendría la señal a esa distancia real. Primero se calcula la atenuación que se quiere simular con la fórmula de espacio libre (FSPL), que depende de la distancia y la frecuencia. Los atenuadores comerciales vienen en valores fijos (3, 6, 10, 20, 30 dB) y soportan una potencia determinada que el transmisor no puede superar. Se combinan varios en cascada para sumar el valor objetivo. Se prueba transmitiendo paquetes reales y revisando RSSI/SNR en el receptor, aumentando la atenuación gradualmente hasta encontrar el punto donde empieza a fallar. Esto da el margen de enlace real, útil para anticipar pérdidas adicionales en vuelo.
 
-\subsubsection{2.5.4 Construcción y materiales de antenas}\label{construcciuxf3n-y-materiales-antenas}
+\subsubsection{Construcción y materiales de antenas}\label{construcciuxf3n-y-materiales-antenas}
 
 La velocidad de propagación de la onda de radio a lo largo de un hilo conductor de cobre es ligeramente menor que la velocidad de la luz en el espacio libre. Debido al propio material y otros efectos capacitivos, la longitud del elemento radiador suele ser aproximadamente 5\% menor que la longitud teórica de un cuarto de onda \cite{ref70}.
 
@@ -603,9 +611,9 @@ Materiales conductores para radiadores \cite{ref70}:
   Aluminio: El aluminio es el material predilecto para estructuras rígidas como antenas Yagi, mástiles y radiadores verticales, debido a su excelente relación resistencia-peso y su bajo costo. Su utilización en forma de tubos de mayor diámetro que un cable convencional permite que las antenas operen con un mayor ancho de banda. Además, el aluminio es fácil de mecanizar manualmente y no se oxida fácilmente.
 \end{itemize}
 
-\subsection{2.6 Interfaces de comunicación}\label{interfaces-comunicacion}
+\subsection{Interfaces de comunicación}\label{interfaces-comunicacion}
 
-\subsubsection{2.6.1 SPI}\label{spi}
+\subsubsection{SPI}\label{spi}
 
 SPI (Serial Peripheral Interface) es un protocolo de comunicación digital utilizado para conectar un microcontrolador con sensores, memorias, pantallas y otros periféricos.
 
@@ -697,7 +705,7 @@ Todos los dispositivos comparten:
 
 Sin embargo, cada dispositivo posee una línea CS independiente. El Main selecciona el dispositivo con el que desea comunicarse colocando su señal CS correspondiente en 0, mientras mantiene las demás en 1 \cite{ref80}.
 
-\subsubsection{2.6.2 I2C}\label{i2c}
+\subsubsection{I2C}\label{i2c}
 
 I2C (Inter-Integrated Circuit) es un protocolo de comunicación digital utilizado para conectar un microcontrolador con sensores, memorias, pantallas y otros periféricos utilizando únicamente dos líneas principales.
 
@@ -777,7 +785,7 @@ Todos los dispositivos comparten \cite{ref81}:
 
 A diferencia de SPI, no hace falta una línea CS para cada dispositivo. El Main selecciona con quién comunicarse enviando la dirección del subnodo.
 
-\subsubsection{2.6.3 UART}\label{uart}
+\subsubsection{UART}\label{uart}
 
 UART (Universal Asynchronous Receiver-Transmitter) es un protocolo de comunicación serie asíncrono que utiliza dos líneas principales: Transmitter (Tx) y Receiver (Rx). Al ser asíncrono, no existe una señal de reloj compartida entre los dispositivos.
 
@@ -855,9 +863,9 @@ La línea UART permanece en estado HIGH por defecto. Cuando el transmisor desea 
 
 \cite{ref84} En UART no se puede mandar una cantidad variable de bits de datos dentro de una misma configuración. La cantidad de bits de datos, la presencia o no de bit de paridad, la cantidad de bits de parada y el baud rate deben configurarse previamente en ambos extremos. Como no existe una señal de reloj ni información adicional que indique dónde terminan los datos y dónde comienzan los bits de paridad o parada, el receptor necesita conocer de antemano el formato exacto de cada trama \cite{ref83}.
 
-\subsection{2.7 Energía: baterías y conversores}\label{energia-fundamentos}
+\subsection{Energía: baterías y conversores}\label{energia-fundamentos}
 
-\subsubsection{2.7.1 Baterías}\label{baterias}
+\subsubsection{Baterías}\label{baterias}
 
 La energía solar no siempre está disponible durante las operaciones de una nave espacial. Para almacenar energía se utilizan baterías primarias y secundarias, las cuales se clasifican según su diferente composición electroquímica. Debido a que las baterías de tipo primario no son recargables, generalmente se utilizan en misiones de corta duración. Las baterías de plata-zinc (Ag-Zn) son utilizadas habitualmente debido a que son más fáciles de manipular y pueden descargarse a una mayor tasa. Sin embargo, también existe una variedad de baterías primarias basadas en litio que presentan una mayor densidad energética, entre ellas las de dióxido de azufre-litio (LiSO₂), monofluoruro de carbono-litio (LiCF\textsubscript{x}) y cloruro de tionilo-litio (LiSOCl₂) \cite{ref39}.
 
@@ -869,7 +877,7 @@ Las baterías típicas de Li-ion presentan un rango de temperatura de operación
 
 \includegraphics[width=2.1875in,keepaspectratio]{./imagenes/image33_1.png}\includegraphics[width=1.2917in,keepaspectratio]{./imagenes/image33_2.png}\cite{ref39} En proyectos anteriores, \cite{ref2,ref3,ref99} se prefirieron las baterías de ion-litio. El equipo del proyecto Zephyrus X utilizó baterías de ion-litio 18650 como fuente de energía principal debido a su bajo peso, alta capacidad de potencia, posibilidad de recarga y amplio rango de temperatura de operación. Sin embargo, experiencias anteriores indicaron que el uso de baterías recargables no era la mejor opción. Si la batería se descargaba excesivamente, no podía volver a cargarse y, en algunos casos, llegaba a explotar {[}citar experiencia John{]}.
 
-\subsubsection{2.7.2 Conversor de voltaje}\label{conversor-de-voltaje}
+\subsubsection{Conversor de voltaje}\label{conversor-de-voltaje}
 
 Dos tipos de conversores \cite{ref105}:
 
@@ -886,9 +894,9 @@ Es capaz de alcanzar de forma consistente eficiencias superiores al 95 \%. Esta 
 
 Un conversor elevador también presenta una alta eficiencia, con valores que comúnmente superan el 90 \%. Un circuito bien diseñado puede alcanzar eficiencias máximas superiores al 95 \%. Sin embargo, generalmente opera en un rango de 85 \% a 95 \%. El proceso de aumentar el voltaje es ligeramente más complejo, lo que puede provocar mayores pérdidas de energía en comparación con un conversor reductor \cite{ref105}.
 
-\subsection{2.8 Materiales y control térmico}\label{materiales-termico}
+\subsection{Materiales y control térmico}\label{materiales-termico}
 
-\subsubsection{2.8.1 Aluminio}\label{aluminio}
+\subsubsection{Aluminio}\label{aluminio}
 
 La conductividad térmica representa la capacidad de un material para transmitir calor. Se define como la cantidad de energía térmica que atraviesa una unidad de espesor del material, por unidad de área y por cada unidad de diferencia de temperatura. La elevada conductividad térmica del aluminio puro se debe principalmente al movimiento eficaz de los electrones libres \cite{ref85}.
 
@@ -900,11 +908,11 @@ La capacidad calorífica específica es una propiedad física que indica la cant
 
 Comparación de la conductividad térmica entre el cobre y el aluminio: El cobre y el aluminio son materiales ampliamente utilizados en aplicaciones de transferencia de calor, como radiadores e intercambiadores térmicos. Aunque el cobre presenta una conductividad térmica superior, el aluminio suele ser la opción preferida debido a su menor costo, menor densidad y mayor facilidad de fabricación y mecanizado \cite{ref85}.
 
-\subsubsection{2.8.2 EPS}\label{eps}
+\subsubsection{EPS}\label{eps}
 
 El EPS tiene una conductividad térmica muy baja. Esto se debe a su estructura de celda cerrada, compuesta en un 98 \% de aire. Este aire atrapado dentro de las celdas es un conductor de calor muy deficiente, lo que le confiere a la espuma excelentes propiedades de aislamiento térmico \cite{ref87}.
 
-\subsubsection{2.8.3 Control térmico}\label{control-termico}
+\subsubsection{Control térmico}\label{control-termico}
 
 El control térmico de una nave espacial tiene como objetivo principal mantener todos sus componentes dentro de los rangos de temperatura permitidos para sus requisitos operativos y de supervivencia en todas las fases de la misión. El comportamiento térmico de un satélite se rige por un balance de energía fundamentado en la cantidad de calor absorbido, almacenado, generado y disipado \cite{ref39}.
 
@@ -925,27 +933,27 @@ Los fundamentos de cada término son los siguientes \cite{ref39}:
 
 \parte{Parte III: Diseño general del sistema}
 
-\section{\texorpdfstring{\textbf{3. Requerimientos y arquitectura}}{3. Requerimientos y arquitectura}}\label{requerimientos-arquitectura}
+\section{Requerimientos y arquitectura}\label{requerimientos-arquitectura}
 
-\pendiente{3. Requerimientos y arquitectura.}
+\pendiente{Requerimientos y arquitectura.}
 
-\subsection{3.1 Requerimientos del sistema}\label{requerimientos-sistema}
+\subsection{Requerimientos del sistema}\label{requerimientos-sistema}
 
-\pendiente{3.1 Requerimientos del sistema.}
+\pendiente{Requerimientos del sistema.}
 
-\subsection{3.2 Arquitectura general: segmento de vuelo y segmento terrestre}\label{arquitectura-general}
+\subsection{Arquitectura general: segmento de vuelo y segmento terrestre}\label{arquitectura-general}
 
-\pendiente{3.2 Arquitectura general: segmento de vuelo y segmento terrestre.}
+\pendiente{Arquitectura general: segmento de vuelo y segmento terrestre.}
 
-\subsection{3.3 Fases de la misión}\label{fases-mision}
+\subsection{Fases de la misión}\label{fases-mision}
 
-\pendiente{3.3 Fases de la misión.}
+\pendiente{Fases de la misión.}
 
-\section{\texorpdfstring{\textbf{4. Diseño del enlace}}{4. Diseño del enlace}}\label{transmisiuxf3n}
+\section{Diseño del enlace}\label{transmisiuxf3n}
 
 ESCRIBIR UNA INTRO
 
-\subsection{4.1 Distancia}\label{distancia}
+\subsection{Distancia}\label{distancia}
 
 Para definir la distancia máxima de transmisión, se investigaron proyectos de globos satélites lanzados en uruguay \cite{ref36}:
 
@@ -979,7 +987,7 @@ Utilizando la herramienta de SondeHub Predictor \cite{ref38} con los mismo pará
 
 \cite{ref17,ref19,ref20,ref32} también confirman una distancia recorrida posible por arriba de los 100 km. Como la telemetría se debe recibir durante todo el trayecto, en base a las predicciones, se estima una distancia máxima de transmisión de 250 km. Aunque las predicciones establecen más distancia, se va a restringir la distancia recorrida para que no se vaya del país. En el caso del video, idealmente la transmisión solo se da en una ventana dentro de la estratosfera, es decir, aproximadamente a los 12 km de altura debe comenzar a transmitir. Según \cite{ref38} demora aproximadamente 40 minutos en llegar a la estratosfera habiendo recorrido 40 km. Y 1 hora y 20 minutos en llegar a los 25 km de altura habiendo recorrido 100 km. En base a esto, se estimó una máxima distancia de transmisión de video de 150 km.
 
-\subsection{\texorpdfstring{4.2 Selección de bandas }{4.2 Selección de bandas }}\label{banda}
+\subsection{Selección de bandas}\label{banda}
 
 Una vez que se resolvió la distancia de transmisión, se determinó la banda que se utilizará para transmitir. Los enlaces son unidireccionales, desde la sonda hasta la superficie terrestre. Como se mencionó antes, los módulos LoRa operan en las bandas ISM de 433, 868 o 915 MHz. Como es muy importante asegurar que la telemetría llegue a la estación terrena, se seleccionó la banda de 433 mhz por tener la mayor propagación.
 
@@ -996,7 +1004,7 @@ Según el Reglamento del Servicio de Radioaficionados \cite{ref41} las bandas de
 
 En términos de propagación, no hay diferencia significativa entre las bandas, pero se seleccionó la de 1240 mhz.
 
-\subsection{4.3 Trámites para el uso de las bandas}\label{truxe1mites-para-el-uso-de-las-bandas}
+\subsection{Trámites para el uso de las bandas}\label{truxe1mites-para-el-uso-de-las-bandas}
 
 Tanto la banda de 433 MHz como la de 1240 MHz se encuentran reguladas dentro del Servicio de Radioaficionados, por lo que su utilización requiere contar con el Permiso de Radioaficionado correspondiente. Este permiso es otorgado por la Unidad Reguladora de Servicios de Comunicaciones (URSEC) \cite{ref41}. Existen tres categorías de radioaficionado: Inicial, General y Superior. Para las bandas elegidas se tuvo que obtener el de categoría ``General''.
 
@@ -1015,7 +1023,7 @@ El examen teórico consta de 3 partes. La primera parte es sobre la Reglamentaci
 
 Se obtuvo el Permiso de Radioaficionado de Categoría ``General'', con el Distintivo de Llamada ``CX1DPH''. Con este permiso se está habilitado a transmitir en las bandas asignadas a este servicio, entre ellas la banda de 433 mHz utilizada para la telemetría y la banda de ATV 1240 mHz para la transmisión de video.
 
-\subsection{4.4 Link budget de video}\label{link-budget-video-100-km}
+\subsection{Link budget de video}\label{link-budget-video-100-km}
 
 Parametros:
 
@@ -1092,11 +1100,11 @@ Margin & dB & Eb/N0 - Required Eb/N0 & 5,324762548 \\
 \end{longtable}
 }
 
-\subsection{4.5 Link budget de telemetría}\label{link-budget-telemetruxeda-250-km}
+\subsection{Link budget de telemetría}\label{link-budget-telemetruxeda-250-km}
 
 \parte{Parte IV: Segmento de vuelo}
 
-\section{\texorpdfstring{\textbf{5. Sistema de telemetría}}{5. Sistema de telemetría}}\label{telemetruxeda}
+\section{Sistema de telemetría}\label{telemetruxeda}
 
 A la superficie terrestre se van a transmitir dos flujos de datos de distinta naturaleza: Telemetría y Video. La función principal de la telemetría es informar el estado en el que se encuentra el globo sonda. Es importante para monitorear la sonda y, en caso de falla, poder determinar el motivo. Se tomarán medidas y transmitirán los siguientes datos:
 
@@ -1121,7 +1129,7 @@ A la superficie terrestre se van a transmitir dos flujos de datos de distinta na
 
 La telemetría se va a transmitir durante todo el vuelo, pero a cada 10 segundos. No es necesario transmitir los valores continuamente porque no suma información útil y solo demandaría de más recursos de energía, que termina impactando en costos y peso.
 
-\subsection{5.1 Sensores}\label{sensores}
+\subsection{Sensores}\label{sensores}
 
 Se consideraron varios tipos de sensores, teniendo en cuenta el rango operativo de temperatura, su funcionamiento a baja presión atmosférica, el consumo energético, la precisión que tiene el sensor y el costo de adquirirlo. Además, se exploraron casos en misiones de globos estratosféricos similares a las nuestras.
 
@@ -1176,7 +1184,7 @@ Para la temperatura externa, se decidió usar el PT100 debido a su rango operati
 
 \includegraphics[width=3.6667in,keepaspectratio]{./imagenes/image59.png}
 
-\subsection{5.2 Cantidad de bytes de telemetría a transmitir}\label{cantidad-de-bytes-de-telemetruxeda-a-transmitir}
+\subsection{Cantidad de bytes de telemetría a transmitir}\label{cantidad-de-bytes-de-telemetruxeda-a-transmitir}
 
 {\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}
@@ -1220,7 +1228,7 @@ Los estados de transmisión de video son:
   2 - Se está transmitiendo video
 \end{itemize}
 
-\subsection{5.3 Arquitectura Transmisión de Telemetría}\label{arquitectura-transmisiuxf3n-de-telemetruxeda}
+\subsection{Arquitectura Transmisión de Telemetría}\label{arquitectura-transmisiuxf3n-de-telemetruxeda}
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image60.png}
 
@@ -1273,7 +1281,7 @@ El módulo EBYTE LoRa E77-400M22S fue utilizado por el equipo SF-HAB \cite{ref19
 
 Otras tecnologías para transmitir telemetría, como APRS \cite{ref3,ref32,ref34} RTTY \cite{ref2,ref22} Sigfox \cite{ref35} son muy utilizadas en globos estratosféricos. Seleccionamos LoRa por ser una tecnología nueva y muy relevante en el mundo creciente de IoT. Además, fue muy utilizada en los proyectos estratosféricos Zephyrus \cite{ref2,ref33} respaldado por el programa Innovation to Flight del Laboratorio de Propulsión de la NASA.
 
-\subsection{5.4 E22-400T22S}\label{e22-400t22s}
+\subsection{E22-400T22S}\label{e22-400t22s}
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image65.png}
 
@@ -1281,7 +1289,7 @@ Otras tecnologías para transmitir telemetría, como APRS \cite{ref3,ref32,ref34
 
 \cite{ref60} El módulo E22-400T22S solo permite modificar el Air Data Rate y con esto automáticamente ajusta los parámetros de transmisión, como el Spreading Factor, para lograr la tasa determinada. Además, tiene tamaños de paquetes configurables 32/64/128/240 y un buffer de 1000 bytes que, en caso que los datos superen el largo configurado, parte la información en distintos paquetes y usa el buffer para almacenarlos momentáneamente \cite{ref60}.
 
-\subsubsection{\texorpdfstring{\textbf{5.4.1 PCB Adaptador}}{5.4.1 PCB Adaptador}}\label{pcb-adaptador}
+\subsubsection{PCB Adaptador}\label{pcb-adaptador}
 
 \includegraphics[width=3.6145in,keepaspectratio]{./imagenes/image51.jpg}\includegraphics[width=1.7500in,keepaspectratio]{./imagenes/image80.png}
 
@@ -1293,14 +1301,14 @@ Cuando se adquirió el módulo \hl{E22-400T22S, al no tener} pines para conectar
 
 \includegraphics[width=2.5177in,keepaspectratio]{./imagenes/image38.png}
 
-\section{\texorpdfstring{\textbf{6. Sistema de video}}{6. Sistema de video}}\label{video}
+\section{Sistema de video}\label{video}
 
 
 Transmitir video en tiempo real desde un globo estratosférico presenta varias dificultades teniendo en cuenta las restricciones de peso, costo, energía y ancho de banda. Además, la naturaleza del tráfico es completamente distinta a la de la telemetría.
 
 Una de las principales restricciones que tiene el proyecto es el consumo de energía, que influye directamente en el peso del sistema. La cámara es uno de los componentes que más energía consume. Además, cuanto mayor es la calidad de video, mayor es el consumo de energía porque cada fotograma requiere de mayor procesamiento. Para este proyecto no es necesario tener una calidad de video tan alta. Transmitir video durante todo el vuelo tampoco es necesario, implica mayor consumo de energía, mayor peso y por ende mayor costo. Por lo tanto, se va a transmitir el video durante 20 - 30 minutos cuando el globo entre en la estratosfera. El objetivo principal es lograr la comunicación necesaria para uno de los tráficos de información más demandantes y poder observar la estratosfera en tiempo real.
 
-\subsection{6.1 Cámaras}\label{cuxe1maras}
+\subsection{Cámaras}\label{cuxe1maras}
 
 La mayoría de los proyectos similares en estos últimos años, utilizaron cámaras GoPro o cámaras RasPi. Las cámaras GoPro son reconocidas por tener un tamaño chico, son livianas y resistentes frente a golpes \cite{ref14}. Varios proyectos, como \cite{ref16,ref18,ref19,ref20,ref33} utilizaron una GoPro. Se encontraron varias opciones: GoPro Hero 5, Hero 7, Hero 8, la Insta360 One R. Todos tienen un mismo rango de operación de temperatura entre -10 °C y 35 °C \cite{ref14}. No fueron diseñadas para condiciones tan extremas, pero con algo de insolación se logra usar. De todas estas GoPro, se destacó la Hero 7 por ser la más liviana, pesando unos 116 gramos, y la más barata. La cámara también tiene una tecnología llamada HyperSmooth, que minimiza el efecto de movimientos bruscos \cite{ref15}.
 
@@ -1308,11 +1316,11 @@ Por otro lado están las cámaras RasPi. También son muy utilizadas porque son 
 
 Se adquirió la RasPi Module 3 por ser barata, moderna y, lo más importante, es compacta y ligera, pesando solo 4 gramos \cite{ref23}. Se descartaron las GoPro porque, a diferencia con las cámaras RasPi, son más costosas y suman más peso y complejidad al sistema. Algo que se tomó en cuenta, como menciona \cite{ref24} es que las cámaras RasPi en general pierden el foco cuando se exponen a temperaturas muy bajas.
 
-\subsection{6.2 Soporte Cámara}\label{soporte-cuxe1mara}
+\subsection{Soporte Cámara}\label{soporte-cuxe1mara}
 
 Observando proyectos pasados, se ve que las cámaras tienen mucho movimiento. La sonda experimenta giros y movimientos pendulares por culpa del viento. Al comenzar el proyecto se determinó que se iba a estabilizar la cámara para minimizar el efecto de los movimientos bruscos. Durante una de las evaluaciones del peso, se descarto. El estabilizador de la cámara era unos de los componentes que más pesaba y se decidió descartar porque su función no era necesaria para cumplir con el objetivo. Se va a usar un soporte de cámara simple para tenerla asegurada contra la carcasa.
 
-\subsection{6.3 Estándares de DTV}\label{estuxe1ndares-de-dtv}
+\subsection{Estándares de DTV}\label{estuxe1ndares-de-dtv}
 
 Uruguay adoptó la versión brasileña del estándar ISDB-T (Japonés), llamado ISDB-Tb, para transmitir televisión digital desde la superficie terrestre \cite{ref59}. Existe la variante ISDB-S para transmitir ISDB vía satélite, pero, según un estudio del 2018, los estándares satelitales principales son DVB-S2 y sus variantes \cite{ref62}.
 
@@ -1348,7 +1356,7 @@ Alpha es el \emph{Roll-off Factor.} DVB-S2 permite los valores de 0.35, 0.25 y 0
 
 \(B\  = \ \ \)\(1.710.720\  \times \ (1\  + \ 0.35)\  = \ 2.31\ Mhz\)
 
-\subsection{6.5 Arquitectura de transmisión de video}\label{arquitectura-transmisiuxf3n-de-video}
+\subsection{Arquitectura de transmisión de video}\label{arquitectura-transmisiuxf3n-de-video}
 
 Según \cite{ref40} el sistema de transmisión se compone de un transmisor, seguido de un filtro pasabanda, seguido de otros componentes como amplificadores, splitters, entre otros, y finalizado con la antena.
 
@@ -1358,7 +1366,7 @@ Según \cite{ref40} el sistema de transmisión se compone de un transmisor, segu
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image89.png}
 
-\subsubsection{\texorpdfstring{\textbf{6.5.1 Transmisor}}{6.5.1 Transmisor}}\label{transmisor}
+\subsubsection{Transmisor}\label{transmisor}
 
 Debido a restricciones de tiempo, costo y conocimiento se decidió investigar Radios Definidos por Software para resolver la transmisión de video.
 
@@ -1378,7 +1386,7 @@ Debido a restricciones de tiempo, costo y conocimiento se decidió investigar Ra
 
 Para transmitir el video, se adquirió un ADALM-PLUTO SDR\hl{. De los tres SDR, era el más económico y disponible para comprar.} \includegraphics[width=2.0469in,keepaspectratio]{./imagenes/image26.jpg}
 
-\subsubsection{\texorpdfstring{\textbf{6.5.2 Amplificador de Potencia}}{6.5.2 Amplificador de Potencia}}\label{amplificador-de-potencia-1}
+\subsubsection{Amplificador de Potencia}\label{amplificador-de-potencia-1}
 
 Se adquirió el amplificador de potencia RF2126:
 
@@ -1442,7 +1450,7 @@ Después de pruebas con el medidor de potencia, se descubrió que el amplificado
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image93.png}
 
-\section{\texorpdfstring{\textbf{7. Antenas de transmisión}}{7. Antenas de transmisión}}\label{antenas-transmisiuxf3n-de-video-y-telemetruxeda}
+\section{Antenas de transmisión}\label{antenas-transmisiuxf3n-de-video-y-telemetruxeda}
 
 El enlace es unidireccional, desde el globo hacia la estación terrena. En el globo, se determinó que la mejor opción es usar una antena de baja ganancia, específicamente un dipolo o monopolo. El globo gira y cambia de orientación constantemente, por lo que se necesita un patrón de radiación casi omnidireccional y ancho de haz amplio. Estas antenas son simples, muy livianas, baratas y confiables, permitiendo la comunicación sin necesidad de apuntamiento preciso \cite{ref2,ref44}.
 
@@ -1454,7 +1462,7 @@ En caso de usar radiales como plano de tierra, se recomienda utilizar de 3 a 4 r
 
 En caso de usar una plancha metálica y que actúe como un plano de tierra eficaz, debe tener un tamaño suficiente para "reflejar" la señal y minimizar las pérdidas. La plancha debe extenderse desde la base del radiador al menos un cuarto de longitud de onda en todas las direcciones. En este caso, no es posible modificar la impedancia para acercarla a 50 Ω por lo que se deberá de asumir un ROE de aproximadamente 1.4 o realizar otro tipo de acoplamiento \cite{ref70}.
 
-\subsection{7.1 Construcción}\label{construcciuxf3n}
+\subsection{Construcción}\label{construcciuxf3n}
 
 Para construir los elementos radiadores de los monopolos, se adquirieron conectores SMA y alambre de cobre de 1mm de diámetro. De esta manera se tenía una interfaz conveniente para conectar otros cables coaxiales SMA.
 
@@ -1514,9 +1522,9 @@ También se verificó la antena de telemetría, sin tener la estructura de alumi
 
 Por último, se acercó la estructura de aluminio al costado de la antena de telemetría y se verificó que el acoplamiento no empeora significativamente. Además, como las dos antenas operan en bandas diferentes, la potencia que transmite una no afecta la señal de la otra.
 
-\section{\texorpdfstring{\textbf{8. Computadora de a bordo y software}}{8. Computadora de a bordo y software}}\label{payload}
+\section{Computadora de a bordo y software}\label{payload}
 
-\subsection{\texorpdfstring{8.1 Arquitectura de comunicación }{8.1 Arquitectura de comunicación }}\label{arquitectura-de-comunicaciuxf3n}
+\subsection{Arquitectura de comunicación}\label{arquitectura-de-comunicaciuxf3n}
 
 El payload está compuesto por dos placas: la placa principal y la placa de alimentación.
 
@@ -1526,7 +1534,7 @@ El payload está compuesto por dos placas: la placa principal y la placa de alim
 
 Para vincular los distintos periféricos con los pines GPIO de la placa se emplea una GPIO breakout board, lo que permite distribuir de forma ordenada las conexiones hacia los diferentes módulos. Las componentes conectados a la placa principal junto a su funcion y el detalle de conexiones se encuentran a continuacion.
 
-\subsubsection*{\texorpdfstring{U-Blox NEO-6M }{U-Blox NEO-6M }}\phantomsection\label{u-blox-neo-6m}
+\subsubsection*{U-Blox NEO-6M}\phantomsection\label{u-blox-neo-6m}
 
 El módulo GPS U-Blox NEO-6M se encarga de recibir las coordenadas de posición del payload durante el vuelo. Se comunica con la Raspberry Pi mediante el protocolo UART0, disponible en los pines GPIO 14 y 15 (RXD0/TXD0).
 
@@ -1674,7 +1682,7 @@ La placa cuenta con dos terminales borne que conectan la placa de alimentación 
 
 Además de los módulos anteriores, el payload incorpora un Pluto SDR, utilizado como radio para la transmisión de video. Este dispositivo se conecta a la Raspberry Pi mediante USB. La Raspberry Pi Camera se conecta por el puerto CSI, sin usar pines GPIO del header.
 
-\subsection{8.2 Configuración Raspberry Pi}\label{configuraciuxf3n-raspberry-pi}
+\subsection{Configuración Raspberry Pi}\label{configuraciuxf3n-raspberry-pi}
 
 Para habilitar el uso de las interfaces UART, SPI e I2C se debe cambiar el archivo de configuración de la Raspi ``/boot/firmware/config.txt''.
 
@@ -1684,11 +1692,11 @@ dtparam=spi=on
 
 dtparam=uart0=on
 
-\subsection{\texorpdfstring{8.3 Arquitectura de software }{8.3 Arquitectura de software }}\label{arquitectura-de-software}
+\subsection{Arquitectura de software}\label{arquitectura-de-software}
 
 El firmware engloba los subsistemas de adquisición de telemetría, transmisión de telemetría a la estación terrena, transmisión de video a la estación terrena, control del mecanismo de liberación de globo (paracaídas/corte), lógica de modos de operación, almacenamiento local de telemetría, información de vuelo y video, y gestión de energía y batería. Todo esto siendo lo más tolerante a fallos posible.
 
-\subsubsection{8.3.1 Esquema General}\label{esquema-general}
+\subsubsection{Esquema General}\label{esquema-general}
 
 El software de payload corre en Python 3 y se ejecuta como un único proceso en la Raspberry Pi. Al arrancar crea una sesión de almacenamiento, inicializa los sensores y los transmisores, y lanza distintos hilos de la clase Thread de la librería threading que corren en paralelo dentro del proceso.
 
@@ -1736,7 +1744,7 @@ Después hay dos subprocesos externos, que los lanza el Video Thread con la libr
   dvbs2-tx: alimenta el ADALM-Pluto SDR para el downlink DVB-S2.
 \end{itemize}
 
-\subsubsection{8.3.2 Sensor Thread - Adquisición de Telemetría}\label{sensor-thread---adquisiciuxf3n-de-telemetruxeda}
+\subsubsection{Sensor Thread - Adquisición de Telemetría}\label{sensor-thread---adquisiciuxf3n-de-telemetruxeda}
 
 El Sensor Thread es el responsable de llamar a Sensor Reader, la clase que expone los servicios de inicializar los sensores, leer un ciclo completo de mediciones y liberar el hardware en caso de reinicio o finalización de la adquisición de telemetría. Cada 5 segundos, a la que llamamos frecuencia de adquisición, el hilo obtiene los valores de los sensores, arma con esos datos una línea de telemetría y la guarda en el almacenamiento local. Al armar el paquete, el Sensor Thread también le pide al Control Thread su estado actual (fase de vuelo y si se está transmitiendo video) y lo incluye como dos campos adicionales del paquete. Si algún valor no está disponible en el momento de armar el paquete, ese campo queda vacío y el paquete se arma igual, sin interrumpirse.
 
@@ -1782,7 +1790,7 @@ El Sensor Thread obtiene los datos del INA226 a través de dos métodos: get\_vo
 
 Con estos valores se construye el paquete de datos. En disco se guarda, cada 5 s, la carga de ese intervalo junto con el acumulado desde el arranque del payload. En el paquete para la transmisión LoRa solo se envia la carga acumulada desde que comenzo el vuelo
 
-\subsubsection{8.3.3 Telemetry Thread - Transmisión LoRa}\label{telemetry-thread---transmisiuxf3n-lora}
+\subsubsection{Telemetry Thread - Transmisión LoRa}\label{telemetry-thread---transmisiuxf3n-lora}
 
 El Telemetry Thread es el responsable de llamar a LoRa Sender, la clase que expone los servicios de inicializar el módulo EBYTE LoRa E22-400T22S, transmitir un paquete y reiniciar el módulo LoRa en caso de que deje de responder. El hilo consume el paquete publicado en la cola por el Sensor Thread y lo transmite por LoRa cada 10 segundos, intervalo al que llamamos frecuencia de transmisión. Para cada envío se arma la trama de telemetría con las últimas lecturas de los sensores disponibles. El armado de la trama se puede ver en la tabla (PONER ARMADO DE LA TRAMA o REFRENCIA A LA TABLA)
 
@@ -1790,7 +1798,7 @@ Tanto en la inicialización como durante el vuelo se realiza un chequeo del esta
 
 (INTEGRIDAD DE DATOS)
 
-\subsubsection{8.3.4 Video Thread - Captura y Transmisión de Video}\label{video-thread---captura-y-transmisiuxf3n-de-video}
+\subsubsection{Video Thread - Captura y Transmisión de Video}\label{video-thread---captura-y-transmisiuxf3n-de-video}
 
 Este hilo es responsable de controlar los módulos necesarios para la filmación y transmisión de video.
 
@@ -1808,7 +1816,7 @@ Se inicializa la cámara en un subproceso, que comienza la captura y compresión
 
 El subproceso de transmisión es dvbs2-tx, que recibe el flujo MPEG-TS por stdin (alimentado por el pipe de escritura del Video Thread) y lo envía al Pluto SDR vía USB, con los parámetros especificados para la transmisión. (VERIFICAR QUE ESTEN TODOS)
 
-\subsubsection{\texorpdfstring{8.3.5 Control Thread }{8.3.5 Control Thread }}\label{control-thread}
+\subsubsection{Control Thread}\label{control-thread}
 
 Este módulo es el componente responsable de gestionar los cambios de estado y las decisiones operativas en función del tiempo de vuelo y de las variables del payload (posición, altura, velocidad y consumo).
 
@@ -1901,11 +1909,11 @@ Mientras el payload se encuentre en fase de ascenso, se verifica en cada ciclo s
 
 Durante la fase de descenso, se verifica en cada ciclo si la altitud del payload se encuentra en 1000 metros o menos sobre la superficie. Al cumplirse esta condición, se activa el NarrowBand IoT con el objetivo de transmitir por la Red IoT la localización del payload tras el aterrizaje, ya que se pierde la línea de vista para la transmisión de telemetría por LoRa
 
-\subsubsection{\texorpdfstring{8.3.6 Almacenamiento Local }{8.3.6 Almacenamiento Local }}\label{almacenamiento-local}
+\subsubsection{Almacenamiento Local}\label{almacenamiento-local}
 
 El payload guarda en disco dos tipos de información, según si cambian o no entre reinicios: los datos de sesión (uno por arranque) y el estado de vuelo (persistente, único para todo el vuelo).
 
-\subsubsection*{8.3.6.1 Datos de sesión}\phantomsection\label{datos-de-sesiuxf3n}
+\subsubsection*{Datos de sesión}\phantomsection\label{datos-de-sesiuxf3n}
 
 Cada arranque del sistema genera un conjunto nuevo de tres archivos, todos identificados con el mismo identificador de sesión.
 
@@ -1918,11 +1926,11 @@ Cada arranque del sistema genera un conjunto nuevo de tres archivos, todos ident
   \textbf{Video}: Guarda el stream de video continuo de la cámara a medida que la cámara va entregando cada bloque de datos en formato TS. La grabación continúa incluso si el enlace de trasmicion está apagado.
 \end{itemize}
 
-\subsubsection*{8.3.6.2 Estado de vuelo}\phantomsection\label{estado-de-vuelo}
+\subsubsection*{Estado de vuelo}\phantomsection\label{estado-de-vuelo}
 
 A diferencia de los tres anteriores, este archivo es único y persiste entre reinicios: no se crea uno nuevo por sesión, sino que se actualiza sobre el mismo archivo durante todo el vuelo. La escritura es atómica, se escribe primero una copia temporal, se fuerza su escritura física a disco, y recién entonces se reemplaza el archivo definitivo. Esto garantiza que un corte de energía a mitad de la escritura nunca deja un archivo corrupto.
 
-\subsubsection{8.3.7 Gestión de Energía y Apagado de Componentes}\label{gestiuxf3n-de-energuxeda-y-apagado-de-componentes}
+\subsubsection{Gestión de Energía y Apagado de Componentes}\label{gestiuxf3n-de-energuxeda-y-apagado-de-componentes}
 
 Gestion de Energia: Apagar SDR: Desactivar la conexion a ADALM-Pluto SDR cuando sea necesario reducir consumo (en el descenso)
 
@@ -1933,13 +1941,13 @@ Gestion de Energia: Apagar SDR: Desactivar la conexion a ADALM-Pluto SDR cuando 
   Arranque el sistema cuando se enciende la Raspi, retomando el estado en el que estaba antes de prenderse
 \end{itemize}
 
-\section{\texorpdfstring{\textbf{9. Sistema de energía}}{9. Sistema de energía}}\label{sistema-de-energuxeda}
+\section{Sistema de energía}\label{sistema-de-energuxeda}
 
-\subsection{9.1 Energy Budget}\label{energy-budget}
+\subsection{Energy Budget}\label{energy-budget}
 
 PONER TABLA
 
-\subsection{9.2 Baterias}\label{baterias-1}
+\subsection{Baterias}\label{baterias-1}
 
 Los equipos de los proyectos Horus y SF-HAB utilizaron pilas primarias Energizer Lithium AA debido a su buen desempeño a bajas temperaturas \cite{ref19,ref20,ref44}. Estas baterías son de tipo primario y utilizan un sistema químico basado en litio y disulfuro de hierro (Li-FeS₂). Presentan un rango de temperatura de operación de -40 °C a 60 °C \cite{ref100} comparable al de las baterías presentadas en \cite{ref39}. Entre sus principales ventajas se encuentran \cite{ref100}:
 
@@ -1960,7 +1968,7 @@ Hablando con Richard Corbo, quien tuvo varias expediciones a Antártida, nos com
 
 Se seleccionaron las baterías Energizer Lithium AA porque presentan un desempeño adecuado y cuentan con antecedentes de uso exitoso en proyectos amateur de globos estratosféricos. Además, se va a emplear un mecanismo para que la temperatura de las baterías no baje significativamente con respecto a la temperatura ambiente en la superficie.
 
-\subsection{9.3 Banco de baterias}\label{banco-de-baterias}
+\subsection{Banco de baterias}\label{banco-de-baterias}
 
 Para el sistema de componentes se debe generar un suministro de 5V con una capacidad de aproximadamente 9000 mAh, utilizando las baterías de 1.5V con una capacidad de 3000mAh. Para aumentar el voltaje del banco de baterías se van a juntar baterías en serie. Como no es posible hacer un banco de 5V utilizando baterías de 1.5V se va a utilizar un conversor reductor o elevador para ajustar el voltaje. Para maximizar la eficiencia en la conversión y minimizar la acumulación de calor, la mejor opción es el conversor reductor.
 
@@ -1978,11 +1986,11 @@ En el laboratorio se verificó el correcto funcionamiento del reductor utilizand
 
 \includegraphics[width=2.8899in,keepaspectratio]{./imagenes/image72.png}\includegraphics[width=2.8975in,keepaspectratio]{./imagenes/image8.png}
 
-\subsection{9.4 Arquitectura}\label{arquitectura}
+\subsection{Arquitectura}\label{arquitectura}
 
-\section{\texorpdfstring{\textbf{10. Estructura e integración}}{10. Estructura e integración}}\label{estructura-integracion}
+\section{Estructura e integración}\label{estructura-integracion}
 
-\subsection{10.1 Materiales y estructura}\label{materiales-estructura}
+\subsection{Materiales y estructura}\label{materiales-estructura}
 
 En \cite{ref2} utilizaron una carcasa de aluminio 6061 para la disipación de calor que genera un transmisor de 5Ghz. Utilizaron el aluminio porque es ligero. Además, esqueletizaron algunas caras para disminuir aún más el peso del sistema. En las caras restantes, se fijaron los componentes utilizando separadores de aluminio. Proporcionando un camino directo de conducción para transferir el calor generado por los componentes hacia el aluminio.
 
@@ -1998,11 +2006,11 @@ Para la estructura se implementará un sistema de gestión térmica pasivo y act
 
 \includegraphics[width=2.8482in,keepaspectratio]{./imagenes/image56.png}\includegraphics[width=2.8329in,keepaspectratio]{./imagenes/image75.png}
 
-\subsection{10.2 Diseño térmico}\label{diseno-termico}
+\subsection{Diseño térmico}\label{diseno-termico}
 
-\pendiente{10.2 Diseño térmico.}
+\pendiente{Diseño térmico.}
 
-\subsection{10.3 Transición de protoboard a placa soldada}\label{transiciuxf3n-de-protoboard-a-placa-para-soldar}
+\subsection{Transición de protoboard a placa soldada}\label{transiciuxf3n-de-protoboard-a-placa-para-soldar}
 
 Una vez teniendo el sistema de telemetría funcionando en una protoboard, se adquirieron placas para soldar y cables con núcleo sólido para tener el sistema con conexiones permanentes y rígidas. Además, se adquirió un adaptador de pines para la RasPi, para así no tener que soldar sobre la misma y mejorar la prolijidad. Una vez finalizadas las soldaduras iniciales, se verificó el funcionamiento de la transmisión de telemetría.
 
@@ -2014,13 +2022,13 @@ Placa Payload V2:
 
 \includegraphics[width=2.0807in,keepaspectratio]{./imagenes/image95.jpg}\includegraphics[width=2.0677in,keepaspectratio]{./imagenes/image74.jpg}
 
-\section{\texorpdfstring{\textbf{11. Globo, descenso y recuperación}}{11. Globo, descenso y recuperación}}\label{lanzamiento}
+\section{Globo, descenso y recuperación}\label{lanzamiento}
 
-\subsection{11.1 Weight budget}\label{weight-budget}
+\subsection{Weight budget}\label{weight-budget}
 
-\subsection{11.2 Selección del globo}\label{seleccion-globo-cap}
+\subsection{Selección del globo}\label{seleccion-globo-cap}
 
-\subsubsection{11.2.1 Opciones de globos}\label{opciones-de-globos}
+\subsubsection{Opciones de globos}\label{opciones-de-globos}
 
 Existen distintos tipos de globos según la altitud a la que se quiera llegar y el peso del payload. También hay distintos proveedores con precios y condiciones de envío muy diferentes. Como el presupuesto es una restricción del proyecto, la selección se hizo comparando todas estas variables.
 
@@ -2032,7 +2040,7 @@ Por otro lado, High Altitude Science tiene una escala de precios más baja. El g
 
 Por último, Kaymont tiene los precios más accesibles de los tres. Un globo capaz de transportar entre 900 y 1800 g de payload cuesta 100 USD, muy por debajo de lo que cobran los otros dos proveedores. El envío a Uruguay cuesta 85 USD, mientras que a Florida, Estados Unidos, baja a 10 USD. Kaymont también ofrece una gama más amplia de tamaños de globo. Esto da flexibilidad si el peso del payload cambiará durante el desarrollo del proyecto \cite{ref76}.
 
-\subsubsection{11.2.2 Selección del globo}\label{selecciuxf3n-del-globo}
+\subsubsection{Selección del globo}\label{selecciuxf3n-del-globo}
 El globo elegido para este proyecto es el Kaymont de 1000 gramos, fabricado por Totex (Japon) en látex natural biodegradable. Sus especificacion principales son \cite{ref77}:
 
 \begin{itemize}
@@ -2056,15 +2064,15 @@ La decisión se tomó principalmente por la restricción del presupuesto. Compar
 
 Además, el globo de 1000 g de Kaymont es una opción validada en la práctica. Es utilizado para el relevamiento de datos en altura por las bases del Space Force de Estados Unidos. Su velocidad de ascenso recomendada por el fabricante (\textasciitilde5 m/s) coincide con la velocidad objetivo definida para el vuelo \cite{ref77}. Esto simplifica el cálculo del lift necesario analizado en la sección anterior.
 
-\subsection{11.3 Selección del gas: helio o hidrógeno}\label{evaluaciuxf3n-de-helio-e-hidruxf3geno}
+\subsection{Selección del gas: helio o hidrógeno}\label{evaluaciuxf3n-de-helio-e-hidruxf3geno}
 
 Tanto el helio como el hidrógeno son los únicos gases de uso práctico para globos de gran altitud ya que son elementos muy livianos y tienen la densidad más baja en comparación con el aire. Algunos países como Estados Unidos, Reino Unido o Alemania permiten el uso de hidrógeno para globos libres recreativos. La elección no es solo técnica, sino también regulatoria y depende de la normativa de cada país.
 
-\subsubsection{\texorpdfstring{\textbf{11.3.1 Capacidad de sustentación}}{11.3.1 Capacidad de sustentación}}\label{capacidad-de-sustentaciuxf3n}
+\subsubsection{Capacidad de sustentación}\label{capacidad-de-sustentaciuxf3n}
 
 Desde el punto de vista físico, el hidrógeno es un poco mejor, teniendo aproximadamente entre un 8\% y un 10\% más de poder de sustentación que el helio \cite{ref78}. Esto significa que para una misma masa de payload se necesitaría un volumen de globo un poco menor, o que sobra algo más de margen para subir con la misma cantidad de gas.
 
-\subsubsection{\texorpdfstring{\textbf{11.3.2 Seguridad}}{11.3.2 Seguridad}}\label{seguridad}
+\subsubsection{Seguridad}\label{seguridad}
 
 La diferencia más importante entre los dos gases no es la sustentación sino la seguridad. El hidrógeno es altamente inflamable y puede encenderse con fuentes de energía muy bajas, como la electricidad estática. El helio no puede incendiarse ni propagar fuego. Un caso histórico de referencia es el desastre de Hindenburg, como un ejemplo de los riesgos del hidrógeno como gas para elevar \cite{ref78}.
 
@@ -2072,7 +2080,7 @@ Por eso organismos como la NASA descartan directamente el hidrógeno en sus prog
 
 Al ser un proyecto universitario, consideramos que la seguridad es más importante que la capacidad de elevación. A pesar de ser más accesible económicamente, consideramos que el uso de hidrógeno sería un riesgo innecesario. Si expertos como los trabajadores de la NASA deciden no usar el hidrógeno por razones de seguridad, se prefiere seguir su ejemplo. Nunca se trabajó con el hidrógeno u otros gases inflamables, y se recomienda que para usarlo hay que ser expertos en el tema.
 
-\subsection{11.4 Lift y velocidades de ascenso y descenso}\label{lift}
+\subsection{Lift y velocidades de ascenso y descenso}\label{lift}
 
 
 El lift es la fuerza total hacia arriba que aporta el helio. Parte de ese lift se consume en sostener el peso del globo y del payload. La fuerza sobrante es lo que hace subir al sistema y se le llama lift positivo.
@@ -2087,7 +2095,7 @@ Las calculadoras de vuelo determinan que la carga del helio se hace con esta cue
 
 Para la capacidad de elevación del helio se usan 27.82 g por pie cúbico a nivel del mar. El lift positivo es el que controla la velocidad de ascenso. Cuanto más lift positivo, el ascenso es más rápido, pero como implica más helio, también lleva a que explote más bajo. Por eso el helio se ajusta para lograr una velocidad de ascenso objetivo.
 
-\subsubsection{11.4.1 Velocidad de ascenso y descenso}\label{velocidad-de-ascenso-y-descenso}
+\subsubsection{Velocidad de ascenso y descenso}\label{velocidad-de-ascenso-y-descenso}
 
 Descenso tradicional (no controlado): En los lanzamientos convencionales, después del estallido del globo, la carga útil cae inicialmente a velocidades extremadamente altas de 40 a 60 m/s en la estratosfera. A los 20 km de altura, el paracaídas reduce la velocidad a \textless{} 40 m/s, y por debajo de los 10 km disminuye a \textless{} 20 m/s. Esta caída descontrolada y veloz es perjudicial para muchos instrumentos y reduce de manera drástica la resolución vertical de los datos obtenidos \cite{ref72}.
 
@@ -2095,7 +2103,7 @@ Descenso controlado ideal: Para realizar mediciones científicas de alta precisi
 
 Para mantener la precisión de los sensores y minimizar los daños causados a la estructura, se hará un descenso controlado de aproximadamente 5 m/s. La tendencia es que la velocidad de ascenso sea también de 5 m/s \cite{ref72}. Además, es necesario usar la mayor velocidad posible para disminuir la distancia que recorre el globo.
 
-\subsection{11.5 Paracaídas}\label{paracaidas}
+\subsection{Paracaídas}\label{paracaidas}
 
 Para poder recuperar el payload se definió la velocidad de descenso de aproximadamente 5 m/s. Es importante que las líneas del paracaídas no se enreden entre sí para que pueda abrirse completamente. Con un payload de \hl{1.6 kg (ajustar cuando estemos seguros)}, se evaluaron dos alternativas. Rocketman High Altitude Balloon Parachute tiene un paracaídas de 4 ft (1,2 m) que es ideal para las características del proyecto. También el paracaídas de 58'\,' (1,5 m) de High Altitude Science puede servir.
 
@@ -2117,7 +2125,7 @@ El MOSFET actúa como un interruptor controlado por voltaje. Cuando el voltaje e
 
 El gate del MOSFET se conecta a un pin GPIO de la Raspberry Pi a través de una resistencia serie de 1 kΩ. Dado que el gate se comporta como un capacitor, cada conmutación del GPIO produciría un pico de corriente elevado para cargarlo o descargarlo. Esta resistencia limita dicho pico a aproximadamente 3,3 mA, valor inferior a la corriente que puede entregar un pin GPIO, protegiendo así a la Raspberry Pi y amortiguando posibles oscilaciones en la línea del gate. Entre el gate y GND se ubica una resistencia de pull-down de 10 kΩ, cuya función es definir el estado del gate cuando el GPIO no lo está controlando. Cuando el GPIO fuerza 3,3 V, el gate alcanza aproximadamente 3 V según el divisor formado por ambas resistencias, lo que asegura el encendido del MOSFET con un consumo en el pin de apenas 0,3 mA. En operación normal el GPIO permanece en nivel bajo y el filamento no conduce corriente. Cuando el software de vuelo determina que debe realizarse el corte, pone el GPIO en nivel alto. El MOSFET pasa a conducir y cierra el circuito batería--filamento--drain--source--GND. La corriente calienta el filamento hasta fundir la cuerda, liberando la carga útil.
 
-\subsection{11.6 Comunicación post-aterrizaje}\label{sistema-de-comunicaciuxf3n-post-aterrizaje}
+\subsection{Comunicación post-aterrizaje}\label{sistema-de-comunicaciuxf3n-post-aterrizaje}
 
 Uno de los objetivos del proyecto es volver a encontrar el dispositivo para lograr obtener todos los datos guardados localmente además de en un futuro poder reutilizarlo. Para ello se decidió utilizar NB-IoT. Se necesita que el dispositivo envíe paquetes de datos muy pequeños. Solo necesitamos que nos envíe las coordenadas GPS para poder encontrarlo. Por eso esta tecnología es la ideal. Además, el canal angosto permite chips de radio más simples, reduce el consumo energético, y permite que la señal recorra distancias más largas o penetre lugares que otros canales no podrían.
 
@@ -2151,13 +2159,13 @@ Decidimos activar el módulo NB-IoT a los 1000 metros, ya que demora tiempo (ent
 
 Después de llegar a tierra, el dispositivo continúa enviando cada 10 minutos hasta recuperarlo o se agote la batería. Puede llegar a pasar que continúe cambiando su ubicación si alguien o algo lo mueve. Por lo tanto es necesario seguir recibiendo la ubicación hasta encontrarlo. Gracias al buen link budget de NB-IoT, aunque quede en un monte o en un valle, hay muchas chances de obtener señal.
 
-\subsection{11.7 Procedimiento de localización y recuperación}\label{localizacion-recuperacion}
+\subsection{Procedimiento de localización y recuperación}\label{localizacion-recuperacion}
 
-\pendiente{11.7 Procedimiento de localización y recuperación.}
+\pendiente{Procedimiento de localización y recuperación.}
 
 \parte{Parte V: Segmento terrestre}
 
-\section{\texorpdfstring{\textbf{12. Estación terrena}}{12. Estación terrena}}\label{arquitectura-recepciuxf3n-de-telemetruxeda-y-video}
+\section{Estación terrena}\label{arquitectura-recepciuxf3n-de-telemetruxeda-y-video}
 
 
 Según \cite{ref40} el sistema de recepción se compone de la antena, seguido de otros componentes como amplificadores, diplexores, atenuadores, entre otros. Finalizando con un filtro pasa banda, seguido de un LNA y por último el receptor.
@@ -2170,7 +2178,7 @@ La arquitectura que se utilizará es la siguiente:
 
 AGREGAR FILTRO
 
-\subsection{12.1 Arquitectura general}\label{estaciuxf3n-terrena}
+\subsection{Arquitectura general}\label{estaciuxf3n-terrena}
 
 Para construir la estación terrena se seleccionaron materiales económicos. Se adquirieron tubos de PVC, conexiones de tubo en forma de T y L, tornillos para fijar las conexiones, y planchas de madera para la base. Adicionalmente, se construyó para que se pueda modificar el tilt y azimut manualmente.\includegraphics[width=2.5573in,keepaspectratio]{./imagenes/image37.png}
 
@@ -2182,7 +2190,7 @@ Una vez todo fijo a la caja, se colocó en la estructura de la estación terrena
 
 \includegraphics[width=4.2500in,keepaspectratio]{./imagenes/image11.png}
 
-\subsection{12.2 Antenas de recepción}\label{antenas-recepciuxf3n-de-video-y-telemetruxeda}
+\subsection{Antenas de recepción}\label{antenas-recepciuxf3n-de-video-y-telemetruxeda}
 
 En la estación terrena, se determinó que la mejor opción es tener una antena de ganancia media o alta. Las antenas Yagi-Uda son muy utilizadas en proyectos similares \cite{ref2,ref44,ref71}. La estación terrena se encuentra en un lugar fijo y estable en la Tierra. A diferencia del globo, que está en movimiento constante y girando, la antena de la estación terrena no necesita ser omnidireccional. Esto permite utilizar antenas altamente directivas que concentran su sensibilidad en una dirección específica, captando señales mucho más débiles. De esta forma, compensar la baja ganancia y la radiación débil del transmisor del globo, logrando un buen enlace aunque la antena del globo sea simple y de baja ganancia.
 
@@ -2190,7 +2198,7 @@ La antena Yagi-Uda se trata de un arreglo parasitario, lo que significa que solo
 
 Los elementos se montan paralelos entre sí sobre un botalón (boom). El espaciamiento típico varía entre 0.1λ y 0.25λ. Un espaciamiento mayor suele mejorar el ancho de banda y la ganancia, pero requiere un boom más largo. La impedancia de una antena Yagi es mucho más baja que la de un dipolo común debido a la fuerte interacción eléctrica con sus elementos parásitos (reflector y directores) \cite{ref70}.
 
-\subsubsection{12.2.1 Antenas adquiridas}\label{antenas-adquiridas}
+\subsubsection{Antenas adquiridas}\label{antenas-adquiridas}
 
 Se verificó el acoplamiento de las antenas Yagi adquiridas.
 
@@ -2204,8 +2212,8 @@ Video:
 
 Las dos antenas obtuvieron muy buenos acoplamientos, ambas reflejan menos del 1\% de la potencia que les incide.
 
-\subsection{12.3 LNA y filtro pasa banda}\label{lna-filtro}
-\subsubsection{12.3.1 Amplificador de bajo ruido}\label{amplificador-de-bajo-ruido-1}
+\subsection{LNA y filtro pasa banda}\label{lna-filtro}
+\subsubsection{Amplificador de bajo ruido}\label{amplificador-de-bajo-ruido-1}
 
 El RTL-SDR tiene un piso de ruido típico entre 3 - 4 dB \cite{ref63}. Se adquiere el LNA SPF5189Z diseñado para operar entre 50MHz y 4000MHz. En 1240 mhz, el piso de ruido es de entre 0.6 (25°C) y 0.8 dB (85°C). La ganancia es ligeramente superior a 16 dB, dependiendo de la temperatura, y tiene una P1dB de 22.5 dBm \cite{ref64}.
 
@@ -2215,7 +2223,7 @@ El efecto que tiene el LNA es el siguiente:
 
 \(T_{R}\  = \ 0.7 + \frac{4}{16}\  = \ 0.95\ dB\)
 
-\subsubsection{12.3.2 Filtro pasa banda}\label{filtro-pasa-banda}
+\subsubsection{Filtro pasa banda}\label{filtro-pasa-banda}
 Para rechazar interferencias fuera de banda, evitar saturación e intermodulación, y limitar el ruido. Se adquirió el filtro pasabanda ZX75BP-1205-S+ de MiniCircuits:
 \begin{itemize}
     \item Banda: 1155 -1255 Mhz
@@ -2226,8 +2234,8 @@ Para rechazar interferencias fuera de banda, evitar saturación e intermodulaci�
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/respuesta-filtro.png}
 
 
-\subsection{12.4 Receptor y demodulación}\label{receptor-cap}
-\subsubsection{12.4.1 Receptor}\label{receptor}
+\subsection{Receptor y demodulación}\label{receptor-cap}
+\subsubsection{Receptor}\label{receptor}
 
 Para recibir el video, se evaluaron varias opciones. \cite{ref49} compara distintos tipos de SDR, de distinto precio, frecuencias de operación y resolución de ADC.
 
@@ -2241,24 +2249,24 @@ Para recibir el video, se evaluaron varias opciones. \cite{ref49} compara distin
 
 El receptor de telemetría es el mismo módulo \hl{EBYTE LoRa E22-400T22S.}
 
-\subsubsection{12.4.2 Librería gr-dvbs2rx}\label{libreria-gr-dvbs2rx}
+\subsubsection{Librería gr-dvbs2rx}\label{libreria-gr-dvbs2rx}
 
 Para resolver la transmisión en DVB-S2, se utilizará la librería gr-dvbs2rx. Es un módulo de GNU Radio externo con implementaciones completas de transmisor y receptor DVB-S2 para radio definida por software (SDR). Incluye una biblioteca compartida con los bloques esenciales (PL, FEC, BBFRAME) de procesamiento de señales para procesar las muestras IQ de entrada y recuperar un flujo de transporte MPEG (TS) en la salida \cite{ref66}.
 
 Además, proporciona la aplicación dvbs2-tx para la transmisión. Al igual que la aplicación de recepción, conecta los bloques de procesamiento de transmisión. Las aplicaciones de transmisión y recepción son altamente personalizables mediante las opciones de línea de comandos y admiten el uso de dispositivos SDR (RTL-SDR, USRP, PlutoSDR y BladeRF) como interfaces de entrada/salida \cite{ref66}.
 
-\section{\texorpdfstring{\textbf{13. Dashboard}}{13. Dashboard}}\label{dashboard}
+\section{Dashboard}\label{dashboard}
 
 \textbf{\hfill\break
 }
 
 \parte{Parte VI: Validación y cierre}
 
-\section{\texorpdfstring{\textbf{14. Pruebas del sistema}}{14. Pruebas del sistema}}\label{pruebas-de-transmisiuxf3n-de-video-y-telemetruxeda}
+\section{Pruebas del sistema}\label{pruebas-de-transmisiuxf3n-de-video-y-telemetruxeda}
 
-\subsection{14.1 Métricas de evaluación}\label{muxe9tricas-para-evaluar-calidad-de-video-y-desempeuxf1o-de-los-enlaces.}
+\subsection{Métricas de evaluación}\label{muxe9tricas-para-evaluar-calidad-de-video-y-desempeuxf1o-de-los-enlaces.}
 
-\subsection{14.2 Pruebas de laboratorio}\label{laboratorio}
+\subsection{Pruebas de laboratorio}\label{laboratorio}
 
 En primer lugar, después de varios intentos, se lograron las transmisiones de video y telemetría en el laboratorio, a menos de 10 metros de distancia.
 
@@ -2272,13 +2280,13 @@ Video:
 
 \includegraphics[width=2.9479in,keepaspectratio]{./imagenes/image39.png}
 
-\subsection{14.3 Pruebas a corta distancia}\label{corta-distancia}
+\subsection{Pruebas a corta distancia}\label{corta-distancia}
 
 Después, se verificó el funcionamiento de los enlaces en simultáneo a una distancia de aproximadamente 50 metros. En esta prueba se utilizaron las dos antenas yagi en el lado de la estación terrena, y dos antenas monopolo del lado.
 
 \includegraphics[width=2.7781in,keepaspectratio]{./imagenes/image43.png}\includegraphics[width=3.0093in,keepaspectratio]{./imagenes/image98.png}
 
-\subsection{14.4 Simulación de larga distancia en pasillo}\label{simulaciuxf3n-larga-distancia-en-pasillo-de-la-universidad}
+\subsection{Simulación de larga distancia en pasillo}\label{simulaciuxf3n-larga-distancia-en-pasillo-de-la-universidad}
 
 Utilizando un medidor de potencia, se verificó la potencia con la que salía la señal de video. La prueba dio una potencia de entre 0 y 1 dBm. El ADALM-PLUTO SDR tiene una máxima potencia de salida de 7 dBm. Se puede variar la potencia de la señal alterando la escala de las muestras de los símbolos QPSK.
 
@@ -2288,13 +2296,13 @@ Utilizando un medidor de potencia, se verificó la potencia con la que salía la
 
 Se realizó una prueba de larga distancia preliminar en el pasillo de la universidad con línea directa. La señal que salía del transmisor tenía una potencia de entre 0 y 1 dBm. Simulando una atenuación inicial de aproximadamente 30 dB. Entre el transmisor y el receptor habían aproximadamente 65 metros, por lo que en 1240 mhz suma 70 dB de atenuación. Del lado del receptor se conectaron atenuadores pasivos entre la antena y el LNA. Se tenía un atenuador de 10 dB y otros dos de 20 dB. Se logró recibir video teniendo una atenuación total de 150 dB, pero se observó una pérdida notoria en los fotogramas. A medida que se retiran los atenuadores, disminuyen las pérdidas.
 
-\subsection{\texorpdfstring{14.5 \textbf{Simulación con separación de 2,5 km}}{14.5 Simulación con separación de 2,5 km}}\label{simulaciuxf3n-larga-distancia-con-separaciuxf3n-de-2.5-km}
+\subsection{\texorpdfstring{\textbf{Simulación con separación de 2,5 km}}{Simulación con separación de 2,5 km}}\label{simulaciuxf3n-larga-distancia-con-separaciuxf3n-de-2.5-km}
 
 \includegraphics[width=3.3106in,keepaspectratio]{./imagenes/image97.png}\includegraphics[width=2.4768in,keepaspectratio]{./imagenes/image52.png}
 
 Entre el techo de un edificio y el techo de la facultad se realizó la tercera prueba de larga distancia. Se logró recibir telemetría sin atenuadores, con una pérdida de espacio libre de 93 dB. También se recibió telemetría con 50 dB de atenuación adicional. Por otro lado, se recibió vídeo sin atenuación con una pérdida de espacio libre de 103 dB. Se adiciono 10 dB de atenuación y se logró recibir video, pero después de un rato de pruebas, se dejó de recibir video con y sin atenuación. Se sospecha que se debió a una falla con un cable que se descubrió en una prueba posterior.
 
-\subsection{14.6 Simulación con separación de 8,2 km}\label{simulaciuxf3n-larga-distancia-con-separaciuxf3n-de-8.2-km}
+\subsection{Simulación con separación de 8,2 km}\label{simulaciuxf3n-larga-distancia-con-separaciuxf3n-de-8.2-km}
 Se realizó una cuarta prueba de larga distancia entre la plaza Virgilio y el faro de punta carretas. Adicionalmente, el objetivo de la prueba era verificar que las antenas funcionan a largas distancias. Para el enlace de telemetría, se tenían 103,45 dB de atenuación de espacio libre a 8,2 kilómetros y se adiciono 40 dB con atenuadores.
 
 \includegraphics[width=3.7510in,keepaspectratio]{./imagenes/prueba-4-sin-atenuadores.png}
@@ -2306,15 +2314,17 @@ Para el enlace de video, se tenían 112.58 dB de atenuación de espacio libre. S
 \includegraphics[width=3.7510in,keepaspectratio]{./imagenes/prueba-4-video-con-atenuadores.png}
 
 
-\section{\texorpdfstring{\textbf{15. Vuelo y resultados}}{15. Vuelo y resultados}}\label{vuelo-resultados}
+\section{Vuelo y resultados}\label{vuelo-resultados}
 
-\pendiente{15. Vuelo y resultados.}
+\pendiente{Vuelo y resultados.}
 
-\section{\texorpdfstring{\textbf{16. Conclusiones y trabajo futuro}}{16. Conclusiones y trabajo futuro}}\label{conclusiones}
+\section{Conclusiones y trabajo futuro}\label{conclusiones}
 
-\pendiente{16. Conclusiones y trabajo futuro.}
+\pendiente{Conclusiones y trabajo futuro.}
 
-\section{\texorpdfstring{\textbf{Referencias y anexos}}{Referencias y anexos}}\label{referencias}
+\section*{Referencias y anexos}
+\phantomsection\label{referencias}
+\addcontentsline{toc}{section}{\textbf{Referencias y anexos}}
 
 \printbibliography[heading=none]
 
