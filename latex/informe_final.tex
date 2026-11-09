@@ -3,14 +3,14 @@
 \PassOptionsToPackage{hyphens}{url}
 \documentclass[12pt,a4paper]{article}
 \usepackage[top=2.5cm,bottom=2.5cm,left=3.5cm,right=2.5cm]{geometry} % margenes de la plantilla UM
-\usepackage[spanish,es-noshorthands]{babel}
+\usepackage[spanish,es-noshorthands,es-tabla]{babel}
 \usepackage{float}
 \usepackage{newunicodechar}
 \newunicodechar{→}{\ensuremath{\rightarrow}}
 \newunicodechar{ǫ}{\ensuremath{\epsilon}}
 \usepackage{xcolor}
 \usepackage{amsmath,amssymb}
-\setcounter{secnumdepth}{3} % numeracion hasta subsubseccion
+\setcounter{secnumdepth}{4} % numeracion hasta paragraph (x.x.x.x)
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
@@ -101,6 +101,8 @@
 \titleformat{\section}{\bfseries\large}{\thesection.}{0.6em}{}
 \titleformat{\subsection}{\bfseries}{\thesubsection}{0.6em}{}
 \titleformat{\subsubsection}{\bfseries}{\thesubsubsection}{0.6em}{}
+\titleformat{\paragraph}{\bfseries}{\theparagraph}{0.6em}{}
+\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 % ---- Indice automatico: partes + formato (tocloft: enlaces hyperref estables) ----
 \setcounter{tocdepth}{3}
@@ -368,9 +370,7 @@ El diseño y desarrollo del sistema se encuentra principalmente condicionado por
 \newpage
 \parte{Parte II: Fundamentos}
 
-\section{Marco teórico}\label{marco-teorico}
-
-\subsection{Entorno estratosférico}\label{condiciones-ambientales}
+\section{Entorno estratosférico}\label{condiciones-ambientales}
 
 La atmósfera de la tierra está compuesta por 5 capas principales. De más baja a más alta son: troposfera, estratosfera, mesosfera, termosfera y exosfera.
 
@@ -390,11 +390,13 @@ Otro factor determinante para el éxito operativo de los globos estratosféricos
 
 \pendiente{Buscar velociad de los vientos, si no esta puesto mas adelante}
 
-\subsection{Física del vuelo}\label{fisica-del-vuelo}
+\newpage
+
+\section{Física del vuelo}\label{fisica-del-vuelo}
 
 El sistema de vuelo está formado por un globo estratosférico de látex, inflado con helio, al que se ata la carga útil o \textit{payload}. El helio, al ser menos denso que el aire, genera una fuerza ascendente que eleva todo el conjunto hasta que el globo revienta en la estratósfera y la carga útil desciende con el paracaídas.
 
-\subsubsection{Fundamento físico del vuelo}\label{fundamento-fuxedsico-del-vuelo}
+\subsection{Fundamento físico del vuelo}\label{fundamento-fuxedsico-del-vuelo}
 El desplazamiento horizontal del globo depende de los vientos a cada altura y, por lo tanto, de las condiciones meteorológicas del día del lanzamiento. El movimiento del globo en la dirección vertical se describe mediante la siguiente ecuación en donde la fuerza neta $F_{\text{neta}}$ sobre el sistema es:
 
 \begin{equation}
@@ -409,7 +411,7 @@ donde $E$ es el empuje, $D$ es la fuerza de arrastre aerodinámico y $W$ es el p
 donde $m$ es la masa total del sistema y $g$ es la aceleración de la gravedad. La masa total del sistema es la suma de tres componentes: el globo, la carga útil y la masa del helio \cite{ref73}. 
 
  
-\subsubsection{Arrastre}\label{arrastre}
+\subsection{Arrastre}\label{arrastre}
 
 El arrastre se opone al movimiento y crece con la velocidad de ascenso $v$:
 \begin{equation}
@@ -419,7 +421,7 @@ El arrastre se opone al movimiento y crece con la velocidad de ascenso $v$:
 donde $C_D$ es el coeficiente de arrastre y $A$ el área frontal del globo. En el momento del lanzamiento el sistema parte del reposo, por lo que $D = 0$ y toda la diferencia entre empuje y peso se traduce en aceleración. A medida que el globo gana velocidad, el arrastre aumenta hasta equilibrar esa diferencia ($F_{\text{neta}} = 0$) y el globo asciende a una velocidad aproximadamente constante.
  
 
-\subsubsection{Flotabilidad (empuje de Arquímedes)}\label{flotabilidad-empuje-de-arquuxedmedes}
+\subsection{Flotabilidad (empuje de Arquímedes)}\label{flotabilidad-empuje-de-arquuxedmedes}
 
 
 Por el principio de Arquímedes, el empuje $E$ es igual al peso del aire desplazado por el volumen total del sistema:
@@ -431,7 +433,7 @@ Por el principio de Arquímedes, el empuje $E$ es igual al peso del aire desplaz
 
 donde $\rho_{\text{aire},0}$ es la densidad del aire a nivel del suelo, $V_g$ es el volumen del globo inflado con helio y  $V_{\text{pld}}$ el volumen de la carga útil. La aproximación es válida ya que normalmente el volumen de la carga útil en este tipo de proyectos es del orden de 3000 cm$^3$ = 0.003 m$^3$ el cual es despreciable frente al volumen del globo, que es de varios metros cúbicos.
 
-\subsubsection{Ley de gases ideales y altura de explosión}\label{ley-de-gases-ideales-y-altura-de-explosion}
+\subsection{Ley de gases ideales y altura de explosión}\label{ley-de-gases-ideales-y-altura-de-explosion}
 
 Cada globo tiene un diámetro de explosión (\textit{burst diameter}) fijo, que es un dato del fabricante. A medida que el globo sube, la presión atmosférica disminuye. Por la ley de los gases ideales, el helio se expande para igualar la presión exterior, y el globo crece de manera continua hasta alcanzar su diámetro máximo y reventar.
  
@@ -457,7 +459,111 @@ De la ecuación \eqref{eq:densidad-reventon} surge una decisión importante en l
  
 Este comportamiento está confirmado en la documentación técnica de High Altitude Science, donde para dos vuelos con el mismo modelo de globo, el que lleva menos helio revienta a mayor altitud \cite{ref74}.
 
-\subsection{Tecnologías de comunicación}\label{tecnologias-de-comunicacion}
+\newpage
+
+\section{Tecnologías de comunicación}\label{tecnologias-de-comunicacion}
+
+\subsection{Link budget}\label{link-budget}
+
+El link budget permite estimar la potencia mínima que debe entregar el transmisor para que los datos se reciban correctamente en el receptor. Para estimar dicha potencia se utiliza la ecuación de Friis:
+\begin{equation}
+  P_R = P_T \left(\frac{\lambda}{4\pi d}\right)^{2} G_T(\theta_T,\phi_T) \, G_R(\theta_R,\phi_R) \left(1-|\rho_T|^{2}\right)\left(1-|\rho_R|^{2}\right),
+  \label{eq:friis}
+\end{equation}
+donde:
+\begin{itemize}
+\item $P_R$: sensibilidad del receptor.
+\item $P_T$: potencia del transmisor.
+\item $\left(\frac{\lambda}{4\pi d}\right)^{2}$: pérdidas de propagación en el espacio libre.
+\item $G_T(\theta_T,\phi_T)$: ganancia de la antena transmisora en la dirección del enlace, que depende de su patrón de radiación.
+\item $G_R(\theta_R,\phi_R)$: ganancia de la antena receptora en la dirección del enlace, que depende de su patrón de radiación.
+\item $\left(1-|\rho_T|^{2}\right)$ y $\left(1-|\rho_R|^{2}\right)$: pérdidas por desadaptación en el transmisor y en el receptor.
+\end{itemize}
+
+\subsubsection{Pérdidas de propagación en espacio libre}
+
+Las pérdidas de propagación en espacio libre corresponden al término $\left(\frac{\lambda}{4\pi d}\right)^{2}$ de la ecuación \eqref{eq:friis}. Expresadas como pérdida en decibeles:
+\begin{equation}
+  L_{FS} = 20\log_{10}\left(\frac{4\pi d}{\lambda}\right) \ \text{dB},
+  \label{eq:fspl-db}
+\end{equation}
+donde:
+\begin{itemize}
+\item $L_{FS}$: pérdida de propagación en el espacio libre, en dB.
+\item $\lambda = c/f$: longitud de onda asociada a la frecuencia de trabajo $f$, siendo $c$ la velocidad de la luz.
+\item $d$: distancia entre el transmisor y el receptor.
+\end{itemize}
+
+\subsubsection{Ganancia en las antenas}
+
+Cuando las antenas no están orientadas en la dirección en la que presentan su máxima ganancia, en la ecuación de Friis se sustituye su ganancia máxima por la ganancia de potencia en la dirección del enlace. Si la antena receptora es direccional y apunta en todo momento hacia el transmisor, el término $G_R(\theta_R,\phi_R)$ se reduce a su ganancia máxima $G_R$.
+
+\subsubsection{Pérdidas por adaptación}
+
+Los términos $\left(1-|\rho_T|^{2}\right)$ y $\left(1-|\rho_R|^{2}\right)$ representan la fracción de potencia que efectivamente se transfiere entre la antena y el resto del sistema en el transmisor y en el receptor, donde $\rho$ es el coeficiente de reflexión. Cuando las antenas están bien adaptadas, $|\rho|$ es cercano a cero y estas pérdidas pueden considerarse despreciables.
+
+\subsubsection{Pérdidas adicionales}
+
+Además de los términos anteriores, se considera un margen adicional de pérdidas $L_{\text{adicional}}$ que contempla los efectos no incluidos en la ecuación de Friis.
+
+Expresando la ecuación \eqref{eq:friis} en decibeles e incorporando las pérdidas adicionales, la condición que debe cumplir el enlace es:
+\begin{equation}
+  P_T + G_T + G_R - L_{FS} - L_{\text{adicional}} \geq P_R,
+  \label{eq:friis-db}
+\end{equation}
+donde:
+\begin{itemize}
+\item $P_T$: potencia del transmisor, en dBm.
+\item $G_T$: ganancia de la antena transmisora en la dirección del enlace, en dBi.
+\item $G_R$: ganancia de la antena receptora, en dBi.
+\item $L_{FS}$: pérdida de propagación en el espacio libre, en dB.
+\item $L_{\text{adicional}}$: margen adicional de pérdidas, en dB.
+\item $P_R$: sensibilidad del receptor, en dBm.
+\end{itemize}
+
+\subsection{Elección de banda}\label{elecciuxf3n-de-banda}
+
+Los factores involucrados en la elección de banda son los siguientes:
+
+\begin{enumerate}
+\item \textbf{Pérdida de trayectoria en espacio libre (FSPL).} Teóricamente, la pérdida en el espacio libre es directamente proporcional al cuadrado de la frecuencia \cite{ref39}. Esto se desprende de la ecuación \eqref{eq:fspl-db}, ya que $\lambda = c/f$.
+
+A frecuencias más altas (como la banda Ka), las pérdidas son mucho mayores que en frecuencias bajas (como UHF), lo que requiere compensar con mayor potencia de transmisión o antenas de mayor ganancia \cite{ref39}.
+
+\item \textbf{Capacidad del canal (ecuación de Shannon).} La necesidad de mayores tasas de datos (por ejemplo, para transmitir video) impulsa el uso de frecuencias más altas. Según la ecuación de Shannon, la capacidad de información de un canal está ligada a su ancho de banda y a la relación señal-ruido \cite{ref39}:
+\begin{equation}
+  C = B\log_{2}(1 + SNR),
+  \label{eq:shannon}
+\end{equation}
+donde:
+\begin{itemize}
+\item $C$: capacidad del canal.
+\item $B$: ancho de banda.
+\item $SNR$: relación señal a ruido.
+\end{itemize}
+
+Las bandas superiores (X, Ka) ofrecen un ancho de banda mucho mayor, permitiendo tasas de transferencia de datos superiores a 100 Mbps, mientras que las bandas VHF/UHF suelen estar limitadas a tasas bajas para telemetría y comando \cite{ref39}.
+
+\item \textbf{Ganancia de la antena y apuntamiento.} El área efectiva (o apertura efectiva) de una antena es una medida de su capacidad para extraer potencia de una onda electromagnética incidente. En términos sencillos, representa la superficie ``útil'' de la antena que realmente captura la señal \cite{ref39}:
+\begin{equation}
+  A_{ef} = \frac{G\lambda^{2}}{4\pi},
+  \label{eq:area-efectiva}
+\end{equation}
+donde:
+\begin{itemize}
+\item $A_{ef}$: área efectiva de apertura.
+\item $G$: ganancia de la antena.
+\item $\lambda$: longitud de onda.
+\end{itemize}
+
+Para mantener una ganancia constante, si se aumenta la frecuencia (reduciendo la longitud de onda), el área efectiva necesaria disminuye drásticamente. El aumento de la ganancia mediante el incremento de la frecuencia o del área efectiva resulta en un ancho de haz más estrecho. Esto exige una precisión de apuntamiento mucho mayor hacia la estación terrestre para no perder el enlace \cite{ref39}. 
+
+En el caso de las antenas omnidireccionales, su área efectiva es inherentemente pequeña y depende principalmente del cuadrado de la longitud de onda, lo que las hace muy dependientes de la frecuencia para cerrar el enlace \cite{ref39,ref40}
+
+\item \textbf{Atenuación atmosférica y ruido.} Las frecuencias superiores sufren una mayor atenuación por gases atmosféricos y lluvia debido a la interacción física entre las ondas electromagnéticas de longitud de onda corta y las moléculas presentes en la atmósfera \cite{ref40}. 
+\end{enumerate}
+
+\subsection{Enlace de telemetría}\label{enlace-telemetria}
 
 \subsubsection{LoRa}\label{lora}
 
@@ -467,17 +573,59 @@ En aplicaciones terrestres, LoRa puede alcanzar distancias aproximadas de entre 
 
 Los parámetros de configuración son el ancho de banda, spreading factor y tasa de codificación. Puede manejar tasas de datos típicas comprendidas aproximadamente entre 0.3 kbps y 50 kbps \cite{ref31}.
 
-\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image79.png}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}>{\centering\arraybackslash}m{0.19\linewidth} >{\centering\arraybackslash}m{0.2\linewidth} >{\raggedright\arraybackslash}m{0.53\linewidth}@{}}
+\toprule
+\textbf{Parámetro} & \textbf{Valores} & \multicolumn{1}{c}{\textbf{Efectos}} \\
+\midrule
+Ancho de banda & 125, \ldots, 500 kHz & Se requiere un mayor ancho de banda para transmitir datos a tasas altas (1 kHz = 1 kcps). Sin embargo, aumentar este parámetro disminuye el alcance de la comunicación y la sensibilidad. \\
+\midrule
+Spreading factor & $2^{6}, \ldots, 2^{12}$ $\frac{\text{chips}}{\text{símbolo}}$ & Un spreading factor (\emph{SF}) mayor aumenta el alcance de la comunicación, la sensibilidad del receptor y la relación señal-ruido (SNR). Sin embargo, en consecuencia, aumenta el consumo de energía. \\
+\midrule
+Tasa de codificación & 4/5, \ldots, 4/8 & Tasas de codificación mayores aumentan la protección contra errores de decodificación y ráfagas de interferencia, a costa de paquetes más largos y un mayor consumo de energía. \\
+\midrule
+Potencia de transmisión & $-4$, \ldots, 20 dBm & La relación señal-ruido aumenta al incrementar la potencia de transmisión, a costa de un mayor gasto de energía. \\
+\bottomrule
+\end{tabular}
+\caption{Parámetros de configuración de LoRa y sus efectos. Adaptado de \cite{ref30}.}
+\label{tab:lora-parametros}
+\end{table}
 
 Opera en las bandas ISM de 433, 868 o 915 MHz, dependiendo de la región donde se implemente. Además, cada transmisión puede transportar una carga útil de entre 2 y 255 octetos \cite{ref30,ref31}.
 
+\begin{figure}[H]
+\centering
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image66.png}
+\caption{Estructura de una trama LoRa ($n \in [1, 4]$) \cite{ref107}.}
+\label{fig:lora-trama}
+\end{figure}
 
 \subsubsection{Narrowband IoT}\label{narrowband-iot}
 
 Es un estándar de comunicación inalámbrica diseñado para conectar dispositivos de bajo consumo a redes celulares usando una franja de banda muy angosta, apenas 180 kHz \cite{ref67}. Como menciona Antel, Nb-IoT es una evolución de LTE enfocados en la optimización de batería. Fue pensado específicamente para dispositivos que envían poca información (bajo ancho de banda) y con poca frecuencia \cite{ref68}.
 
 NB-IoT tiene un link budget de 164 dB, mientras que GPRS y LTE tienen 144 dB y 142.7 dB respectivamente. Esto permite mucho mayor capacidad de penetración y alcance \cite{ref69}. Por otro lado, Antel tiene una cobertura de casi el 80\% del territorio uruguayo de NB-IoT \cite{ref68}.
+
+\subsubsection{APRS}\label{aprs}
+
+\pendiente{Completar APRS}
+
+\subsection{Enlace de video}\label{enlace-video}
+
+\subsubsection{Estándares de DTV}\label{estuxe1ndares-de-dtv}
+
+Uruguay adoptó la versión brasileña del estándar ISDB-T (Japonés), llamado ISDB-Tb, para transmitir televisión digital desde la superficie terrestre \cite{ref59}. Existe la variante ISDB-S para transmitir ISDB vía satélite, pero, según un estudio del 2018, los estándares satelitales principales son DVB-S2 y sus variantes \cite{ref62}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=0.505\linewidth,keepaspectratio]{./imagenes/image4.png}\hfill
+\includegraphics[height=0.505\linewidth,keepaspectratio]{./imagenes/image1.png}
+\caption{Participación de los estándares de transmisión satelital en SDTV y HDTV por región entre 1996 y 2018: a) América del Norte, b) América del Sur, c) Europa, d) África, e) Rusia, f) Asia y g) Australia \cite{ref62}.}
+\label{fig:estandares-dtv-region}
+\end{figure}
 
 \subsubsection{DVB-S2 (Europeo)}\label{dvb-s2-europeo}
 
@@ -506,83 +654,13 @@ El estándar incluye \cite{ref27}:
   Eficiencia Espectral: Ofrece tres factores de \emph{roll-off} (0.35, 0.25 y 0.20) para moldear el espectro de la señal y optimizar el uso del ancho de banda.
 \end{itemize}
 
-DVB-S2 es compatible con servicios de televisión codificados MPEG-2 y MPEG-4 \cite{ref27}.
+DVB-S2 es compatible con servicios de televisión codificados MPEG-2 y MPEG-4 \cite{ref27,ref42}.
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image15.png}
 
-\subsubsection{Radios definidos por software}\label{radios-definidos-por-software}
+\section{Video digital}\label{video-digital}
 
-Un SDR es un sistema de comunicación por radio donde los componentes que tradicionalmente se implementan en hardware (como filtros, amplificadores y moduladores) se definen mediante software \cite{ref49}.
-
-\hl{A diferencia de los dispositivos de radio convencionales, que son estrictamente de hardware y tienen especificaciones fijas (como rangos de frecuencia y filtros predeterminados), un SDR ofrece una gran flexibilidad. Esto nos permite ajustar parámetros como la frecuencia, el ancho de banda y el método de modulación o demodulación utilizando programas informáticos sin necesidad de cambiar o comprar más componentes físicos.}
-
-\subsubsection{Elección de banda}\label{elecciuxf3n-de-banda}
-
-Los factores involucrados en la elección de banda son los siguientes:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Pérdida de Trayectoria en Espacio Libre (FSPL): Teóricamente, la pérdida en el espacio libre es directamente proporcional al cuadrado de la frecuencia \cite{ref39}.
-
-  \(L_{FS} = \ {(\frac{4\pi df}{c})}^{2}\)
-
-  \(L_{FS}\) : pérdida por propagación
-
-  \(d\) : \hl{velocidad de la luz}
-
-  \(f\) : frecuencia
-
-  \(c\) : velocidad de la luz
-
-  A frecuencias más altas (como la banda Ka), las pérdidas son mucho mayores que en frecuencias bajas (como UHF), lo que requiere compensar con mayor potencia de transmisión o antenas de mayor ganancia \cite{ref39}.
-\item
-  Capacidad del Canal (Ecuación de Shannon): La necesidad de mayores tasas de datos (por ejemplo, para transmitir video) impulsa el uso de frecuencias más altas. Según la Ecuación de Shannon, la capacidad de información de un canal está ligada a su ancho de banda y a la relación señal-ruido \cite{ref39}.
-
-  \(C\  = \ B\log_{2}(1\  + \ SNR)\)
-\end{enumerate}
-
-\(C\) : Capacidad
-
-\(B\) : Ancho de banda
-
-\(SNR\) : Relación señal a ruido
-
-\begin{quote}
-Las bandas superiores (X, Ka) ofrecen un ancho de banda mucho mayor, permitiendo tasas de transferencia de datos superiores a 100 Mbps, mientras que las bandas VHF/UHF suelen estar limitadas a tasas bajas para telemetría y comando \cite{ref39}.
-\end{quote}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{2}
-\item
-  Ganancia de la Antena y Apuntamiento: El área efectiva (o apertura efectiva) de una antena es una medida de su capacidad para extraer potencia de una onda electromagnética incidente. En términos sencillos, representa la superficie "útil" de la antena que realmente captura la señal \cite{ref39}.
-\end{enumerate}
-
-\(A_{ef} = \ \frac{G\lambda^{2}}{4\pi}\)
-
-\(A_{ef}\) : Área efectiva de apertura
-
-\(G\) : \hl{Ganancia}
-
-\hl{}\(\lambda\) \hl{: Longitud de onda}
-
-\begin{quote}
-\hl{Para mantener una ganancia constante, si se aumenta la frecuencia (reduciendo la longitud de onda), el área efectiva necesaria disminuye drásticamente. El aumento de la ganancia mediante el incremento de la frecuencia o del área efectiva resulta en un ancho de haz más estrecho. Esto exige una precisión de apuntamiento mucho mayor hacia la estación terrestre para no perder el enlace} \cite{ref39}\hl{.}
-
-\hl{En el caso de las antenas omnidireccionales, su área efectiva es inherentemente pequeña y depende principalmente del cuadrado de la longitud de onda, lo que las hace muy dependientes de la frecuencia para cerrar el enlace} \cite{ref39}\hl{}\cite{ref40}\hl{.}
-\end{quote}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{3}
-\item
-  \hl{Atenuación Atmosférica y Ruido: Las frecuencias superiores sufren una mayor atenuación por gases atmosféricos y lluvia debido a la interacción física entre las ondas electromagnéticas de longitud de onda corta y las moléculas presentes en la atmósfera} \cite{ref40}\hl{.}
-\end{enumerate}
-
-\subsection{Video digital}\label{video-digital}
-
-\subsubsection{Codificación de video}\label{codificaciuxf3n-de-video}
+\subsection{Codificación de video}\label{codificaciuxf3n-de-video}
 
 La codificación de video es el proceso mediante el cual se comprime y se transforma el formato de un contenido de video sin procesar en un archivo digital, de modo que pueda reproducirse en distintos dispositivos y plataformas.
 
@@ -596,7 +674,7 @@ El códec H.264 (AVC) destaca por su buena eficiencia de compresión, permitiend
 
 El códec H.265 (HEVC) presenta como principal ventaja su alta eficiencia de compresión, ya que permite obtener la misma calidad de video utilizando aproximadamente un 40--50\% menos de bitrate que H.264, lo que reduce significativamente el consumo de ancho de banda y el tamaño de los archivos. Sin embargo, requiere una mayor capacidad de procesamiento, lo que implica tiempos de codificación más largos y mayores exigencias de hardware.
 
-\subsubsection{Encapsulamiento}\label{encapsulamiento}
+\subsection{Encapsulamiento}\label{encapsulamiento}
 
 La encapsulación es el proceso de envolver datos de video codificados en unidades estructuradas y paquetizadas para facilitar su transmisión, almacenamiento y sincronización en distintos sistemas multimedia. En el caso de los estándares HEVC (H.265) y AVC (H.264), ambos utilizan una capa de abstracción, llamada Network Abstraction Layer, para cumplir esta función \cite{ref26}.
 
@@ -608,9 +686,15 @@ El MPEG-2 Transport Stream (TS) es un estándar global utilizado para la difusi�
 
 Los datos codificados (unidades NAL) se empaquetan primero en PES (Packetized Elementary Stream). El encabezado PES contiene información de temporización esencial, como una base de reloj común y marcas de tiempo para indicar cuándo se deben decodificar (DTS) y presentar (PTS) los datos. Los paquetes PES se fragmentan en unidades de longitud fija de 188 bytes. Esta estructura de longitud fija es fundamental para entornos donde es probable que ocurran errores, ya que facilita que el receptor mantenga la sincronización en canales con pérdidas. Cada paquete TS incluye un PID en su encabezado para identificar a qué componente (video, audio o datos) pertenece, permitiendo al receptor demultiplexar los servicios \cite{ref26}.
 
-\subsection{Componentes de RF}\label{componentes-rf}
+\section{Cadena de RF}\label{componentes-rf}
 
-\subsubsection{Amplificador de potencia}\label{amplificador-de-potencia}
+\subsection{Radios definidos por software}\label{radios-definidos-por-software}
+
+Un SDR es un sistema de comunicación por radio donde los componentes que tradicionalmente se implementan en hardware (como filtros, amplificadores y moduladores) se definen mediante software \cite{ref49}.
+
+\hl{A diferencia de los dispositivos de radio convencionales, que son estrictamente de hardware y tienen especificaciones fijas (como rangos de frecuencia y filtros predeterminados), un SDR ofrece una gran flexibilidad. Esto nos permite ajustar parámetros como la frecuencia, el ancho de banda y el método de modulación o demodulación utilizando programas informáticos sin necesidad de cambiar o comprar más componentes físicos.}
+
+\subsection{Amplificador de potencia}\label{amplificador-de-potencia}
 
 Un amplificador de potencia (PA) convierte señales de baja potencia en una de mayor potencia \cite{ref88}. Los parámetros clave que se toman en cuenta para seleccionar amplificadores son los siguientes:
 
@@ -634,15 +718,7 @@ Un amplificador de potencia (PA) convierte señales de baja potencia en una de m
   Frecuencia de operación: Define el espectro de frecuencias dentro del cual un amplificador de potencia de RF mantiene el rendimiento especificado \cite{ref93}.
 \end{itemize}
 
-\subsubsection{Amplificador de bajo ruido}\label{amplificador-de-bajo-ruido}
-
-Un Amplificador de Bajo Ruido (LNA) es un componente electrónico fundamental ubicado en la etapa inicial de un receptor. Su función es amplificar las señales débiles captadas por la antena, incorporando la menor cantidad posible de ruido interno. Se utiliza principalmente para minimizar la temperatura de ruido total del sistema. Reduce de forma efectiva la contribución de ruido de todas las etapas posteriores de la cadena de recepción. Al amplificar la señal desde el comienzo y disminuir el efecto del ruido térmico generado por los componentes subsiguientes, el LNA permite mantener una relación señal-ruido (SNR) suficientemente alta para que el receptor pueda recuperar correctamente los datos transmitidos del ruido de fondo \cite{ref40}.
-
-\subsubsection{Atenuadores}\label{atenuadores}
-
-Un atenuador es un componente pasivo que introduce una pérdida conocida y fija (en dB) entre el transmisor y el receptor. La idea es reemplazar el espacio libre por un atenuador calibrado que simule la atenuación que tendría la señal a esa distancia real. Primero se calcula la atenuación que se quiere simular con la fórmula de espacio libre (FSPL), que depende de la distancia y la frecuencia. Los atenuadores comerciales vienen en valores fijos (3, 6, 10, 20, 30 dB) y soportan una potencia determinada que el transmisor no puede superar. Se combinan varios en cascada para sumar el valor objetivo. Se prueba transmitiendo paquetes reales y revisando RSSI/SNR en el receptor, aumentando la atenuación gradualmente hasta encontrar el punto donde empieza a fallar. Esto da el margen de enlace real, útil para anticipar pérdidas adicionales en vuelo.
-
-\subsubsection{Construcción y materiales de antenas}\label{construcciuxf3n-y-materiales-antenas}
+\subsection{Construcción y materiales de antenas}\label{construcciuxf3n-y-materiales-antenas}
 
 La velocidad de propagación de la onda de radio a lo largo de un hilo conductor de cobre es ligeramente menor que la velocidad de la luz en el espacio libre. Debido al propio material y otros efectos capacitivos, la longitud del elemento radiador suele ser aproximadamente 5\% menor que la longitud teórica de un cuarto de onda \cite{ref70}.
 
@@ -655,9 +731,17 @@ Materiales conductores para radiadores \cite{ref70}:
   Aluminio: El aluminio es el material predilecto para estructuras rígidas como antenas Yagi, mástiles y radiadores verticales, debido a su excelente relación resistencia-peso y su bajo costo. Su utilización en forma de tubos de mayor diámetro que un cable convencional permite que las antenas operen con un mayor ancho de banda. Además, el aluminio es fácil de mecanizar manualmente y no se oxida fácilmente.
 \end{itemize}
 
-\subsection{Interfaces de comunicación}\label{interfaces-comunicacion}
+\subsection{Amplificador de bajo ruido}\label{amplificador-de-bajo-ruido}
 
-\subsubsection{SPI}\label{spi}
+Un Amplificador de Bajo Ruido (LNA) es un componente electrónico fundamental ubicado en la etapa inicial de un receptor. Su función es amplificar las señales débiles captadas por la antena, incorporando la menor cantidad posible de ruido interno. Se utiliza principalmente para minimizar la temperatura de ruido total del sistema. Reduce de forma efectiva la contribución de ruido de todas las etapas posteriores de la cadena de recepción. Al amplificar la señal desde el comienzo y disminuir el efecto del ruido térmico generado por los componentes subsiguientes, el LNA permite mantener una relación señal-ruido (SNR) suficientemente alta para que el receptor pueda recuperar correctamente los datos transmitidos del ruido de fondo \cite{ref40}.
+
+\subsection{Atenuadores}\label{atenuadores}
+
+Un atenuador es un componente pasivo que introduce una pérdida conocida y fija (en dB) entre el transmisor y el receptor. La idea es reemplazar el espacio libre por un atenuador calibrado que simule la atenuación que tendría la señal a esa distancia real. Primero se calcula la atenuación que se quiere simular con la fórmula de espacio libre (FSPL), que depende de la distancia y la frecuencia. Los atenuadores comerciales vienen en valores fijos (3, 6, 10, 20, 30 dB) y soportan una potencia determinada que el transmisor no puede superar. Se combinan varios en cascada para sumar el valor objetivo. Se prueba transmitiendo paquetes reales y revisando RSSI/SNR en el receptor, aumentando la atenuación gradualmente hasta encontrar el punto donde empieza a fallar. Esto da el margen de enlace real, útil para anticipar pérdidas adicionales en vuelo.
+
+\section{Interfaces de comunicación}\label{interfaces-comunicacion}
+
+\subsection{SPI}\label{spi}
 
 SPI (Serial Peripheral Interface) es un protocolo de comunicación digital utilizado para conectar un microcontrolador con sensores, memorias, pantallas y otros periféricos.
 
@@ -749,7 +833,7 @@ Todos los dispositivos comparten:
 
 Sin embargo, cada dispositivo posee una línea CS independiente. El Main selecciona el dispositivo con el que desea comunicarse colocando su señal CS correspondiente en 0, mientras mantiene las demás en 1 \cite{ref80}.
 
-\subsubsection{I2C}\label{i2c}
+\subsection{I2C}\label{i2c}
 
 I2C (Inter-Integrated Circuit) es un protocolo de comunicación digital utilizado para conectar un microcontrolador con sensores, memorias, pantallas y otros periféricos utilizando únicamente dos líneas principales.
 
@@ -829,7 +913,7 @@ Todos los dispositivos comparten \cite{ref81}:
 
 A diferencia de SPI, no hace falta una línea CS para cada dispositivo. El Main selecciona con quién comunicarse enviando la dirección del subnodo.
 
-\subsubsection{UART}\label{uart}
+\subsection{UART}\label{uart}
 
 UART (Universal Asynchronous Receiver-Transmitter) es un protocolo de comunicación serie asíncrono que utiliza dos líneas principales: Transmitter (Tx) y Receiver (Rx). Al ser asíncrono, no existe una señal de reloj compartida entre los dispositivos.
 
@@ -907,9 +991,9 @@ La línea UART permanece en estado HIGH por defecto. Cuando el transmisor desea 
 
 \cite{ref84} En UART no se puede mandar una cantidad variable de bits de datos dentro de una misma configuración. La cantidad de bits de datos, la presencia o no de bit de paridad, la cantidad de bits de parada y el baud rate deben configurarse previamente en ambos extremos. Como no existe una señal de reloj ni información adicional que indique dónde terminan los datos y dónde comienzan los bits de paridad o parada, el receptor necesita conocer de antemano el formato exacto de cada trama \cite{ref83}.
 
-\subsection{Energía: baterías y conversores}\label{energia-fundamentos}
+\section{Energía: baterías y conversores}\label{energia-fundamentos}
 
-\subsubsection{Baterías}\label{baterias}
+\subsection{Baterías}\label{baterias}
 
 La energía solar no siempre está disponible durante las operaciones de una nave espacial. Para almacenar energía se utilizan baterías primarias y secundarias, las cuales se clasifican según su diferente composición electroquímica. Debido a que las baterías de tipo primario no son recargables, generalmente se utilizan en misiones de corta duración. Las baterías de plata-zinc (Ag-Zn) son utilizadas habitualmente debido a que son más fáciles de manipular y pueden descargarse a una mayor tasa. Sin embargo, también existe una variedad de baterías primarias basadas en litio que presentan una mayor densidad energética, entre ellas las de dióxido de azufre-litio (LiSO₂), monofluoruro de carbono-litio (LiCF\textsubscript{x}) y cloruro de tionilo-litio (LiSOCl₂) \cite{ref39}.
 
@@ -921,7 +1005,7 @@ Las baterías típicas de Li-ion presentan un rango de temperatura de operación
 
 \includegraphics[width=2.1875in,keepaspectratio]{./imagenes/image33_1.png}\includegraphics[width=1.2917in,keepaspectratio]{./imagenes/image33_2.png}\cite{ref39} En proyectos anteriores, \cite{ref2,ref3,ref99} se prefirieron las baterías de ion-litio. El equipo del proyecto Zephyrus X utilizó baterías de ion-litio 18650 como fuente de energía principal debido a su bajo peso, alta capacidad de potencia, posibilidad de recarga y amplio rango de temperatura de operación. Sin embargo, experiencias anteriores indicaron que el uso de baterías recargables no era la mejor opción. Si la batería se descargaba excesivamente, no podía volver a cargarse y, en algunos casos, llegaba a explotar {[}citar experiencia John{]}.
 
-\subsubsection{Conversor de voltaje}\label{conversor-de-voltaje}
+\subsection{Conversor de voltaje}\label{conversor-de-voltaje}
 
 Dos tipos de conversores \cite{ref105}:
 
@@ -938,9 +1022,9 @@ Es capaz de alcanzar de forma consistente eficiencias superiores al 95 \%. Esta 
 
 Un conversor elevador también presenta una alta eficiencia, con valores que comúnmente superan el 90 \%. Un circuito bien diseñado puede alcanzar eficiencias máximas superiores al 95 \%. Sin embargo, generalmente opera en un rango de 85 \% a 95 \%. El proceso de aumentar el voltaje es ligeramente más complejo, lo que puede provocar mayores pérdidas de energía en comparación con un conversor reductor \cite{ref105}.
 
-\subsection{Materiales y control térmico}\label{materiales-termico}
+\section{Materiales y control térmico}\label{materiales-termico}
 
-\subsubsection{Aluminio}\label{aluminio}
+\subsection{Aluminio}\label{aluminio}
 
 La conductividad térmica representa la capacidad de un material para transmitir calor. Se define como la cantidad de energía térmica que atraviesa una unidad de espesor del material, por unidad de área y por cada unidad de diferencia de temperatura. La elevada conductividad térmica del aluminio puro se debe principalmente al movimiento eficaz de los electrones libres \cite{ref85}.
 
@@ -952,11 +1036,11 @@ La capacidad calorífica específica es una propiedad física que indica la cant
 
 Comparación de la conductividad térmica entre el cobre y el aluminio: El cobre y el aluminio son materiales ampliamente utilizados en aplicaciones de transferencia de calor, como radiadores e intercambiadores térmicos. Aunque el cobre presenta una conductividad térmica superior, el aluminio suele ser la opción preferida debido a su menor costo, menor densidad y mayor facilidad de fabricación y mecanizado \cite{ref85}.
 
-\subsubsection{EPS}\label{eps}
+\subsection{EPS}\label{eps}
 
 El EPS tiene una conductividad térmica muy baja. Esto se debe a su estructura de celda cerrada, compuesta en un 98 \% de aire. Este aire atrapado dentro de las celdas es un conductor de calor muy deficiente, lo que le confiere a la espuma excelentes propiedades de aislamiento térmico \cite{ref87}.
 
-\subsubsection{Control térmico}\label{control-termico}
+\subsection{Control térmico}\label{control-termico}
 
 El control térmico de una nave espacial tiene como objetivo principal mantener todos sus componentes dentro de los rangos de temperatura permitidos para sus requisitos operativos y de supervivencia en todas las fases de la misión. El comportamiento térmico de un satélite se rige por un balance de energía fundamentado en la cantidad de calor absorbido, almacenado, generado y disipado \cite{ref39}.
 
@@ -1363,16 +1447,6 @@ Se adquirió la RasPi Module 3 por ser barata, moderna y, lo más importante, es
 \subsection{Soporte Cámara}\label{soporte-cuxe1mara}
 
 Observando proyectos pasados, se ve que las cámaras tienen mucho movimiento. La sonda experimenta giros y movimientos pendulares por culpa del viento. Al comenzar el proyecto se determinó que se iba a estabilizar la cámara para minimizar el efecto de los movimientos bruscos. Durante una de las evaluaciones del peso, se descarto. El estabilizador de la cámara era unos de los componentes que más pesaba y se decidió descartar porque su función no era necesaria para cumplir con el objetivo. Se va a usar un soporte de cámara simple para tenerla asegurada contra la carcasa.
-
-\subsection{Estándares de DTV}\label{estuxe1ndares-de-dtv}
-
-Uruguay adoptó la versión brasileña del estándar ISDB-T (Japonés), llamado ISDB-Tb, para transmitir televisión digital desde la superficie terrestre \cite{ref59}. Existe la variante ISDB-S para transmitir ISDB vía satélite, pero, según un estudio del 2018, los estándares satelitales principales son DVB-S2 y sus variantes \cite{ref62}.
-
-\includegraphics[width=2.6302in,keepaspectratio]{./imagenes/image1.png}
-
-\includegraphics[width=2.7279in,keepaspectratio]{./imagenes/image4.png}
-
-\cite{ref62}
 
 \subsection{Ancho de canal de transmisión de video}\label{ancho-de-canal-transmisiuxf3n-de-video}
 
