@@ -384,42 +384,78 @@ En 2022, estudiantes de \emph{Penn State University} publicaron un paper sobre u
 
 La exposición a bajas temperaturas es una consideración importante, ya que el límite inferior de operación de muchos componentes electrónicos es de alrededor de −40 °C. Sin embargo, la baja densidad atmosférica hace que la transferencia de calor por conducción y convección con el aire circundante sea extremadamente limitada. Como resultado, aunque el aire ambiente es muy frío, la superficie de la carga útil orientada hacia el sol puede llegar a calentarse más que lo haría cerca del suelo. Incluso los materiales de la superficie y el color de la pintura afectarán su temperatura. Otras experiencias de vuelos en globo muestran que una carga útil típica debe prepararse para un rango térmico de −50 °C a 50 °C, lo cual es comparable al de los CubeSats en órbitas bajas terrestres cuyo rango térmico de operación tiende a estar entre −40 °C a 70 °C \cite{ref3}.
 
-Gran parte de los satélites orbitan en la termosfera, llamada Órbita Terrestre Baja. Otros satélites, como GPS a 36.000 kilómetros, orbitan en la exosfera. Los globos de gran altitud, lanzados a la estratosfera, pueden llegar hasta aproximadamente 40 km. Son una gran herramienta para hacer validaciones iniciales de satélites antes de ser insertados en órbita. Como presentan dos trabajos anteriormente, la altura entre 30 y 40 kilómetros ofrece condiciones ambientales muy similares a las que existen en Órbita Terrestre Baja. Aunque la temperatura de las moléculas en la termosfera es mucho mayor que las de la estratosfera, su extrema baja densidad molecular genera una sensación térmica muy baja, por lo que sin exposición al sol, la temperatura de los satélites sigue siendo extremadamente baja. Por lo tanto, en términos de radiación ultravioleta, sensación térmica, presión y densidad las capas superiores de la estratosfera logran asimilar las condiciones a la que se exponen satélites en la termosfera y superior. Además, con un globo no se puede ir más allá que la estratosfera porque la baja presión expande el gas interior causando que reviente.
+Gran parte de los satélites orbitan en la termosfera, llamada Órbita Terrestre Baja. Otros satélites, como GPS a 36.000 kilómetros, orbitan en la exosfera. Los globos de gran altitud, lanzados a la estratosfera, pueden llegar hasta aproximadamente 40 km. Son una gran herramienta para hacer validaciones iniciales de satélites antes de ser insertados en órbita. Como presentan los dos trabajos anteriormente mencionados, la altura entre 30 y 40 kilómetros ofrece condiciones ambientales muy similares a las que existen en Órbita Terrestre Baja. Aunque la temperatura de las moléculas en la termosfera es mucho mayor que las de la estratosfera, su extrema baja densidad molecular genera una sensación térmica muy baja, por lo que sin exposición al sol, la temperatura de los satélites sigue siendo extremadamente baja. Por lo tanto, en términos de radiación ultravioleta, sensación térmica, presión y densidad las capas superiores de la estratosfera logran asimilar las condiciones a la que se exponen satélites en la termosfera y superior. EL globo no puede ascender más allá de la estratosfera porque la baja presión expande el gas interior causando que explote.
 
 Otro factor determinante para el éxito operativo de los globos estratosféricos es el viento. Debido a su enorme superficie, los globos experimentan un alto arrastre, incluso en la atmósfera reducida de la estratosfera. Los vientos tienden a moverse de forma horizontal, pero su dirección cambia según la altitud. Sin medios activos de resistencia, la tendencia natural de estas naves es moverse a la deriva con los vientos predominantes, lo que constituye su mayor limitación operativa. Además, las ráfagas de viento repentinas son peligrosas, ya que pueden superar la resistencia de los materiales y atentar contra la integridad estructural de la plataforma \cite{ref4}.
 
-\subsection{Física del vuelo en globo}\label{fisica-del-vuelo}
+\pendiente{Buscar velociad de los vientos, si no esta puesto mas adelante}
+
+\subsection{Física del vuelo}\label{fisica-del-vuelo}
+
+El sistema de vuelo está formado por un globo estratosférico de látex, inflado con helio, al que se ata la carga útil o \textit{payload}. El helio, al ser menos denso que el aire, genera una fuerza ascendente que eleva todo el conjunto hasta que el globo revienta en la estratósfera y la carga útil desciende con el paracaídas.
 
 \subsubsection{Fundamento físico del vuelo}\label{fundamento-fuxedsico-del-vuelo}
+El desplazamiento horizontal del globo depende de los vientos a cada altura y, por lo tanto, de las condiciones meteorológicas del día del lanzamiento. El movimiento del globo en la dirección vertical se describe mediante la siguiente ecuación en donde la fuerza neta $F_{\text{neta}}$ sobre el sistema es:
 
-El vuelo del globo se describe con una ecuación de movimiento sobre el eje vertical. La masa total del sistema por su aceleración es igual al balance entre el empuje que lo sube y las fuerzas resistentes:
+\begin{equation}
+  F_{\text{neta}} = E - D - W,
+  \label{eq:fuerza-neta}
+\end{equation}
+donde $E$ es el empuje, $D$ es la fuerza de arrastre aerodinámico y $W$ es el peso del sistema calculado como 
+\begin{equation}
+  W = m \cdot g,
+  \label{eq:peso}
+\end{equation}
+donde $m$ es la masa total del sistema y $g$ es la aceleración de la gravedad. La masa total del sistema es la suma de tres componentes: el globo, la carga útil y la masa del helio \cite{ref73}. 
 
-\(M_{total}\ \ \ .\ \ a\  = \ Empuje\  - \ Arrastre\  - \ Peso\)
+ 
+\subsubsection{Arrastre}\label{arrastre}
 
-La masa total es la suma de los tres componentes: estructura del globo, carga útil (payload) y la masa del helio \cite{ref73}. Para entender el comportamiento del globo durante el ascenso es necesario entender dos relaciones físicas. La primera es la flotabilidad (empuje de Arquímedes) y la otra es la ley de los gases ideales.
+El arrastre se opone al movimiento y crece con la velocidad de ascenso $v$:
+\begin{equation}
+  D = \frac{1}{2}\,\rho_{\text{aire}}\,C_D\,A\,v^{2},
+  \label{eq:arrastre}
+\end{equation}
+donde $C_D$ es el coeficiente de arrastre y $A$ el área frontal del globo. En el momento del lanzamiento el sistema parte del reposo, por lo que $D = 0$ y toda la diferencia entre empuje y peso se traduce en aceleración. A medida que el globo gana velocidad, el arrastre aumenta hasta equilibrar esa diferencia ($F_{\text{neta}} = 0$) y el globo asciende a una velocidad aproximadamente constante.
+ 
 
 \subsubsection{Flotabilidad (empuje de Arquímedes)}\label{flotabilidad-empuje-de-arquuxedmedes}
 
-El helio genera una fuerza hacia arriba porque es menos denso que el aire de alrededor. Por el principio de Arquimedes, la fuerza de empuje es igual al peso del aire desplazado por el volumen del globo. La fuerza neta queda como la diferencia entre la densidad del aire y la del helio, multiplicada por el volumen del globo:
 
-\(Empuje\ neto\  = \ (p_{aire} - \ p_{helio})\ .\ Volumen\ \ .\ g\)
+Por el principio de Arquímedes, el empuje $E$ es igual al peso del aire desplazado por el volumen total del sistema:
+\begin{equation}
+  E = \rho_{\text{aire},0}\left(V_g + V_{\text{pld}}\right) g
+  \approx \rho_{\text{aire},0}\, V_g\, g
+  \label{eq:empuje}
+\end{equation}
 
-Esta fuerza neta es la que debe levantar el peso del globo y del payload. Lo que sobra después de vencer ese peso, es lo que hace subir al sistema.
+donde $\rho_{\text{aire},0}$ es la densidad del aire a nivel del suelo, $V_g$ es el volumen del globo inflado con helio y  $V_{\text{pld}}$ el volumen de la carga útil. La aproximación es válida ya que normalmente el volumen de la carga útil en este tipo de proyectos es del orden de 3000 cm$^3$ = 0.003 m$^3$ el cual es despreciable frente al volumen del globo, que es de varios metros cúbicos.
 
 \subsubsection{Ley de gases ideales y altura de explosión}\label{ley-de-gases-ideales-y-altura-de-explosion}
 
-Cada globo tiene un diámetro de explosion (burst diameter) fijo. Es un dato del fabricante. Mientras el globo sube, la presión atmosférica va bajando. Para compensar esto, por la ley de los gases ideales (Boyle), el helio se expande. El globo va creciendo de manera continua hasta que alcanza su máximo diámetro y explota.
-
-De acá surge una decisión importante en la planificación del vuelo, que depende de cuánto helio se ponga al principio:
-
+Cada globo tiene un diámetro de explosión (\textit{burst diameter}) fijo, que es un dato del fabricante. A medida que el globo sube, la presión atmosférica disminuye. Por la ley de los gases ideales, el helio se expande para igualar la presión exterior, y el globo crece de manera continua hasta alcanzar su diámetro máximo y reventar.
+ 
+Como el globo está cerrado, la masa de helio se conserva durante todo el ascenso:
+\begin{equation}
+  m_{\text{He}} = \rho_{\text{He},0}\, V_0 = \rho_{\text{He},s}\, V_{\max}.
+\end{equation}
+Aproximando el globo como una esfera, $V \propto R_b^{3}$, se obtiene la densidad del helio en el momento en el cual revienta:
+\begin{equation}
+  \frac{\rho_{\text{He},s}}{\rho_{\text{He},0}} = \left(\frac{R_{b,0}}{R_{b,\max}}\right)^{3},
+  \label{eq:densidad-reventon}
+\end{equation}
+donde $R_{b,0}$ es el radio del globo al inflarlo en tierra y $R_{b,\max}$ el radio de explosión. Como el helio está aproximadamente en equilibrio de presión con el aire exterior, esta densidad permite estimar la presión atmosférica, y con ella la altura, a la que revienta el globo.
+ 
+De la ecuación \eqref{eq:densidad-reventon} surge una decisión importante en la planificación del vuelo, que depende de cuánto helio se cargue al inicio:
+ 
 \begin{itemize}
 \item
-  Más helio inicial: el globo llega antes a su diámetro de reventón. Esto es menor altura máxima, pero mayor velocidad de ascenso.
+  Más helio inicial: el radio inicial $R_{b,0}$ es mayor, por lo que el globo llega antes a su diámetro de reventón. Esto implica una menor altura máxima, pero una mayor velocidad de ascenso.
 \item
-  Menos helio inicial: sube más lento, pero alcanza una altura mayor antes de reventar.
+  Menos helio inicial: el globo sube más lento, pero alcanza una altura mayor antes de reventar.
 \end{itemize}
-
-Esto está confirmado en la documentación técnica de High Altitude Science. Para dos vuelos con el mismo modelo de globo, el que lleva menos helio revienta a mayor altitud \cite{ref74}.
+ 
+Este comportamiento está confirmado en la documentación técnica de High Altitude Science, donde para dos vuelos con el mismo modelo de globo, el que lleva menos helio revienta a mayor altitud \cite{ref74}.
 
 \subsection{Tecnologías de comunicación}\label{tecnologias-de-comunicacion}
 
