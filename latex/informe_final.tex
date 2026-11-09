@@ -81,17 +81,12 @@
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 % fallback for those not using the hyperref driver hyperxmp:
 \makeatletter
 \@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
 \makeatother
-\hypersetup{
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-
 
 \usepackage{csquotes}
 \usepackage[style=ieee,backend=biber,sorting=none,language=american]{biblatex}
@@ -107,27 +102,14 @@
 \titleformat{\subsection}{\bfseries}{\thesubsection}{0.6em}{}
 \titleformat{\subsubsection}{\bfseries}{\thesubsubsection}{0.6em}{}
 
-% ---- Indice automatico: partes + formato ----
+% ---- Indice automatico: partes + formato (tocloft: enlaces hyperref estables) ----
 \setcounter{tocdepth}{3}
-\usepackage{titletoc}
-\titlecontents{section}
-  [0em]
-  {\addvspace{4pt}\bfseries}
-  {\contentslabel{2.2em}}
-  {\hspace*{-2.2em}\bfseries}
-  {\titlerule*[0.5pc]{.}\contentspage}
-\titlecontents{subsection}
-  [1.5em]
-  {}
-  {\contentslabel{2.8em}}
-  {\hspace*{-2.8em}}
-  {\titlerule*[0.5pc]{.}\contentspage}
-\titlecontents{subsubsection}
-  [4.5em]
-  {}
-  {\contentslabel{3.6em}}
-  {\hspace*{-3.6em}}
-  {\titlerule*[0.5pc]{.}\contentspage}
+\usepackage{tocloft}
+\renewcommand{\cftsecfont}{\bfseries}
+\renewcommand{\cftsecpagefont}{\bfseries}
+\setlength{\cftsubsecindent}{1.75em}
+\setlength{\cftsubsubsecindent}{3.75em}
+\setlength{\cftbeforesecskip}{4pt}
 \makeatletter
 \newcommand*\l@parte[2]{%
   \ifnum \c@tocdepth >-2 \relax
@@ -137,11 +119,20 @@
     \addvspace{0.5em \@plus.2\p@}%
   \fi}
 \newcommand{\parte}[1]{%
+  \phantomsection
   \addcontentsline{toc}{parte}{#1}%
   \begin{center}{\Large\bfseries #1\par}\end{center}%
 }
 \@ifundefined{toclevel@parte}{\def\toclevel@parte{0}}{}%
 \makeatother
+
+% hyperref despues de titlesec/tocloft (orden requerido para anclas de seccion e indice)
+\usepackage{hyperref}
+\hypersetup{
+  hidelinks,
+  linktoc=section,
+  pdfcreator={LaTeX via pandoc}}
+\usepackage{bookmark}
 
 % ---- Datos de portada y hoja de aprobacion (completar) ----
 \newcommand{\pendiente}[1]{\textcolor{red}{[#1]}}
@@ -158,6 +149,7 @@
 \date{}
 
 \begin{document}
+\hypersetup{pageanchor=false} % front matter en romano; reactivar al pasar a arabico
 
 % ================= Portada =================
 \begin{titlepage}
@@ -252,7 +244,7 @@ El/Los autor/autores de este trabajo final de carrera declara(n) que es/son el/l
 {\Large\bfseries Tabla de contenido\par}
 \end{center}
 \vspace{0.5em}
-{\hypersetup{linkcolor=black}\tableofcontents}
+\tableofcontents
 
 
 % ================= Resumen =================
@@ -265,6 +257,9 @@ El/Los autor/autores de este trabajo final de carrera declara(n) que es/son el/l
 
 \newpage
 \pagenumbering{arabic}
+\setcounter{page}{1}
+\hypersetup{pageanchor=true}
+\phantomsection
 
 \parte{Parte I: Presentación del proyecto}
 
@@ -1326,7 +1321,11 @@ Uruguay adoptó la versión brasileña del estándar ISDB-T (Japonés), llamado 
 
 \includegraphics[width=2.6302in,keepaspectratio]{./imagenes/image1.png}
 
-\includegraphics[width=2.7279in,keepaspectratio]{./imagenes/image4.png}\cite{ref62}\subsection{6.4 Ancho de canal de transmisión de video}\label{ancho-de-canal-transmisiuxf3n-de-video}
+\includegraphics[width=2.7279in,keepaspectratio]{./imagenes/image4.png}
+
+\cite{ref62}
+
+\subsection{Ancho de canal de transmisión de video}\label{ancho-de-canal-transmisiuxf3n-de-video}
 
 El CODEC es uno de los componentes que mayor procesamiento requiere por tener que disminuir el tamaño del video en tiempo real. Cuanto mayor sea la calidad del video, mayor es el procesamiento. Esto se traduce en major consumo energético, en peso y costo. El objetivo es poder observar el entorno con suficiente claridad. Después de pruebas con la cámara y observando videos con distintas calidades, se determinó la calidad de 720x480 pixeles a 30 fps cumple con nuestras necesidades.
 
@@ -2296,7 +2295,7 @@ Utilizando un medidor de potencia, se verificó la potencia con la que salía la
 
 Se realizó una prueba de larga distancia preliminar en el pasillo de la universidad con línea directa. La señal que salía del transmisor tenía una potencia de entre 0 y 1 dBm. Simulando una atenuación inicial de aproximadamente 30 dB. Entre el transmisor y el receptor habían aproximadamente 65 metros, por lo que en 1240 mhz suma 70 dB de atenuación. Del lado del receptor se conectaron atenuadores pasivos entre la antena y el LNA. Se tenía un atenuador de 10 dB y otros dos de 20 dB. Se logró recibir video teniendo una atenuación total de 150 dB, pero se observó una pérdida notoria en los fotogramas. A medida que se retiran los atenuadores, disminuyen las pérdidas.
 
-\subsection{\texorpdfstring{\textbf{Simulación con separación de 2,5 km}}{Simulación con separación de 2,5 km}}\label{simulaciuxf3n-larga-distancia-con-separaciuxf3n-de-2.5-km}
+\subsection{Simulación con separación de 2,5 km}\label{simulaciuxf3n-larga-distancia-con-separaciuxf3n-de-2.5-km}
 
 \includegraphics[width=3.3106in,keepaspectratio]{./imagenes/image97.png}\includegraphics[width=2.4768in,keepaspectratio]{./imagenes/image52.png}
 
