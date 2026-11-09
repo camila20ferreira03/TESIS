@@ -24,5 +24,9 @@
       "name": "latexmk (pdfLaTeX + biber)",
       "tools": ["latexmk"]
     }
-  ]
+  ],
+  "[latex]": {
+  "editor.wordWrap": "on",
+  "editor.wordWrapColumn": 100
+}
 }
