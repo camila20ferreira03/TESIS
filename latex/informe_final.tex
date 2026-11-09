@@ -104,8 +104,8 @@
 % ---- Datos de portada y hoja de aprobacion (completar) ----
 \newcommand{\pendiente}[1]{\textcolor{red}{[#1]}}
 \colorlet{RED}{red} % \MakeUppercase tambien pasa el nombre del color a mayusculas
-\newcommand{\tesistitulo}{\pendiente{Título de la tesis}}
-\newcommand{\tesissubtitulo}{\pendiente{Subtítulo}}
+\newcommand{\tesistitulo}{StratoVision}
+\newcommand{\tesissubtitulo}{Sistema de transmisión de telemetría y video en tiempo real desde la estratosfera}
 \newcommand{\tesisautores}{Camila Ferreira\\ Patrick Hobbins\\ Juan Manuel Vazquez}
 \newcommand{\tesisfacultad}{Facultad de Ingeniería}
 \newcommand{\tesiscarrera}{Ingeniería Telemática}
@@ -159,7 +159,7 @@ Montevideo, Uruguay\par
 \vspace{0.8cm}
 {\bfseries \tesisautores\par}
 \vspace{0.65cm}
-{\bfseries \MakeUppercase{\tesistitulo}\par}
+{\bfseries \MakeUppercase{\tesissubtitulo}\par}
 \vspace{0.6cm}
 Nombre o nombres de director, tutor o asesor:\par
 \tesisdirector\par
@@ -544,7 +544,7 @@ El/Los autor/autores de este trabajo final de carrera declara(n) que es/son el/l
 
 \subsection{1.1 Descripción}\label{descripciuxf3n}
 
-Sistema compuesto por un globo sonda y una estación terrena, para transmitir información desde la estratosfera hasta la superficie terrestre. Durante el vuelo, se va a capturar video y datos de telemetría, como la posición, temperatura y presión, que serán procesados y transmitidos a la superficie en tiempo real. Se diseñará un sistema de comunicación que minimice el consumo de energía y maximice la calidad de la transmisión. El dispositivo descenderá de forma controlada para poder recuperarlo, permitiendo su análisis y reutilización. A su vez, incorporará un sistema para visualizar los datos obtenidos.
+En este proyecto se propone un sistema compuesto por un globo sonda y una estación terrena, para transmitir información desde la estratosfera hasta la superficie terrestre. Durante el vuelo, se va a capturar video y datos de telemetría, como la posición, temperatura y presión, que serán procesados y transmitidos a la superficie en tiempo real. Se diseñará un sistema de comunicación que minimice el consumo de energía y maximice la calidad de la transmisión. El dispositivo descenderá de forma controlada para poder recuperarlo, permitiendo su análisis y reutilización. A su vez, incorporará un sistema para visualizar los datos obtenidos.
 
 \subsection{1.2 Motivación}\label{motivaciuxf3n}
 
@@ -623,10 +623,11 @@ El diseño y desarrollo del sistema se encuentra principalmente condicionado por
   \textbf{Autonomía de la batería:} las baterías en conjunto deben tener una autonomía suficiente para poder ubicarlo cuando aterrice, como mínimo 10 horas.
 \end{itemize}
 
+% 
+
+
+
 \newpage
-\begin{center}
-{\Large\bfseries Parte II: Fundamentos\par}
-\end{center}
 
 \section{\texorpdfstring{\textbf{2. Marco teórico}}{2. Marco teórico}}\label{marco-teorico}
 
