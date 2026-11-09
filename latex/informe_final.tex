@@ -101,6 +101,42 @@
 \usepackage{setspace}
 \onehalfspacing % interlineado 1,5
 
+% ---- Indice automatico: partes + formato ----
+\setcounter{tocdepth}{3}
+\usepackage{titletoc}
+\titlecontents{section}
+  [0em]
+  {\addvspace{4pt}\bfseries}
+  {}
+  {\bfseries}
+  {\titlerule*[0.5pc]{.}\contentspage}
+\titlecontents{subsection}
+  [1.5em]
+  {}
+  {}
+  {}
+  {\titlerule*[0.5pc]{.}\contentspage}
+\titlecontents{subsubsection}
+  [3.8em]
+  {}
+  {}
+  {}
+  {\titlerule*[0.5pc]{.}\contentspage}
+\makeatletter
+\newcommand*\l@parte[2]{%
+  \ifnum \c@tocdepth >-2 \relax
+    \addpenalty{-\@highpenalty}%
+    \addvspace{1.0em \@plus.2\p@}%
+    {\centering\bfseries #1\par}%
+    \addvspace{0.5em \@plus.2\p@}%
+  \fi}
+\newcommand{\parte}[1]{%
+  \addcontentsline{toc}{parte}{#1}%
+  \begin{center}{\Large\bfseries #1\par}\end{center}%
+}
+\@ifundefined{toclevel@parte}{\def\toclevel@parte{0}}{}%
+\makeatother
+
 % ---- Datos de portada y hoja de aprobacion (completar) ----
 \newcommand{\pendiente}[1]{\textcolor{red}{[#1]}}
 \colorlet{RED}{red} % \MakeUppercase tambien pasa el nombre del color a mayusculas
@@ -204,326 +240,14 @@ El/Los autor/autores de este trabajo final de carrera declara(n) que es/son el/l
 
 \pendiente{Texto de agradecimiento. También se puede incluir un apartado de dedicatorias en esta misma página.}
 
-% ================= Indice (propio) =================
+% ================= Tabla de contenido =================
 \newpage
 \begin{center}
 {\Large\bfseries Tabla de contenido\par}
 \end{center}
+\vspace{0.5em}
+{\hypersetup{linkcolor=black}\tableofcontents}
 
-
-\begin{center}
-\textbf{Parte I: Presentación del proyecto}
-\end{center}
-
-\hyperref[introduccion]{\textbf{1. Alcance del proyecto}}\dotfill\textbf{\pageref{introduccion}}
-
-\begin{quote}
-\hyperref[descripciuxf3n]{1.1 Descripción}\dotfill\pageref{descripciuxf3n}
-
-\hyperref[motivaciuxf3n]{1.2 Motivación}\dotfill\pageref{motivaciuxf3n}
-
-\hyperref[objetivo-general]{1.3 Objetivo general y objetivos específicos}\dotfill\pageref{objetivo-general}
-
-\hyperref[restricciones]{1.4 Restricciones}\dotfill\pageref{restricciones}
-\end{quote}
-
-\begin{center}
-\textbf{Parte II: Fundamentos}
-\end{center}
-
-\hyperref[marco-teorico]{\textbf{2. Marco teórico}}\dotfill\textbf{\pageref{marco-teorico}}
-
-\begin{quote}
-\hyperref[condiciones-ambientales]{2.1 Entorno estratosférico}\dotfill\pageref{condiciones-ambientales}
-
-\hyperref[fisica-del-vuelo]{2.2 Física del vuelo en globo}\dotfill\pageref{fisica-del-vuelo}
-
-\begin{quote}
-\hyperref[fundamento-fuxedsico-del-vuelo]{2.2.1 Fundamento físico del vuelo}\dotfill\pageref{fundamento-fuxedsico-del-vuelo}
-
-\hyperref[flotabilidad-empuje-de-arquuxedmedes]{2.2.2 Flotabilidad (empuje de Arquímedes)}\dotfill\pageref{flotabilidad-empuje-de-arquuxedmedes}
-
-\hyperref[ley-de-gases-ideales-y-altura-de-explosion]{2.2.3 Ley de gases ideales y altura de explosión}\dotfill\pageref{ley-de-gases-ideales-y-altura-de-explosion}
-\end{quote}
-
-\hyperref[tecnologias-de-comunicacion]{2.3 Tecnologías de comunicación}\dotfill\pageref{tecnologias-de-comunicacion}
-
-\begin{quote}
-\hyperref[lora]{2.3.1 LoRa}\dotfill\pageref{lora}
-
-\hyperref[narrowband-iot]{2.3.2 Narrowband IoT}\dotfill\pageref{narrowband-iot}
-
-\hyperref[dvb-s2-europeo]{2.3.3 DVB-S2 (Europeo)}\dotfill\pageref{dvb-s2-europeo}
-
-\hyperref[radios-definidos-por-software]{2.3.4 Radios definidos por software}\dotfill\pageref{radios-definidos-por-software}
-
-\hyperref[elecciuxf3n-de-banda]{2.3.5 Elección de banda}\dotfill\pageref{elecciuxf3n-de-banda}
-\end{quote}
-
-\hyperref[video-digital]{2.4 Video digital}\dotfill\pageref{video-digital}
-
-\begin{quote}
-\hyperref[codificaciuxf3n-de-video]{2.4.1 Codificación de video}\dotfill\pageref{codificaciuxf3n-de-video}
-
-\hyperref[encapsulamiento]{2.4.2 Encapsulamiento}\dotfill\pageref{encapsulamiento}
-\end{quote}
-
-\hyperref[componentes-rf]{2.5 Componentes de RF}\dotfill\pageref{componentes-rf}
-
-\begin{quote}
-\hyperref[amplificador-de-potencia]{2.5.1 Amplificador de potencia}\dotfill\pageref{amplificador-de-potencia}
-
-\hyperref[amplificador-de-bajo-ruido]{2.5.2 Amplificador de bajo ruido}\dotfill\pageref{amplificador-de-bajo-ruido}
-
-\hyperref[atenuadores]{2.5.3 Atenuadores}\dotfill\pageref{atenuadores}
-
-\hyperref[construcciuxf3n-y-materiales-antenas]{2.5.4 Construcción y materiales de antenas}\dotfill\pageref{construcciuxf3n-y-materiales-antenas}
-\end{quote}
-
-\hyperref[interfaces-comunicacion]{2.6 Interfaces de comunicación}\dotfill\pageref{interfaces-comunicacion}
-
-\begin{quote}
-\hyperref[spi]{2.6.1 SPI}\dotfill\pageref{spi}
-
-\hyperref[i2c]{2.6.2 I2C}\dotfill\pageref{i2c}
-
-\hyperref[uart]{2.6.3 UART}\dotfill\pageref{uart}
-\end{quote}
-
-\hyperref[energia-fundamentos]{2.7 Energía: baterías y conversores}\dotfill\pageref{energia-fundamentos}
-
-\begin{quote}
-\hyperref[baterias]{2.7.1 Baterías}\dotfill\pageref{baterias}
-
-\hyperref[conversor-de-voltaje]{2.7.2 Conversor de voltaje}\dotfill\pageref{conversor-de-voltaje}
-\end{quote}
-
-\hyperref[materiales-termico]{2.8 Materiales y control térmico}\dotfill\pageref{materiales-termico}
-
-\begin{quote}
-\hyperref[aluminio]{2.8.1 Aluminio}\dotfill\pageref{aluminio}
-
-\hyperref[eps]{2.8.2 EPS}\dotfill\pageref{eps}
-
-\hyperref[control-termico]{2.8.3 Control térmico}\dotfill\pageref{control-termico}
-\end{quote}
-\end{quote}
-
-\begin{center}
-\textbf{Parte III: Diseño general del sistema}
-\end{center}
-
-\hyperref[requerimientos-arquitectura]{\textbf{3. Requerimientos y arquitectura}}\dotfill\textbf{\pageref{requerimientos-arquitectura}}
-
-\begin{quote}
-\hyperref[requerimientos-sistema]{3.1 Requerimientos del sistema}\dotfill\pageref{requerimientos-sistema}
-
-\hyperref[arquitectura-general]{3.2 Arquitectura general: segmento de vuelo y segmento terrestre}\dotfill\pageref{arquitectura-general}
-
-\hyperref[fases-mision]{3.3 Fases de la misión}\dotfill\pageref{fases-mision}
-\end{quote}
-
-\hyperref[transmisiuxf3n]{\textbf{4. Diseño del enlace}}\dotfill\textbf{\pageref{transmisiuxf3n}}
-
-\begin{quote}
-\hyperref[distancia]{4.1 Distancia}\dotfill\pageref{distancia}
-
-\hyperref[banda]{4.2 Selección de bandas}\dotfill\pageref{banda}
-
-\hyperref[truxe1mites-para-el-uso-de-las-bandas]{4.3 Trámites para el uso de las bandas}\dotfill\pageref{truxe1mites-para-el-uso-de-las-bandas}
-
-\hyperref[link-budget-video-100-km]{4.4 Link budget de video}\dotfill\pageref{link-budget-video-100-km}
-
-\hyperref[link-budget-telemetruxeda-250-km]{4.5 Link budget de telemetría}\dotfill\pageref{link-budget-telemetruxeda-250-km}
-\end{quote}
-
-\begin{center}
-\textbf{Parte IV: Segmento de vuelo}
-\end{center}
-
-\hyperref[telemetruxeda]{\textbf{5. Sistema de telemetría}}\dotfill\textbf{\pageref{telemetruxeda}}
-
-\begin{quote}
-\hyperref[sensores]{5.1 Sensores}\dotfill\pageref{sensores}
-
-\hyperref[cantidad-de-bytes-de-telemetruxeda-a-transmitir]{5.2 Cantidad de bytes de telemetría a transmitir}\dotfill\pageref{cantidad-de-bytes-de-telemetruxeda-a-transmitir}
-
-\hyperref[arquitectura-transmisiuxf3n-de-telemetruxeda]{5.3 Arquitectura Transmisión de Telemetría}\dotfill\pageref{arquitectura-transmisiuxf3n-de-telemetruxeda}
-
-\hyperref[e22-400t22s]{5.4 E22-400T22S}\dotfill\pageref{e22-400t22s}
-
-\begin{quote}
-\hyperref[pcb-adaptador]{5.4.1 PCB Adaptador}\dotfill\pageref{pcb-adaptador}
-\end{quote}
-\end{quote}
-
-\hyperref[video]{\textbf{6. Sistema de video}}\dotfill\textbf{\pageref{video}}
-
-\begin{quote}
-\hyperref[cuxe1maras]{6.1 Cámaras}\dotfill\pageref{cuxe1maras}
-
-\hyperref[soporte-cuxe1mara]{6.2 Soporte Cámara}\dotfill\pageref{soporte-cuxe1mara}
-
-\hyperref[estuxe1ndares-de-dtv]{6.3 Estándares de DTV}\dotfill\pageref{estuxe1ndares-de-dtv}
-
-\hyperref[ancho-de-canal-transmisiuxf3n-de-video]{6.4 Ancho de canal de transmisión de video}\dotfill\pageref{ancho-de-canal-transmisiuxf3n-de-video}
-
-\hyperref[arquitectura-transmisiuxf3n-de-video]{6.5 Arquitectura de transmisión de video}\dotfill\pageref{arquitectura-transmisiuxf3n-de-video}
-
-\begin{quote}
-\hyperref[transmisor]{6.5.1 Transmisor}\dotfill\pageref{transmisor}
-
-\hyperref[amplificador-de-potencia-1]{6.5.2 Amplificador de Potencia}\dotfill\pageref{amplificador-de-potencia-1}
-\end{quote}
-\end{quote}
-
-\hyperref[antenas-transmisiuxf3n-de-video-y-telemetruxeda]{\textbf{7. Antenas de transmisión}}\dotfill\textbf{\pageref{antenas-transmisiuxf3n-de-video-y-telemetruxeda}}
-
-\begin{quote}
-\hyperref[construcciuxf3n]{7.1 Construcción}\dotfill\pageref{construcciuxf3n}
-\end{quote}
-
-\hyperref[payload]{\textbf{8. Computadora de a bordo y software}}\dotfill\textbf{\pageref{payload}}
-
-\begin{quote}
-\hyperref[arquitectura-de-comunicaciuxf3n]{8.1 Arquitectura de comunicación}\dotfill\pageref{arquitectura-de-comunicaciuxf3n}
-
-\hyperref[configuraciuxf3n-raspberry-pi]{8.2 Configuración Raspberry Pi}\dotfill\pageref{configuraciuxf3n-raspberry-pi}
-
-\hyperref[arquitectura-de-software]{8.3 Arquitectura de software}\dotfill\pageref{arquitectura-de-software}
-
-\begin{quote}
-\hyperref[esquema-general]{8.3.1 Esquema General}\dotfill\pageref{esquema-general}
-
-\hyperref[sensor-thread---adquisiciuxf3n-de-telemetruxeda]{8.3.2 Sensor Thread - Adquisición de Telemetría}\dotfill\pageref{sensor-thread---adquisiciuxf3n-de-telemetruxeda}
-
-\hyperref[telemetry-thread---transmisiuxf3n-lora]{8.3.3 Telemetry Thread - Transmisión LoRa}\dotfill\pageref{telemetry-thread---transmisiuxf3n-lora}
-
-\hyperref[video-thread---captura-y-transmisiuxf3n-de-video]{8.3.4 Video Thread - Captura y Transmisión de Video}\dotfill\pageref{video-thread---captura-y-transmisiuxf3n-de-video}
-
-\hyperref[control-thread]{8.3.5 Control Thread}\dotfill\pageref{control-thread}
-
-\hyperref[almacenamiento-local]{8.3.6 Almacenamiento Local}\dotfill\pageref{almacenamiento-local}
-
-\hyperref[gestiuxf3n-de-energuxeda-y-apagado-de-componentes]{8.3.7 Gestión de Energía y Apagado de Componentes}\dotfill\pageref{gestiuxf3n-de-energuxeda-y-apagado-de-componentes}
-\end{quote}
-\end{quote}
-
-\hyperref[sistema-de-energuxeda]{\textbf{9. Sistema de energía}}\dotfill\textbf{\pageref{sistema-de-energuxeda}}
-
-\begin{quote}
-\hyperref[energy-budget]{9.1 Energy Budget}\dotfill\pageref{energy-budget}
-
-\hyperref[baterias-1]{9.2 Baterias}\dotfill\pageref{baterias-1}
-
-\hyperref[banco-de-baterias]{9.3 Banco de baterias}\dotfill\pageref{banco-de-baterias}
-
-\hyperref[arquitectura]{9.4 Arquitectura}\dotfill\pageref{arquitectura}
-\end{quote}
-
-\hyperref[estructura-integracion]{\textbf{10. Estructura e integración}}\dotfill\textbf{\pageref{estructura-integracion}}
-
-\begin{quote}
-\hyperref[materiales-estructura]{10.1 Materiales y estructura}\dotfill\pageref{materiales-estructura}
-
-\hyperref[diseno-termico]{10.2 Diseño térmico}\dotfill\pageref{diseno-termico}
-
-\hyperref[transiciuxf3n-de-protoboard-a-placa-para-soldar]{10.3 Transición de protoboard a placa soldada}\dotfill\pageref{transiciuxf3n-de-protoboard-a-placa-para-soldar}
-\end{quote}
-
-\hyperref[lanzamiento]{\textbf{11. Globo, descenso y recuperación}}\dotfill\textbf{\pageref{lanzamiento}}
-
-\begin{quote}
-\hyperref[weight-budget]{11.1 Weight budget}\dotfill\pageref{weight-budget}
-
-\hyperref[seleccion-globo-cap]{11.2 Selección del globo}\dotfill\pageref{seleccion-globo-cap}
-
-\begin{quote}
-\hyperref[opciones-de-globos]{11.2.1 Opciones de globos}\dotfill\pageref{opciones-de-globos}
-
-\hyperref[selecciuxf3n-del-globo]{11.2.2 Selección del globo}\dotfill\pageref{selecciuxf3n-del-globo}
-\end{quote}
-
-\hyperref[evaluaciuxf3n-de-helio-e-hidruxf3geno]{11.3 Selección del gas: helio o hidrógeno}\dotfill\pageref{evaluaciuxf3n-de-helio-e-hidruxf3geno}
-
-\begin{quote}
-\hyperref[capacidad-de-sustentaciuxf3n]{11.3.1 Capacidad de sustentación}\dotfill\pageref{capacidad-de-sustentaciuxf3n}
-
-\hyperref[seguridad]{11.3.2 Seguridad}\dotfill\pageref{seguridad}
-\end{quote}
-
-\hyperref[lift]{11.4 Lift y velocidades de ascenso y descenso}\dotfill\pageref{lift}
-
-\begin{quote}
-\hyperref[velocidad-de-ascenso-y-descenso]{11.4.1 Velocidad de ascenso y descenso}\dotfill\pageref{velocidad-de-ascenso-y-descenso}
-\end{quote}
-
-\hyperref[paracaidas]{11.5 Paracaídas}\dotfill\pageref{paracaidas}
-
-\hyperref[sistema-de-comunicaciuxf3n-post-aterrizaje]{11.6 Comunicación post-aterrizaje}\dotfill\pageref{sistema-de-comunicaciuxf3n-post-aterrizaje}
-
-\hyperref[localizacion-recuperacion]{11.7 Procedimiento de localización y recuperación}\dotfill\pageref{localizacion-recuperacion}
-\end{quote}
-
-\begin{center}
-\textbf{Parte V: Segmento terrestre}
-\end{center}
-
-\hyperref[arquitectura-recepciuxf3n-de-telemetruxeda-y-video]{\textbf{12. Estación terrena}}\dotfill\textbf{\pageref{arquitectura-recepciuxf3n-de-telemetruxeda-y-video}}
-
-\begin{quote}
-\hyperref[estaciuxf3n-terrena]{12.1 Arquitectura general}\dotfill\pageref{estaciuxf3n-terrena}
-
-\hyperref[antenas-recepciuxf3n-de-video-y-telemetruxeda]{12.2 Antenas de recepción}\dotfill\pageref{antenas-recepciuxf3n-de-video-y-telemetruxeda}
-
-\begin{quote}
-\hyperref[antenas-adquiridas]{12.2.1 Antenas adquiridas}\dotfill\pageref{antenas-adquiridas}
-\end{quote}
-
-\hyperref[lna-filtro]{12.3 LNA y filtro pasa banda}\dotfill\pageref{lna-filtro}
-
-\begin{quote}
-\hyperref[amplificador-de-bajo-ruido-1]{12.3.1 Amplificador de bajo ruido}\dotfill\pageref{amplificador-de-bajo-ruido-1}
-
-\hyperref[filtro-pasa-banda]{12.3.2 Filtro pasa banda}\dotfill\pageref{filtro-pasa-banda}
-\end{quote}
-
-\hyperref[receptor-cap]{12.4 Receptor y demodulación}\dotfill\pageref{receptor-cap}
-
-\begin{quote}
-\hyperref[receptor]{12.4.1 Receptor}\dotfill\pageref{receptor}
-
-\hyperref[libreria-gr-dvbs2rx]{12.4.2 Librería gr-dvbs2rx}\dotfill\pageref{libreria-gr-dvbs2rx}
-\end{quote}
-\end{quote}
-
-\hyperref[dashboard]{\textbf{13. Dashboard}}\dotfill\textbf{\pageref{dashboard}}
-
-\begin{center}
-\textbf{Parte VI: Validación y cierre}
-\end{center}
-
-\hyperref[pruebas-de-transmisiuxf3n-de-video-y-telemetruxeda]{\textbf{14. Pruebas del sistema}}\dotfill\textbf{\pageref{pruebas-de-transmisiuxf3n-de-video-y-telemetruxeda}}
-
-\begin{quote}
-\hyperref[muxe9tricas-para-evaluar-calidad-de-video-y-desempeuxf1o-de-los-enlaces.]{14.1 Métricas de evaluación}\dotfill\pageref{muxe9tricas-para-evaluar-calidad-de-video-y-desempeuxf1o-de-los-enlaces.}
-
-\hyperref[laboratorio]{14.2 Pruebas de laboratorio}\dotfill\pageref{laboratorio}
-
-\hyperref[corta-distancia]{14.3 Pruebas a corta distancia}\dotfill\pageref{corta-distancia}
-
-\hyperref[simulaciuxf3n-larga-distancia-en-pasillo-de-la-universidad]{14.4 Simulación de larga distancia en pasillo}\dotfill\pageref{simulaciuxf3n-larga-distancia-en-pasillo-de-la-universidad}
-
-\hyperref[simulaciuxf3n-larga-distancia-con-separaciuxf3n-de-2.5-km]{14.5 Simulación con separación de 2,5 km}\dotfill\pageref{simulaciuxf3n-larga-distancia-con-separaciuxf3n-de-2.5-km}
-
-\hyperref[simulaciuxf3n-larga-distancia-con-separaciuxf3n-de-8.2-km]{14.6 Simulación con separación de 8,2 km}\dotfill\pageref{simulaciuxf3n-larga-distancia-con-separaciuxf3n-de-8.2-km}
-\end{quote}
-
-\hyperref[vuelo-resultados]{\textbf{15. Vuelo y resultados}}\dotfill\textbf{\pageref{vuelo-resultados}}
-
-\hyperref[conclusiones]{\textbf{16. Conclusiones y trabajo futuro}}\dotfill\textbf{\pageref{conclusiones}}
-
-\hyperref[referencias]{\textbf{Referencias y anexos}}\dotfill\textbf{\pageref{referencias}}
 
 % ================= Resumen =================
 \newpage
@@ -536,9 +260,7 @@ El/Los autor/autores de este trabajo final de carrera declara(n) que es/son el/l
 \newpage
 \pagenumbering{arabic}
 
-\begin{center}
-{\Large\bfseries Parte I: Presentación del proyecto\par}
-\end{center}
+\parte{Parte I: Presentación del proyecto}
 
 \section{\texorpdfstring{\textbf{1. Alcance del proyecto}}{1. Alcance del proyecto}}\label{introduccion}
 
@@ -628,6 +350,7 @@ El diseño y desarrollo del sistema se encuentra principalmente condicionado por
 
 
 \newpage
+\parte{Parte II: Fundamentos}
 
 \section{\texorpdfstring{\textbf{2. Marco teórico}}{2. Marco teórico}}\label{marco-teorico}
 
@@ -1200,9 +923,7 @@ Los fundamentos de cada término son los siguientes \cite{ref39}:
   Rechazo de calor (Q out,rad): En el vacío del espacio, el calor sólo puede disiparse mediante radiación infrarroja ya que no hay aire ni fluidos que permitan la transferencia de calor por convección.
 \end{itemize}
 
-\begin{center}
-{\Large\bfseries Parte III: Diseño general del sistema\par}
-\end{center}
+\parte{Parte III: Diseño general del sistema}
 
 \section{\texorpdfstring{\textbf{3. Requerimientos y arquitectura}}{3. Requerimientos y arquitectura}}\label{requerimientos-arquitectura}
 
@@ -1373,9 +1094,7 @@ Margin & dB & Eb/N0 - Required Eb/N0 & 5,324762548 \\
 
 \subsection{4.5 Link budget de telemetría}\label{link-budget-telemetruxeda-250-km}
 
-\begin{center}
-{\Large\bfseries Parte IV: Segmento de vuelo\par}
-\end{center}
+\parte{Parte IV: Segmento de vuelo}
 
 \section{\texorpdfstring{\textbf{5. Sistema de telemetría}}{5. Sistema de telemetría}}\label{telemetruxeda}
 
@@ -1807,7 +1526,7 @@ El payload está compuesto por dos placas: la placa principal y la placa de alim
 
 Para vincular los distintos periféricos con los pines GPIO de la placa se emplea una GPIO breakout board, lo que permite distribuir de forma ordenada las conexiones hacia los diferentes módulos. Las componentes conectados a la placa principal junto a su funcion y el detalle de conexiones se encuentran a continuacion.
 
-\subsubsection{\texorpdfstring{U-Blox NEO-6M }{U-Blox NEO-6M }}\label{u-blox-neo-6m}
+\subsubsection*{\texorpdfstring{U-Blox NEO-6M }{U-Blox NEO-6M }}\phantomsection\label{u-blox-neo-6m}
 
 El módulo GPS U-Blox NEO-6M se encarga de recibir las coordenadas de posición del payload durante el vuelo. Se comunica con la Raspberry Pi mediante el protocolo UART0, disponible en los pines GPIO 14 y 15 (RXD0/TXD0).
 
@@ -2186,7 +1905,7 @@ Durante la fase de descenso, se verifica en cada ciclo si la altitud del payload
 
 El payload guarda en disco dos tipos de información, según si cambian o no entre reinicios: los datos de sesión (uno por arranque) y el estado de vuelo (persistente, único para todo el vuelo).
 
-\subsubsection{8.3.6.1 Datos de sesión}\label{datos-de-sesiuxf3n}
+\subsubsection*{8.3.6.1 Datos de sesión}\phantomsection\label{datos-de-sesiuxf3n}
 
 Cada arranque del sistema genera un conjunto nuevo de tres archivos, todos identificados con el mismo identificador de sesión.
 
@@ -2199,7 +1918,7 @@ Cada arranque del sistema genera un conjunto nuevo de tres archivos, todos ident
   \textbf{Video}: Guarda el stream de video continuo de la cámara a medida que la cámara va entregando cada bloque de datos en formato TS. La grabación continúa incluso si el enlace de trasmicion está apagado.
 \end{itemize}
 
-\subsubsection{8.3.6.2 Estado de vuelo}\label{estado-de-vuelo}
+\subsubsection*{8.3.6.2 Estado de vuelo}\phantomsection\label{estado-de-vuelo}
 
 A diferencia de los tres anteriores, este archivo es único y persiste entre reinicios: no se crea uno nuevo por sesión, sino que se actualiza sobre el mismo archivo durante todo el vuelo. La escritura es atómica, se escribe primero una copia temporal, se fuerza su escritura física a disco, y recién entonces se reemplaza el archivo definitivo. Esto garantiza que un corte de energía a mitad de la escritura nunca deja un archivo corrupto.
 
@@ -2386,7 +2105,7 @@ También se consideró fabricar un paracaídas casero con tela, hilo y líneas d
 
 Se seleccionó el Rocketman High Altitude Balloon Parachute de 4 ft. Cumple con el objetivo de velocidad de aterrizaje. Tiene la mejor relación arrastre/peso de las opciones evaluadas minimizando el peso total del sistema. Su diseño de 4 líneas y material ripstop reduce el riesgo de enredo y garantiza una apertura estable. Además, es una empresa confiable que realizó sistemas de recuperación para empresas reconocidas como Nasa o SpaceX \cite{ref98}. Se descartó la opción de High Altitude Science por tener el doble de peso y también por costar el doble de precio.
 
-\subsection{Sistema de Liberacion del globo}\label{sistema-de-liberacion-del-globo}
+\subsection*{Sistema de Liberacion del globo}\phantomsection\label{sistema-de-liberacion-del-globo}
 
 En caso de que la carga útil detecte que sale de la zona permitida o el vuelo cumplió su tiempo máximo, se implementó un sistema de corte, utilizados en proyectos anteriores como {[}Ur06{]} y {[}CFL09{]}, en donde se usa un filamento de nicrom, que calentándose corta la tanza a la cual está atada el globo estratosférico, liberándolo y comenzando el descenso.
 
@@ -2436,9 +2155,7 @@ Después de llegar a tierra, el dispositivo continúa enviando cada 10 minutos h
 
 \pendiente{11.7 Procedimiento de localización y recuperación.}
 
-\begin{center}
-{\Large\bfseries Parte V: Segmento terrestre\par}
-\end{center}
+\parte{Parte V: Segmento terrestre}
 
 \section{\texorpdfstring{\textbf{12. Estación terrena}}{12. Estación terrena}}\label{arquitectura-recepciuxf3n-de-telemetruxeda-y-video}
 
@@ -2535,9 +2252,7 @@ Además, proporciona la aplicación dvbs2-tx para la transmisión. Al igual que 
 \textbf{\hfill\break
 }
 
-\begin{center}
-{\Large\bfseries Parte VI: Validación y cierre\par}
-\end{center}
+\parte{Parte VI: Validación y cierre}
 
 \section{\texorpdfstring{\textbf{14. Pruebas del sistema}}{14. Pruebas del sistema}}\label{pruebas-de-transmisiuxf3n-de-video-y-telemetruxeda}
 
