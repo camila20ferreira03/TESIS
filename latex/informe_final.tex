@@ -8,7 +8,7 @@
 \usepackage{newunicodechar}
 \newunicodechar{→}{\ensuremath{\rightarrow}}
 \newunicodechar{ǫ}{\ensuremath{\epsilon}}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
 \usepackage{amsmath,amssymb}
 \setcounter{secnumdepth}{4} % numeracion hasta paragraph (x.x.x.x)
 \usepackage{iftex}
@@ -1151,7 +1151,16 @@ El examen teórico consta de 3 partes. La primera parte es sobre la Reglamentaci
 
 Se obtuvo el Permiso de Radioaficionado de Categoría ``General'', con el Distintivo de Llamada ``CX1DPH''. Con este permiso se está habilitado a transmitir en las bandas asignadas a este servicio, entre ellas la banda de 433 mHz utilizada para la telemetría y la banda de ATV 1240 mHz para la transmisión de video.
 
-\subsection{Link budget de video}\label{link-budget-video-100-km}
+\subsection{Link budget}\label{link-budget}
+
+Consideraciones:
+\begin{itemize}
+    \item Mismatch Efficiency: Se tomó en cuenta el SWR de las antenas que se adquirieron y construyeron.
+    \item Efficiency: Las antenas, tanto de la sonda como las de la estación terrena, estarán sujetas a tubos de plástico, por lo que las pérdidas de potencia por efecto joule son mínimas.
+    \item Polarization Match Efficiency: Se estima que en promedio se perderá aproximadamente la mitad de la potencia debido al movimiento pendular que puede tener el payload.
+\end{itemize}
+
+\subsubsection{Video (100km)}\label{link-budget-video}
 
 Parametros:
 
@@ -1176,59 +1185,104 @@ Calculos:
   >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2994}}
   >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1304}}
   >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.3251}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1851}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.0290}}@{}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1851}}
+  >{\centering\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.0290}}@{}}
 \toprule\noalign{}
+\textbf{Parameter} & \textbf{Unit} & \textbf{Calculation} & & \\
+\midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-Parameter & Unit & Calculation & & \\
-Reference Noise & dB (mW/Hz) & 10 log10 kT0 & -173,9772292 & - \\
-Total Receiver Noise & dB & 10 log10 ( FLNA + (FRX − 1)/G -1 ) & -7,488006223 & - \\
-Transmit Power SDR & dBm (W) & 10 log10 PT & 0 & .+ \\
-Amplifier (x2) Gain & dB & 10 log10 G & 18,5 & .+ \\
-Transmit Mismatch Efficiency & dB & 10 log10 ηT & -0,1322826573 & .+ \\
-Transmit Efficiency & dB & 10 log10 ǫT & -0,08773924308 & .+ \\
-Transmit Antenna Directivity & dBi & 10 log10 GT & 1,534059365 & .+ \\
-Path Loss & dB & 10 log10 Lp & 134,3102059 & - \\
-Polarization Match Efficiency & dB & 10 log10 ǫp & -3,010299957 & .+ \\
-Receive Antenna Directivity & dBi & 10 log10 GR & 13,7 & .+ \\
-Receive Efficiency & dB & 10 log10 ǫR & -0,08773924308 & .+ \\
-Receive Mismatch Efficiency & dB & 10 log10 ηR & -0,04364805402 & .+ \\
-Bit Rate & dB(b/s) & 10 log10 rb & 61,70261715 & - \\
+Reference Noise & dB (mW/Hz) & $10\log_{10} kT_0$ & $-173{,}9772292$ & $-$ \\
+Total Receiver Noise & dB & $10\log_{10}\left(F_{LNA} + \frac{F_{RX}-1}{G} - 1\right)$ & $-7{,}488006223$ & $-$ \\
+Transmit Power SDR & dBm (W) & $10\log_{10} P_T$ & $0$ & $+$ \\
+Amplifier ($\times$2) Gain & dB & $10\log_{10} G$ & $18{,}5$ & $+$ \\
+Transmit Mismatch Efficiency & dB & $10\log_{10} \eta_T$ & $-0{,}1322826573$ & $+$ \\
+Transmit Efficiency & dB & $10\log_{10} \epsilon_T$ & $-0{,}08773924308$ & $+$ \\
+Transmit Antenna Directivity & dBi & $10\log_{10} G_T$ & $1{,}534059365$ & $+$ \\
+Path Loss & dB & $10\log_{10} L_p$ & $134{,}3102059$ & $-$ \\
+Polarization Match Efficiency & dB & $10\log_{10} \epsilon_p$ & $-3{,}010299957$ & $+$ \\
+Receive Antenna Directivity & dBi & $10\log_{10} G_R$ & $13{,}7$ & $+$ \\
+Receive Efficiency & dB & $10\log_{10} \epsilon_R$ & $-0{,}08773924308$ & $+$ \\
+Receive Mismatch Efficiency & dB & $10\log_{10} \eta_R$ & $-0{,}04364805402$ & $+$ \\
+Bit Rate & dB(b/s) & $10\log_{10} r_b$ & $61{,}70261715$ & $-$ \\
 \end{longtable}
 }
-
-Consideraciones:
-
-\begin{itemize}
-\item
-  Mismatch Efficiency: Se tomó en cuenta el SWR de las antenas que se adquirieron y construyeron.
-\item
-  Efficiency: Las antenas, tanto de la sonda como las de la estación terrena, estarán sujetas a tubos de plástico, por lo que las pérdidas de potencia por efecto joule son mínimas.
-\item
-  Polarization Match Efficiency:
-\end{itemize}
 
 Resultados:
 
 {\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3955}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0450}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2653}}
-  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2621}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.4000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2800}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2200}}@{}}
 \toprule\noalign{}
+\textbf{Result} & \textbf{Unit} & \textbf{Calculation} & \\
+\midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-Eb/N0 & dB & (sum) & 15,82476255 \\
-Required Eb/N0 BER=10\^{}(−6) for QPSK & dB & & 10,5 \\
-Margin & dB & Eb/N0 - Required Eb/N0 & 5,324762548 \\
+$E_b/N_0$ & dB & (sum) & $15{,}82476255$ \\
+Required $E_b/N_0$ (BER $=10^{-6}$, QPSK) & dB & & $10{,}5$ \\
+Margin & dB & $E_b/N_0 - (E_b/N_0)_{\text{req}}$ & \cellcolor{green!40}$\mathbf{5{,}324762548}$ \\
 \end{longtable}
 }
 
-\subsection{Link budget de telemetría}\label{link-budget-telemetruxeda-250-km}
+\subsubsection{Telemetría (250 km)}\label{link-budget-telemetria}
+
+Calculos:
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2000}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3500}}@{}}
+\toprule\noalign{}
+\textbf{Parameter} & \textbf{Unit} & \textbf{Value} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Transmit Power & dBm (W) & $22$ \\
+Transmit Mismatch Efficiency & dB & $-0{,}08773924308$ \\
+Transmit Efficiency & dB & $-0{,}087739243$ \\
+Transmit Antenna Directivity & dBi & $2{,}053$ \\
+Path Loss & dB & $-133{,}13$ \\
+Polarization Match Efficiency & dB & $-3{,}010299957$ \\
+Receive Antenna Directivity & dBi & $11$ \\
+Receive Efficiency & dB & $-0{,}08773924308$ \\
+Receive Mismatch Efficiency & dB & $-0{,}04364805402$ \\
+\midrule\noalign{}
+Received Power & dBm & $-101{,}3941657$ \\
+\midrule\noalign{}
+Reference Noise & dB (mW/Hz) & $-173{,}9772292$ \\
+Noise Figure SX1262 & dB & $6$ \\
+Bandwidth & dB-Hz & $50{,}97$ \\
+\midrule\noalign{}
+Noise Floor & dBm & $-117{,}0072292$ \\
+\end{longtable}
+}\cite{ref108}\cite{ref109}
+
+Resultados:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2000}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3500}}@{}}
+\toprule\noalign{}
+\textbf{Result} & \textbf{Unit} & \textbf{Value} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Received SNR & dB & $15{,}61306346$ \\
+Required SNR (SF9) & dB & $-12{,}5$ \\
+SNR Margin & dB & \cellcolor{green!40}$\mathbf{28{,}11306346}$ \\
+\end{longtable}
+}
+
+
 
 \parte{Parte IV: Segmento de vuelo}
 
@@ -2296,13 +2350,13 @@ Según \cite{ref40} el sistema de recepción se compone de la antena, seguido de
 
 La arquitectura que se utilizará es la siguiente:
 
-\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image36.png}
-
-AGREGAR FILTRO
+\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/arquitectura-recepcion.png}
 
 \subsection{Arquitectura general}\label{estaciuxf3n-terrena}
 
-Para construir la estación terrena se seleccionaron materiales económicos. Se adquirieron tubos de PVC, conexiones de tubo en forma de T y L, tornillos para fijar las conexiones, y planchas de madera para la base. Adicionalmente, se construyó para que se pueda modificar el tilt y azimut manualmente.\includegraphics[width=2.5573in,keepaspectratio]{./imagenes/image37.png}
+Para construir la estación terrena se seleccionaron materiales económicos. Se adquirieron tubos de PVC, conexiones de tubo en forma de T y L, tornillos para fijar las conexiones, y planchas de madera para la base. Adicionalmente, se construyó para que se pueda modificar el tilt y azimut manualmente.
+
+\includegraphics[width=2.5573in,keepaspectratio]{./imagenes/image37.png}
 
 Para el hardware, se compró una caja de electricidad y se adaptó para fijar cada componente. El módulo LoRa, las luces LED, y el LNA, se soldaron sobre una placa.
 
@@ -2316,7 +2370,9 @@ Una vez todo fijo a la caja, se colocó en la estructura de la estación terrena
 
 En la estación terrena, se determinó que la mejor opción es tener una antena de ganancia media o alta. Las antenas Yagi-Uda son muy utilizadas en proyectos similares \cite{ref2,ref44,ref71}. La estación terrena se encuentra en un lugar fijo y estable en la Tierra. A diferencia del globo, que está en movimiento constante y girando, la antena de la estación terrena no necesita ser omnidireccional. Esto permite utilizar antenas altamente directivas que concentran su sensibilidad en una dirección específica, captando señales mucho más débiles. De esta forma, compensar la baja ganancia y la radiación débil del transmisor del globo, logrando un buen enlace aunque la antena del globo sea simple y de baja ganancia.
 
-La antena Yagi-Uda se trata de un arreglo parasitario, lo que significa que solo un elemento está conectado directamente al transmisor, mientras que los demás (parásitos) reirradian energía inducida por el campo electromagnético del primero. Se compone por tres elementos: reflector, excitado y director. El elemento excitado es típicamente un dipolo plegado. El reflector se coloca detrás del elemento excitado, en dirección opuesta a la radiación deseada, permitiendo cancelar o reducir la señal hacia atrás. Suele ser 3\% más largo que la longitud de media onda en el conductor. Los elementos directores se colocan delante del elemento excitado en la dirección de máxima radiación. El primer director es típicamente un 3\% más corto que el elemento excitado. Al añadir más directores, se incrementa la ganancia y se estrecha el haz de la señal \cite{ref70}. \includegraphics[width=2.5938in,keepaspectratio]{./imagenes/image20.png}
+La antena Yagi-Uda se trata de un arreglo parasitario, lo que significa que solo un elemento está conectado directamente al transmisor, mientras que los demás (parásitos) reirradian energía inducida por el campo electromagnético del primero. Se compone por tres elementos: reflector, excitado y director. El elemento excitado es típicamente un dipolo plegado. El reflector se coloca detrás del elemento excitado, en dirección opuesta a la radiación deseada, permitiendo cancelar o reducir la señal hacia atrás. Suele ser 3\% más largo que la longitud de media onda en el conductor. Los elementos directores se colocan delante del elemento excitado en la dirección de máxima radiación. El primer director es típicamente un 3\% más corto que el elemento excitado. Al añadir más directores, se incrementa la ganancia y se estrecha el haz de la señal \cite{ref70}. 
+
+\includegraphics[width=2.5938in,keepaspectratio]{./imagenes/image20.png}
 
 Los elementos se montan paralelos entre sí sobre un botalón (boom). El espaciamiento típico varía entre 0.1λ y 0.25λ. Un espaciamiento mayor suele mejorar el ancho de banda y la ganancia, pero requiere un boom más largo. La impedancia de una antena Yagi es mucho más baja que la de un dipolo común debido a la fuerte interacción eléctrica con sus elementos parásitos (reflector y directores) \cite{ref70}.
 
