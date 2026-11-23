@@ -631,7 +631,7 @@ NB-IoT tiene un link budget de 164 dB, mientras que GPRS y LTE tienen 144 dB y 1
 
 MQTT(Message Queuing Telemetry Transport) es un protocolo de mensajería pensado para redes con poco ancho de banda, alta latencia o conectividad inestable, y para dispositivos con recursos limitados de procesamiento y energía. Funciona sobre TCP/IP y se basa en un modelo de publicación/suscripción con tres roles. El publicador envía mensajes asociados a un tópico determinado. El suscriptor declara su interés en uno o más tópicos y recibe los mensajes que se publiquen en ellos. Por último, el broker es el servidor central que recibe todos los mensajes, los filtra por tópico y los distribuye a los suscriptores correspondientes.
 
-El establecimiento de la sesión se da en dos etapas. Primero se establece la conexión de transporte: el cliente abre una conexión TCP con el broker, por convención en el puerto 1883 sin cifrado o en el 8883 con TLS. Luego se establece la conexión MQTT propiamente dicha. El cliente envía un paquete CONNECT con su Client ID, que es su identificador único ante el broker, y también usuario y contraseña si el broker requiere autenticación. 
+El establecimiento de la sesión se da en dos etapas. Primero se establece la conexión de transporte: el cliente abre una conexión TCP con el broker, por convención en el puerto 1883 sin cifrado o en el 8883 con TLS. Luego se establece la conexión MQTT propiamente dicha. El cliente envía un paquete CONNECT con su Client ID, que es su identificador único ante el broker, y también usuario y contraseña si el broker requiere autenticación. El broker responde con un paquete CONNACK con un código de retorno, donde el valor 0 indica que la conexión fue aceptada.
 
 \subsection{Enlace de video}\label{enlace-video}
 
