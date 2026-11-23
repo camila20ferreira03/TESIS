@@ -98,10 +98,10 @@
 
 % ---- Titulos numerados automaticamente ----
 \usepackage{titlesec}
-\titleformat{\section}{\bfseries\large}{\thesection.}{0.6em}{}
-\titleformat{\subsection}{\bfseries}{\thesubsection}{0.6em}{}
-\titleformat{\subsubsection}{\bfseries}{\thesubsubsection}{0.6em}{}
-\titleformat{\paragraph}{\bfseries}{\theparagraph}{0.6em}{}
+\titleformat{\section}{\bfseries\Large}{\thesection.}{0.6em}{}
+\titleformat{\subsection}{\bfseries\large}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\bfseries\normalsize}{\thesubsubsection}{0.6em}{}
+\titleformat{\paragraph}{\bfseries\small}{\theparagraph}{0.6em}{}
 \titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 % ---- Indice automatico: partes + formato (tocloft: enlaces hyperref estables) ----
@@ -563,15 +563,17 @@ En el caso de las antenas omnidireccionales, su área efectiva es inherentemente
 \item \textbf{Atenuación atmosférica y ruido.} Las frecuencias superiores sufren una mayor atenuación por gases atmosféricos y lluvia debido a la interacción física entre las ondas electromagnéticas de longitud de onda corta y las moléculas presentes en la atmósfera \cite{ref40}. 
 \end{enumerate}
 
-\subsection{Enlace de telemetría}\label{enlace-telemetria}
+\subsection{Enlaces de datos}\label{enlaces-de-datos}
 
-\subsubsection{LoRa}\label{lora}
+En esta sección se presentan las tecnologías de comunicación consideradas para el sistema. La modulación LoRa constituye el enlace principal de telemetría entre el \textit{payload} y la estación terrena durante el vuelo. El protocolo de radioaficionados APRS se analiza como alternativa, dado su uso extendido en globos estratosféricos. Por último, también se considera el estándar de comunicación celular Narrowband IoT (NB-IoT) para transmitir la localización del \textit{payload} a través de la red móvil después del aterrizaje. 
 
-Long Range, desarrollada por Semtech, es una tecnología de transmisión de paquetes de datos pequeños a largas distancias, con baja potencia, bajo consumo de energía y una baja tasa de transmisión de datos. Utiliza una modulación basada en Chirp Spread Spectrum (CSS). Esta técnica permite transmitir pequeños paquetes de datos a largas distancias con alta robustez frente al ruido y a señales débiles \cite{ref29,ref31}.
+\subsubsection{Enlace de telemetría: LoRa}\label{lora}
 
-En aplicaciones terrestres, LoRa puede alcanzar distancias aproximadas de entre 2 y 15 km \cite{ref29} mientras que en enlaces aire-tierra con línea de vista, como en proyectos de globos estratosféricos, pueden alcanzarse distancias del orden de 100--300 km. Una de las principales ventajas de LoRa es su elevada sensibilidad, permitiendo detectar señales extremadamente débiles, típicamente entre −116 dBm y −136 dBm dependiendo de la configuración utilizada \cite{ref31}.
+Long Range, desarrollada por Semtech, es una tecnoloxgía de transmisión de paquetes de datos pequeños a largas distancias, con baja potencia, bajo consumo de energía y una baja tasa de transmisión de datos. Utiliza una modulación basada en Chirp Spread Spectrum (CSS). Esta técnica permite transmitir pequeños paquetes de datos a largas distancias con alta robustez frente al ruido y a señales débiles \cite{ref29,ref31}.
 
-Los parámetros de configuración son el ancho de banda, spreading factor y tasa de codificación. Puede manejar tasas de datos típicas comprendidas aproximadamente entre 0.3 kbps y 50 kbps \cite{ref31}.
+En aplicaciones terrestres, LoRa puede alcanzar distancias aproximadas de entre 2 y 15 km \cite{ref29} mientras que en enlaces aire-tierra con línea de vista, como en proyectos de globos estratosféricos, pueden alcanzarse distancias del orden de 100--300 km. Una de las principales ventajas de LoRa es su elevada sensibilidad, permitiendo detectar señales extremadamente débiles, típicamente entre −116 dBm y −136 dBm dependiendo de la configuración utilizada \cite{ref31}. Opera en las bandas ISM de 433, 868 o 915 MHz, dependiendo de la región donde se implemente \cite{ref30,ref31}.
+
+Los parámetros de configuración son el ancho de banda, spreading factor y tasa de codificación, que se detallan en la tabla \ref{tab:lora-parametros}. Puede manejar tasas de datos típicas comprendidas aproximadamente entre 0.3 kbps y 50 kbps \cite{ref31}.
 
 \begin{table}[H]
 \centering
@@ -594,7 +596,7 @@ Potencia de transmisión & $-4$, \ldots, 20 dBm & La relación señal-ruido aume
 \label{tab:lora-parametros}
 \end{table}
 
-Opera en las bandas ISM de 433, 868 o 915 MHz, dependiendo de la región donde se implemente. Además, cada transmisión puede transportar una carga útil de entre 2 y 255 octetos \cite{ref30,ref31}.
+Cada transmisión puede transportar una carga útil de entre 2 y 255 octetos \cite{ref30,ref31}.
 
 \begin{figure}[H]
 \centering
@@ -603,15 +605,33 @@ Opera en las bandas ISM de 433, 868 o 915 MHz, dependiendo de la región donde s
 \label{fig:lora-trama}
 \end{figure}
 
+\pendiente{Completar tiempo en el aire}
+
+\subsubsection{APRS}\label{aprs}
+
+APRS (\emph{Automatic Packet Reporting System}) es un protocolo de comunicación por paquetes que usan los radioaficionados para difundir datos en tiempo real a todas las estaciones de una red. Se usa principalmente para transmitir posición GPS, telemetría y mensajes cortos \cite{ref110}.
+
+En la capa física, APRS usa modulación AFSK (\emph{Audio Frequency-Shift Keying}, modulación por desplazamiento de frecuencia de audio) sobre FM, a 1200 baudios. Sigue el estándar Bell 202, que representa los bits con tonos de 1200 Hz y 2200 Hz. Opera normalmente en bandas de radioaficionado, como VHF de 144 MHz o UHF de 433 MHz \cite{ref110}.
+
+En la capa de enlace usa el protocolo AX.25. Cada trama contiene el indicativo de origen, el de destino, el camino de repetición o \emph{path}, los datos a trasmitir y un código de verificación de errores \cite{ref110,ref111}.
+
+Para ampliar la cobertura, la red usa repetidores digitales o \emph{digipeaters}. Estos funcionan escuchando todas las tramas y retransmitiendo solo las que cumplen las condiciones del camino indicado por el emisor. Al retransmitir una trama, cada repetidor digital agrega su indicativo. Así queda registrado qué repetidores la procesaron \cite{ref110,ref111}. El camino es la ruta que el emisor fija para sus tramas, y puede ser nominal o genérico. En el camino nominal, el emisor conoce la red y nombra en orden los repetidores digitales que deben repetir la trama. Si uno de ellos no la recibe, la ruta se interrumpe. En el camino genérico, el emisor no conoce la red y usa alias genéricos. El esquema estándar es WIDEn-N, donde n indica el número de saltos con que se originó la trama y N los saltos que le quedan. Cada repetidor digital le resta 1 a N al retransmitirla, y cuando N llega a 0 la trama deja de repetirse \cite{ref110}. Por último, las IGates (\emph{Internet Gateways}) son receptores conectados a Internet que reenvían las tramas recibidas por radio al APRS-IS (\emph{APRS Internet System}). Esta red troncal mundial de alto ancho de banda deja los datos disponibles en tiempo real para cualquier persona del mundo \cite{ref110}.
+
+Uno de los servicios más usados para ver estos datos es aprs.fi, un sitio web que se conecta al APRS-IS, guarda en una base de datos los paquetes que recibe y los muestra sobre un mapa casi en tiempo real \cite{ref112}. Así se puede seguir la trayectoria de una estación, consultar su historial de posiciones y ver la telemetría que transmite.
+
 \subsubsection{Narrowband IoT}\label{narrowband-iot}
+
+\paragraph{Características del estándar}\label{nbiot-caracteristicas}
 
 Es un estándar de comunicación inalámbrica diseñado para conectar dispositivos de bajo consumo a redes celulares usando una franja de banda muy angosta, apenas 180 kHz \cite{ref67}. Como menciona Antel, Nb-IoT es una evolución de LTE enfocados en la optimización de batería. Fue pensado específicamente para dispositivos que envían poca información (bajo ancho de banda) y con poca frecuencia \cite{ref68}.
 
 NB-IoT tiene un link budget de 164 dB, mientras que GPRS y LTE tienen 144 dB y 142.7 dB respectivamente. Esto permite mucho mayor capacidad de penetración y alcance \cite{ref69}. Por otro lado, Antel tiene una cobertura de casi el 80\% del territorio uruguayo de NB-IoT \cite{ref68}.
 
-\subsubsection{APRS}\label{aprs}
+\paragraph{Conexión a la red y protocolo MQTT}\label{nbiot-conexion-mqtt}
 
-\pendiente{Completar APRS}
+MQTT(Message Queuing Telemetry Transport) es un protocolo de mensajería pensado para redes con poco ancho de banda, alta latencia o conectividad inestable, y para dispositivos con recursos limitados de procesamiento y energía. Funciona sobre TCP/IP y se basa en un modelo de publicación/suscripción con tres roles. El publicador envía mensajes asociados a un tópico determinado. El suscriptor declara su interés en uno o más tópicos y recibe los mensajes que se publiquen en ellos. Por último, el broker es el servidor central que recibe todos los mensajes, los filtra por tópico y los distribuye a los suscriptores correspondientes.
+
+El establecimiento de la sesión se da en dos etapas. Primero se establece la conexión de transporte: el cliente abre una conexión TCP con el broker, por convención en el puerto 1883 sin cifrado o en el 8883 con TLS. Luego se establece la conexión MQTT propiamente dicha. El cliente envía un paquete CONNECT con su Client ID, que es su identificador único ante el broker, y también usuario y contraseña si el broker requiere autenticación. 
 
 \subsection{Enlace de video}\label{enlace-video}
 
