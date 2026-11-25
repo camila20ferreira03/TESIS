@@ -1481,7 +1481,7 @@ El módulo EBYTE LoRa E77-400M22S fue utilizado por el equipo SF-HAB \cite{ref19
 
 \hl{Se prefirió el EBYTE LoRa E22-400T22S sobre el E22-400T33S por su menor consumo energético a la hora de transmitir. Se optó por tener menos potencia de transmisión, ahorrando energía, y tener mejor sensibilidad en el receptor para compensar por la pérdida de potencia. Además, se prefirió por sobre el RAK5205 ya que tiene menor consumo energético y mayor potencia de transmisión.}
 
-Otras tecnologías para transmitir telemetría, como APRS \cite{ref3,ref32,ref34} RTTY \cite{ref2,ref22} Sigfox \cite{ref35} son muy utilizadas en globos estratosféricos. Seleccionamos LoRa por ser una tecnología nueva y muy relevante en el mundo creciente de IoT. Además, fue muy utilizada en los proyectos estratosféricos Zephyrus \cite{ref2,ref33} respaldado por el programa Innovation to Flight del Laboratorio de Propulsión de la NASA.
+Otras tecnologías para transmitir telemetría, como APRS \cite{ref3,ref32,ref34} RTTY \cite{ref2,ref22} Sigfox \cite{ref35} son muy utilizadas en globos estratosféricos. Seleccionamos LoRa por ser una tecnología nueva y muy relevante en el mundo creciente de IoT. Además, fue muy utilizada en los proyectos estratosféricos Zephyrus \cite{ref2,ref33} respaldado por el programa Innovation to Flight del Laboratorio de Propulsión de la NASA. APRS se decidió usar como enlace complementario para aprovechar la infraestructura de radioaficionados que ya existe en Uruguay.
 
 \subsection{E22-400T22S}\label{e22-400t22s}
 
@@ -1502,6 +1502,12 @@ Cuando se adquirió el módulo \hl{E22-400T22S, al no tener} pines para conectar
 \cite{ref60}\includegraphics[width=3.2161in,keepaspectratio]{./imagenes/image81.png}
 
 \includegraphics[width=2.5177in,keepaspectratio]{./imagenes/image38.png}
+
+\subsection{APRS}\label{aprs}
+
+Reutilizamos una radiosonda Vaisala RS41-SG que nos prestaron para hacer seguimiento del globo. Reemplazamos el firmware original por RS41ng, un firmware de código abierto que la hace transmitir APRS. Lo grabamos con un programador ST-Link conectado por SWD, después de desbloquear la memoria del microcontrolador. La configuramos para transmitir en 439.000~MHz, dentro de la banda de radioaficionados, con modulación APRS a 1200~baud, el indicativo CX1DPH-11 y la potencia máxima del transmisor.
+
+Se decidió agregar APRS para aprovechar la infraestructura de receptores que ya tienen los radioaficionados en Uruguay. Las estaciones que actúan como iGate reciben la señal y suben la posición a aprs.fi. Por lo tanto se reciben datos del globo a través de esa red además del enlace LoRa.
 
 \section{Sistema de video}\label{video}
 
@@ -2222,6 +2228,11 @@ Placa Payload V2:
 
 \subsection{Weight budget}\label{weight-budget}
 
+Desde las primeras etapas del proyecto llevamos un presupuesto de peso (weight budget). Se hizo una lista de todos los componentes que iban a formar parte del payload, con una estimación del peso de cada uno. La fuimos armando incluso antes de tener los dispositivos, porque el peso total era un dato que necesitábamos temprano para dimensionar el resto del sistema como el tamaño del globo, la cantidad de helio y el paracaídas. Para cada componente registramos un peso mínimo, uno máximo y un valor de referencia típico. Esto fue especialmente útil cuando la hoja de datos del fabricante no informaba el peso, porque nos permitía trabajar con un rango razonable en lugar de un único valor incierto. Con este criterio, la estimación total quedó entre 1,54 y 1,82 kg, con un valor de referencia de 1,67 kg.
+
+Si se agrupa por subsistema, la mayor parte del peso corresponde a la estructura del payload, con unos 630 g (cerca del 38~\% del total). Esto incluye la caja de foam con recubrimiento de aluminio, los soportes interiores, la tornillería, el cableado, las placas y el separador de tanzas. Le siguen la energía, con unos 300 g (18~\%), dominada por el pack de baterías y su soporte. La transmisión, con unos 290 g (17~\%), donde los componentes más pesados son el ADALM-PLUTO, el amplificador y el APRS. El sistema de descenso, compuesto por el paracaídas, la tanza y el sistema de corte, suma unos 140 g (9~\%). Las antenas y su tubo de soporte suman unos 100 g, igual que los sensores. El procesamiento (la Raspberry Pi y sus extensores) aporta unos 95 g, y la cámara apenas 10 g. Una vez integrado, el payload completo con el paracaídas pesó 1,7 kg, un valor dentro del rango estimado y muy cercano a la referencia típica. Esto confirma que la estimación fue adecuada para dimensionar el globo, el helio y el sistema de recuperación.
+
+
 \subsection{Selección del globo}\label{seleccion-globo-cap}
 
 \subsubsection{Opciones de globos}\label{opciones-de-globos}
@@ -2515,6 +2526,40 @@ Para el enlace de video, se tenían 112.58 dB de atenuación de espacio libre. S
 \section{Vuelo y resultados}\label{vuelo-resultados}
 
 \pendiente{Vuelo y resultados.}
+
+\subsection{Trámites}\label{tramites}
+
+\subsubsection{Trámites DINACIA}\label{tramites-dinacia}
+
+Para el lanzamiento se necesitaron permisos de la DINACIA. En Uruguay, el lanzamiento de un globo libre no tripulado está regulado por el Reglamento Aeronáutico Latinoamericano LAR 91, adoptado por la Dirección Nacional de Aviación Civil e Infraestructura Aeronáutica (DINACIA). Su Apéndice P clasifica estos globos en ligeros, medianos y pesados según la masa de la carga útil, y establece que ninguno puede lanzarse sin autorización del Estado, independientemente de su categoría. Por eso se presentó una solicitud formal dirigida al Director Nacional de Aviación Civil, acompañada del aval institucional de la Facultad de Ingeniería y de una descripción técnica del sistema. Con esta solicitud se inició un expediente administrativo. La primera ubicación propuesta, en el departamento de Río Negro, recibió una opinión técnica desfavorable, porque la trayectoria del globo atravesaría uno de los principales flujos de tránsito aéreo comercial del país. Se hizo una nueva propuesta, desde el Campo Militar La Calera (Lavalleja). DINACIA otorgó su conformidad técnica con tres requisitos. Se tuvo que brindar acceso a un sistema de seguimiento en tiempo real del globo, comunicarse con el Centro de Control de Tránsito Aéreo antes del lanzamiento para obtener la autorización operativa, y notificar el aterrizaje al finalizar la operación. Por lo tanto, la DINACIA emitió un NOTAM que habilitó el lanzamiento el día y la franja horaria específicos para desarrollar todo el vuelo.
+
+\subsubsection{Trámites Fuerza Aérea}\label{tramites-fuerza-aerea}
+
+El lanzamiento se hizo en el Campo Militar La Calera, cercano a Minas, Lavalleja. Es una zona en la que no hay mucho tráfico aéreo y la DINACIA permite el lanzamiento. Como el Campo depende de la Brigada Aérea I de la Fuerza Aérea Uruguaya, fue necesario gestionar una autorización ante su Comandante. Para ello, se presentó una nota formal en la que se describía el proyecto y se solicitaba el uso del predio en las fechas previstas. Se adjuntó la documentación del expediente de DINACIA como respaldo de la autorización aeronáutica. La Brigada autorizó el uso del campo exclusivamente para los fines académicos descritos. Se tuvo que enviar previamente la lista de todas las personas que concurrirían al predio, con sus datos, para coordinar su acceso. Esto implicó que, cada vez que se reprogramó el lanzamiento, hubo que notificar a la Brigada y solicitar nuevamente el uso del predio para la nueva fecha.
+
+\section{Presupuesto final}\label{presupuesto-final}
+
+El costo total del proyecto fue de aproximadamente USD 2.352, incluyendo impuestos, comisiones y envíos. La mayor parte del presupuesto, unos USD 970 (cerca del 40~\%), se destinó al sistema de radiocomunicaciones. Esto incluye los módulos LoRa, el SDR ADALM-PLUTO, amplificadores, filtros, las antenas Yagi y el cableado y los conectores RF. Esta partida incluye además los impuestos de importación de esos equipos, que fueron considerables. El segundo gran rubro fueron los elementos de vuelo (helio, globo y paracaídas), que sumaron unos USD 750. El helio fue por sí solo el gasto individual más grande del proyecto, con USD 582. El resto, alrededor de USD 440, correspondió a la electrónica del payload (Raspberry Pi y accesorios, cámaras, sensores, baterías y pilas), a los materiales para la estructura del payload y de la estación terrena (comprados mayormente en ferreterías locales) y a trámites como el permiso de radioaficionado ante URSEC. Por último, los envíos internacionales a través de Exur sumaron unos USD 190. La mayoría de los componentes se compró en el exterior, principalmente en Amazon, AliExpress, Alibaba, eBay y Mini-Circuits. Se complementó con insumos de proveedores locales. El costo total se mantuvo dentro del límite de USD 2.500 planteado en las restricciones (Sección~\ref{restricciones}).
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}l r r@{}}
+\toprule
+\textbf{Rubro} & \textbf{Costo (USD)} & \textbf{Porcentaje} \\
+\midrule
+Sistema de radiocomunicaciones & 970 & 41~\% \\
+Elementos de vuelo (helio, globo y paracaídas) & 750 & 32~\% \\
+Electrónica, estructura y trámites & 440 & 19~\% \\
+Envíos internacionales & 190 & 8~\% \\
+\midrule
+\textbf{Total} & \textbf{2.352} & \textbf{100~\%} \\
+\bottomrule
+\end{tabular}
+\caption{Distribución del presupuesto final del proyecto por rubro.}
+\label{tab:presupuesto-final}
+\end{table}
 
 \section{Conclusiones y trabajo futuro}\label{conclusiones}
 
