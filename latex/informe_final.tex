@@ -5,9 +5,6 @@
 \usepackage[top=2.5cm,bottom=2.5cm,left=3.5cm,right=2.5cm]{geometry} % margenes de la plantilla UM
 \usepackage[spanish,es-noshorthands,es-tabla]{babel}
 \usepackage{float}
-\usepackage{newunicodechar}
-\newunicodechar{→}{\ensuremath{\rightarrow}}
-\newunicodechar{ǫ}{\ensuremath{\epsilon}}
 \usepackage[table]{xcolor}
 \usepackage{amsmath,amssymb}
 \setcounter{secnumdepth}{4} % numeracion hasta paragraph (x.x.x.x)
@@ -18,6 +15,8 @@
   \usepackage{textcomp} % provide euro and other symbols
   % characters pdfLaTeX does not know by default
   \usepackage{newunicodechar}
+  \newunicodechar{→}{\ensuremath{\rightarrow}}
+  \newunicodechar{ǫ}{\ensuremath{\epsilon}}
   \newunicodechar{λ}{\ensuremath{\lambda}}
   \newunicodechar{η}{\ensuremath{\eta}}
   \newunicodechar{μ}{\ensuremath{\mu}}
@@ -49,6 +48,7 @@
 \makeatother
 \usepackage{longtable,booktabs,array}
 \usepackage{caption}
+\usepackage{subcaption}
 \captionsetup[table]{skip=6pt}
 \newcounter{none} % for unnumbered tables
 \usepackage{calc} % for calculating minipage widths
@@ -96,22 +96,8 @@
 \usepackage{setspace}
 \onehalfspacing % interlineado 1,5
 
-% ---- Titulos numerados automaticamente ----
-\usepackage{titlesec}
-\titleformat{\section}{\bfseries\Large}{\thesection.}{0.6em}{}
-\titleformat{\subsection}{\bfseries\large}{\thesubsection}{0.6em}{}
-\titleformat{\subsubsection}{\bfseries\normalsize}{\thesubsubsection}{0.6em}{}
-\titleformat{\paragraph}{\bfseries\small}{\theparagraph}{0.6em}{}
-\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
-
-% ---- Indice automatico: partes + formato (tocloft: enlaces hyperref estables) ----
+% ---- Indice automatico: partes + formato ----
 \setcounter{tocdepth}{3}
-\usepackage{tocloft}
-\renewcommand{\cftsecfont}{\bfseries}
-\renewcommand{\cftsecpagefont}{\bfseries}
-\setlength{\cftsubsecindent}{1.75em}
-\setlength{\cftsubsubsecindent}{3.75em}
-\setlength{\cftbeforesecskip}{4pt}
 \makeatletter
 \newcommand*\l@parte[2]{%
   \ifnum \c@tocdepth >-2 \relax
@@ -128,6 +114,14 @@
 \@ifundefined{toclevel@parte}{\def\toclevel@parte{0}}{}%
 \makeatother
 
+% ---- Titulos numerados automaticamente ----
+\usepackage{titlesec}
+\titleformat{\section}{\bfseries\Large}{\thesection.}{0.6em}{}
+\titleformat{\subsection}{\bfseries\large}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\bfseries\normalsize}{\thesubsubsection}{0.6em}{}
+\titleformat{\paragraph}{\bfseries\small}{\theparagraph}{0.6em}{}
+\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
 % hyperref despues de titlesec/tocloft (orden requerido para anclas de seccion e indice)
 \usepackage{hyperref}
 \hypersetup{
@@ -135,6 +129,25 @@
   linktoc=section,
   pdfcreator={LaTeX via pandoc}}
 \usepackage{bookmark}
+\usepackage{titletoc}
+\titlecontents{section}
+  [0em]
+  {\bfseries}
+  {\thecontentslabel.\ }
+  {}
+  {\titlerule*[0.5pc]{.}\contentspage}
+\titlecontents{subsection}
+  [1.75em]
+  {}
+  {\thecontentslabel\ }
+  {}
+  {\titlerule*[0.5pc]{.}\contentspage}
+\titlecontents{subsubsection}
+  [3.75em]
+  {}
+  {\thecontentslabel\ }
+  {}
+  {\titlerule*[0.5pc]{.}\contentspage}
 
 % ---- Datos de portada y hoja de aprobacion (completar) ----
 \newcommand{\pendiente}[1]{\textcolor{red}{[#1]}}
@@ -237,7 +250,7 @@ El/Los autor/autores de este trabajo final de carrera declara(n) que es/son el/l
 % ================= Agradecimientos =================
 \newpage
 \section*{Agradecimientos}
-\raggedright
+\begingroup\raggedright
 \begin{itemize}
 \item Richard Corbo (Frio antartida)
 \item Fernando (Lab)
@@ -252,7 +265,7 @@ El/Los autor/autores de este trabajo final de carrera declara(n) que es/son el/l
 \item Carlos Marx
 \item Linde (Descuento Helio)
 \item Ricardo Pereyra
-\end{itemize}
+\end{itemize}\endgroup
 
 % ================= Tabla de contenido =================
 \newpage
@@ -461,9 +474,303 @@ Este comportamiento está confirmado en la documentación técnica de High Altit
 
 \newpage
 
-\section{Tecnologías de comunicación}\label{tecnologias-de-comunicacion}
+\section{Comportamiento térmico}\label{materiales-termico}
 
-\subsection{Link budget}\label{link-budget}
+\subsection{Propiedades térmicas de los materiales}\label{materiales}
+
+El comportamiento térmico de un material se describe principalmente mediante dos propiedades: la capacidad calorífica específica y la conductividad térmica.
+
+La capacidad calorífica específica es una propiedad física que indica la cantidad de energía térmica requerida para aumentar en un grado Celsius (o un kelvin) la temperatura de una unidad de masa de una sustancia:
+\begin{equation}
+  c = \frac{Q}{m \, \Delta T},
+  \label{eq:calor-especifico}
+\end{equation}
+donde $Q$ es la energía térmica absorbida o liberada (J), $m$ es la masa (kg) y $\Delta T$ es la variación de temperatura (K), por lo que $c$ se mide en J/(kg$\cdot$K). Esta propiedad es fundamental para la gestión térmica de los materiales, ya que determina la velocidad con la que estos absorben o liberan calor durante su operación.
+
+La conductividad térmica representa la capacidad de un material para transmitir calor. Se define como la cantidad de energía térmica por unidad de tiempo que atraviesa una unidad de espesor del material, por unidad de área y por cada unidad de diferencia de temperatura. Para una placa plana,
+\begin{equation}
+  k = \frac{\dot{Q} \, L}{A \, \Delta T},
+  \label{eq:conductividad}
+\end{equation}
+donde $\dot{Q}$ es la energía térmica por unidad de tiempo que atraviesa la placa (W), $L$ es su espesor (m), $A$ es su área (m$^2$) y $\Delta T$ es la diferencia de temperatura entre sus caras (K), por lo que $k$ se mide en W/(m$\cdot$K).
+
+\subsubsection{Aluminio}\label{aluminio}
+
+El aluminio es un material liviano y de bajo costo, y se considera para la estructura de la carga útil. Tiene una elevada conductividad térmica, que se debe principalmente al movimiento eficaz de los electrones libres \cite{ref85}. Además, presenta una capacidad calorífica específica relativamente alta, de aproximadamente 0,900~kJ/(kg$\cdot$K) a temperatura ambiente. Es decir, requiere más energía térmica que otros metales comunes para elevar su temperatura en un kelvin o un grado Celsius \cite{ref85}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=3.3071in,keepaspectratio]{./imagenes/image90_sin_pie.png}
+\caption{Calor específico del aluminio a diferentes temperaturas \cite{ref86}.}
+\label{fig:calor-especifico-aluminio}
+\end{figure}
+
+En cuanto a la conducción, el aluminio suele compararse con el cobre, ya que ambos son materiales ampliamente utilizados en aplicaciones de transferencia de calor, como radiadores e intercambiadores térmicos. Aunque el cobre presenta una conductividad térmica superior, el aluminio suele ser la opción preferida debido a su menor costo, menor densidad y mayor facilidad de fabricación y mecanizado \cite{ref85}.
+
+A su vez, el aluminio puede actuar como un excelente aislante frente a la radiación térmica gracias a su elevada reflectividad. En particular, es capaz de reflejar entre el 90 \% y el 95 \% de la radiación infrarroja incidente, reduciendo considerablemente la cantidad de energía térmica absorbida por el material \cite{ref85}.
+
+
+
+\subsubsection{Poliestireno expandido (EPS)}\label{eps}
+
+El poliestireno expandido es un material liviano y se considera como aislante térmico para el interior de la estructura de la carga útil. Su conductividad térmica es muy baja. Esto se debe a su estructura de celda cerrada, compuesta en un 98 \% de aire. Este aire atrapado dentro de las celdas es un conductor de calor muy deficiente, lo que le confiere a la espuma excelentes propiedades de aislamiento térmico \cite{ref87}.
+
+\subsection{Control térmico}\label{control-termico}
+
+El control térmico de una nave espacial tiene como objetivo principal mantener todos sus componentes dentro de los rangos de temperatura permitidos para sus requisitos operativos y de supervivencia en todas las fases de la misión. El comportamiento térmico de un satélite se rige por un balance de energía fundamentado en la cantidad de calor absorbido, almacenado, generado y disipado \cite{ref39}.
+
+\begin{equation}
+  q_{\text{solar}} + q_{\text{albedo}} + q_{\text{planetshine}} + Q_{\text{gen}} = Q_{\text{stored}} + Q_{\text{out,conv}} + Q_{\text{out,rad}}
+  \label{eq:balance-termico}
+\end{equation}
+
+Los fundamentos de cada término son los siguientes \cite{ref39}:
+
+\begin{itemize}
+\item
+  Fuentes de calor externas: Incluyen el calentamiento solar directo ($q_{\text{solar}}$), el calentamiento solar reflejado por el planeta ($q_{\text{albedo}}$) y el calentamiento por radiación infrarroja proveniente del planeta ($q_{\text{planetshine}}$).
+\item
+  Generación de calor interna ($Q_{\text{gen}}$): Depende de la disipación de energía de los componentes electrónicos y de carga útil de la nave espacial.
+\item
+  Almacenamiento de calor ($Q_{\text{stored}}$): Se basa en la capacitancia térmica o masa térmica de la nave espacial.
+\item
+  Rechazo de calor por convección ($Q_{\text{out,conv}}$): En la estratosfera todavía hay aire, por lo que la carga útil también pierde calor por convección. Durante el ascenso, el globo sube a varios metros por segundo y el aire circula constantemente sobre la superficie de la carga útil \cite{ref113}. A mayor altura, el aire es tan poco denso que la convección casi desaparece y el calor se disipa principalmente por radiación \cite{ref114}.
+\item
+  Rechazo de calor ($Q_{\text{out,rad}}$): El calor se disipa mediante radiación infrarroja. 
+\end{itemize}
+
+\newpage
+
+
+\section{Energía}\label{energia-fundamentos}
+
+\subsection{Baterías}\label{baterias}
+
+Durante el vuelo de un globo estratosférico, la carga útil no dispone de una fuente de energía externa, por lo que toda la energía necesaria debe almacenarse a bordo en baterías. Para almacenar energía se utilizan baterías primarias y secundarias, las cuales se clasifican según su diferente composición electroquímica. Debido a que las baterías de tipo primario no son recargables, generalmente se utilizan en misiones de corta duración. Las baterías de plata-zinc (Ag-Zn) son utilizadas habitualmente debido a que son más fáciles de manipular y pueden descargarse a una mayor tasa. Sin embargo, también existe una variedad de baterías primarias basadas en litio que presentan una mayor densidad energética, entre ellas las de dióxido de azufre-litio (LiSO₂), monofluoruro de carbono-litio (LiCF\textsubscript{x}) y cloruro de tionilo-litio (LiSOCl₂) \cite{ref39}.
+
+Las baterías de tipo secundario incluyen las de níquel-cadmio (NiCd), níquel-hidrógeno (NiH₂), polímero de litio (LiPo) e ion-litio (Li-ion), las cuales han sido ampliamente utilizadas en el pasado en pequeños satélites. Las baterías secundarias basadas en litio son utilizadas habitualmente en dispositivos electrónicos portátiles debido a su capacidad de recarga, bajo peso y alta densidad energética, y se han vuelto ampliamente utilizadas en misiones espaciales. Generalmente, se conectan a una fuente de energía primaria (por ejemplo, un panel solar) y pueden proporcionar energía recargable bajo demanda \cite{ref39}.
+
+En general, existen dos grupos de celdas: de alta energía y de alta potencia. Las celdas de alta potencia utilizan un diseño de baja resistencia, por ejemplo, mediante el aumento del área superficial del recubrimiento o mediante múltiples puntos de contacto entre el colector de corriente y la celda. Esto permite reducir la resistencia total y alcanzar una mayor tasa de descarga. Por otro lado, las celdas de alta energía buscan optimizar la densidad energética gravimétrica para obtener la mayor cantidad de energía posible de la celda. En general, para aplicaciones espaciales es importante contar con una alta densidad energética, ya que una batería con una elevada densidad energética gravimétrica permite reducir el costo de lanzamiento a órbita al proporcionar una mayor capacidad de almacenamiento por unidad de masa \cite{ref39}.
+
+Las baterías típicas de Li-ion presentan un rango de temperatura de operación de -20 °C a 60 °C. Esto puede no cumplir con los requisitos de misiones que requieren operar a temperaturas más bajas. Entre las baterías destinadas a aplicaciones de baja temperatura se encuentran \cite{ref39}:
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Fabricante / química} & \textbf{Rango de temperatura} \\
+\midrule
+EEMB / Li-ion & $-40$~°C a $60$~°C \\
+\midrule
+Tadiran / LiSOCl\textsubscript{2} & $-80$~°C a $125$~°C \\
+ & $-40$~°C a $85$~°C \\
+\midrule
+GREPOW / LiPo & $-40$~°C a $60$~°C \\
+ & $-55$~°C a $50$~°C \\
+\midrule
+GREPOW / Li-ion (LiFePO\textsubscript{4}) & $-40$~°C a $50$~°C \\
+\bottomrule
+\end{tabular}
+\caption{Baterías para aplicaciones de baja temperatura y su rango de operación. Adaptado de \cite{ref39}.}
+\label{tab:baterias-baja-temperatura}
+\end{table}
+
+En proyectos anteriores, \cite{ref2,ref3,ref99} se prefirieron las baterías de ion-litio. El equipo del proyecto Zephyrus X utilizó baterías de ion-litio 18650 como fuente de energía principal debido a su bajo peso, alta capacidad de potencia, posibilidad de recarga y amplio rango de temperatura de operación. Sin embargo, las baterías recargables requieren ciertos cuidados, como no cargarlas con cargadores diseñados para otras baterías y mantener el voltaje de cada celda entre sus límites mínimo de descarga y máximo de carga. De lo contrario, la batería puede explotar, perder vida útil o sufrir una inversión de polaridad en algunas de sus celdas \cite{ref115}.
+
+\subsection{Conversor de voltaje}\label{conversor-de-voltaje}
+
+Para alimentar la electrónica con el voltaje que requiere cada componente a partir de la tensión de las baterías, se utilizan dos tipos principales de conversores \cite{ref105}:
+
+\begin{itemize}
+\item
+  Un conversor reductor (\textit{step-down}) disminuye el voltaje. Utiliza un interruptor electrónico que conecta y desconecta rápidamente la tensión de entrada. Un inductor y un capacitor suavizan esta señal para obtener una salida estable de menor voltaje. El voltaje de salida es una fracción del voltaje de entrada, determinada por el tiempo durante el cual el interruptor permanece encendido, conocido como ciclo de trabajo.
+\item
+  Un conversor elevador (\textit{step-up}) aumenta el voltaje. Utiliza un inductor para almacenar energía proveniente de la fuente de entrada. Cuando el interruptor se apaga, el inductor libera la energía almacenada. Esta energía se suma al voltaje de entrada, generando un voltaje de salida superior al de entrada.
+\end{itemize}
+
+Un conversor reductor es conocido por su excelente eficiencia en la conversión de potencia.
+
+Es capaz de alcanzar de forma consistente eficiencias superiores al 95 \%. Esta elevada eficiencia implica que se desperdicia menos energía, lo que resulta fundamental para prolongar la duración de las baterías y reducir la generación de calor en dispositivos compactos \cite{ref105}.
+
+Un conversor elevador también presenta una alta eficiencia, con valores que comúnmente superan el 90 \%. Un circuito bien diseñado puede alcanzar eficiencias máximas superiores al 95 \%. Sin embargo, generalmente opera en un rango de 85 \% a 95 \%. El proceso de aumentar el voltaje es ligeramente más complejo, lo que puede provocar mayores pérdidas de energía en comparación con un conversor reductor \cite{ref105}.
+
+
+\newpage
+\section{Buses de comunicación a bordo}\label{interfaces-comunicacion}
+
+\subsection{SPI}\label{spi}
+
+SPI (Serial Peripheral Interface) es un protocolo de comunicación digital utilizado para conectar un microcontrolador con sensores, memorias, pantallas y otros periféricos donde los bits se trasmiten uno detrás de otro, es decir, en forma serial. Es un protocolo síncrono, ya que utiliza una señal de reloj para sincronizar la comunicación, y \textit{full duplex}. Además, sigue una arquitectura \textit{Main-Subnode} (también conocida como \textit{Master-Slave}), en la que un dispositivo principal se comunica con uno o varios dispositivos subordinados.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image46.png}
+\caption{Conexión de un Main con múltiples subnodos SPI \cite{ref80}.}
+\label{fig:spi-multiples-subnodos}
+\end{figure}
+
+La comunicación utiliza cuatro líneas. La línea SCLK (\textit{Serial Clock}) transporta la señal de reloj generada por el Main, que sincroniza la transmisión y recepción de los datos bit a bit. La línea CS (\textit{Chip Select}) permite al Main seleccionar con qué Subnodo desea comunicarse. Normalmente permanece en 1, y el Main la coloca en 0 cuando quiere comunicarse con un Subnodo específico. Por último, SPI utiliza dos líneas de datos independientes, lo que permite la comunicación \textit{full duplex}: MOSI (\textit{Main Out, Subnode In}), que transmite datos desde el Main hacia el Subnodo, y MISO (\textit{Main In, Subnode Out}), que los transmite en sentido contrario \cite{ref80}.
+
+El funcionamiento se basa en dos operaciones. El \textit{shifting} consiste en desplazar los bits dentro de un registro para colocar en la línea el siguiente bit a transmitir. El \textit{sampling} consiste en leer el valor presente en la línea de datos en un instante determinado por el reloj \cite{ref80}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image53.png}
+\caption{Secuencia de comunicación SPI \cite{ref80}.}
+\label{fig:spi-secuencia}
+\end{figure}
+
+La Figura~\ref{fig:spi-secuencia} muestra la secuencia de comunicación. Primero, el Main coloca la señal CS en 0 para seleccionar el Subnodo y comienza a generar la señal de reloj. En cada flanco de subida del reloj (línea naranja), el Subnodo lee el bit enviado por el Main en MOSI y, al mismo tiempo, el Main lee el bit enviado por el Subnodo en MISO. En cada flanco de bajada (línea azul), ambos actualizan su línea de salida con el siguiente bit a transmitir \cite{ref80}.
+
+\subsection{I2C}\label{i2c}
+
+I2C (Inter-Integrated Circuit) es un protocolo de comunicación digital utilizado para conectar un microcontrolador con sensores, memorias, pantallas y otros periféricos utilizando únicamente dos líneas principales. Es un protocolo síncrono, ya que utiliza una señal de reloj para sincronizar la comunicación, y \textit{half duplex}, porque ambos sentidos de transmisión comparten la misma línea de datos. Además, admite uno o varios dispositivos principales y varios subnodos conectados al mismo bus, y cada subnodo se identifica con una dirección propia de 7 o 10 bits.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image76_sin_pie.png}
+\caption{Conexión I2C de un Main con múltiples subnodos y resistencias de \textit{pull-up} \cite{ref81}.}
+\label{fig:i2c-multiples-subnodos}
+\end{figure}
+
+La comunicación utiliza dos líneas. La línea SDA (\textit{Serial Data}) es bidireccional y se usa para enviar y recibir datos. La línea SCL (\textit{Serial Clock}) transporta la señal de reloj, generada normalmente por el Main, que indica cuándo se leen los bits. Como se observa en la Figura~\ref{fig:i2c-multiples-subnodos}, todos los dispositivos comparten estas dos líneas. A diferencia de SPI, no hace falta una línea CS para cada dispositivo, ya que el Main selecciona con quién comunicarse enviando la dirección del subnodo \cite{ref81}.
+
+Las líneas SDA y SCL usan resistencias de \textit{pull-up} ($R_p$), que las mantienen por defecto en nivel alto (HIGH). Para enviar un 0, el dispositivo baja la línea a nivel bajo (LOW), y para enviar un 1, la libera y la resistencia la vuelve a subir a HIGH. Esto permite que varios dispositivos compartan el mismo bus sin que uno fuerce HIGH mientras otro fuerza LOW \cite{ref81}.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{\linewidth}
+\centering
+\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image32.png}
+\caption{Estructura de un mensaje \cite{ref81}.}
+\label{fig:i2c-mensaje}
+\end{subfigure}
+
+\vspace{0.5em}
+
+\begin{subfigure}{\linewidth}
+\centering
+\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image86.png}
+\caption{Diagrama temporal \cite{ref82}.}
+\label{fig:i2c-temporal}
+\end{subfigure}
+\caption{Proceso de transmisión I2C.}
+\label{fig:i2c-transmision}
+\end{figure}
+
+La Figura~\ref{fig:i2c-transmision} muestra el proceso de transmisión. El Main inicia la comunicación con una condición de START, bajando SDA de HIGH a LOW mientras SCL está en HIGH. Luego envía la dirección del subnodo con el que quiere comunicarse y un bit que indica si quiere escribir o leer. El subnodo que reconoce su dirección responde con un ACK, bajando SDA. A continuación se transmite la trama de datos, y después de cada dato recibido el receptor envía otro ACK. Para terminar, el Main genera una condición de STOP, subiendo SDA a HIGH mientras SCL está en HIGH \cite{ref81}.
+
+\subsection{UART}\label{uart}
+
+UART (Universal Asynchronous Receiver-Transmitter) es un protocolo de comunicación serie asíncrono que utiliza dos líneas principales: Transmitter (Tx) y Receiver (Rx). Al ser asíncrono, no existe una señal de reloj compartida entre los dispositivos.
+
+\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image19.png}
+
+\cite{ref83} El Databus quiere enviar los bits en paralelo y la interfaz UART se encarga de transmitirlos de forma serial (uno atrás del otro). Este protocolo es entre dos dispositivos y no más. El TX de uno está conectado al RX del otro \cite{ref83}.
+
+Para que la comunicación funcione correctamente, ambos dispositivos deben configurarse previamente con el mismo baud rate. El baud rate indica la velocidad a la que se transmiten los bits por segundo. Cada dispositivo utiliza su propio reloj interno para enviar y muestrear los datos, por lo que la clave es que ambos tengan configuraciones compatibles para minimizar errores \cite{ref83}.
+
+La línea UART permanece en estado HIGH por defecto. Cuando el transmisor desea enviar información, lleva la línea a LOW durante un tiempo de bit, generando el bit de arranque (Start Bit). Este cambio de HIGH a LOW le indica al receptor que comienza una nueva trama de datos \cite{ref83}.
+
+\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image57.png}
+
+\cite{ref83} La estructura de una trama UART se divide de la siguiente manera \cite{ref83}:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Bit de arranque}
+
+  \begin{itemize}
+  \item
+    Se mantiene siempre en nivel 0 (LOW).
+  \item
+    Su función es notificar al receptor el inicio de una nueva transmisión de datos.
+  \end{itemize}
+\item
+  \textbf{Bits de datos}
+
+  \begin{itemize}
+  \item
+    Representan la información útil o carga útil (payload) a transmitir.
+  \item
+    Dependiendo de la configuración previa, suelen ser 5, 6, 7, 8 o hasta 9 bits.
+  \item
+    Por lo general, el envío se realiza comenzando por el bit menos significativo (LSB).
+  \end{itemize}
+\item
+  \textbf{Bit de paridad}
+
+  \begin{itemize}
+  \item
+    Permite implementar un mecanismo básico para la detección de errores simples.
+  \item
+    Las opciones incluyen paridad par (Even), impar (Odd) o puede omitirse según se requiera.
+  \end{itemize}
+\item
+  \textbf{Bit(s) de parada}
+
+  \begin{itemize}
+  \item
+    Puede consistir en uno, uno y medio o dos bits de duración.
+  \item
+    Estos bits permanecen siempre en estado 1 (HIGH).
+  \item
+    Señalan la conclusión de la trama actual, permitiendo que el receptor se sincronice para la próxima ráfaga.
+  \end{itemize}
+\end{enumerate}
+
+\textbf{Proceso de Transmisión} \cite{ref83}\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Los datos suelen existir inicialmente en paralelo dentro del dispositivo.
+\item
+  La interfaz UART transmisora convierte esos bits paralelos a una tira de bits serial (uno atrás del otro).
+\item
+  Luego coloca el Start Bit (LOW), transmite los bits de datos uno tras otro, opcionalmente agrega un bit de paridad para detección de errores y finalmente envía uno o más bits de parada (Stop Bits) en estado HIGH.
+\item
+  Durante la recepción, la UART receptora detecta el Start Bit y, utilizando su propio reloj interno, comienza a muestrear la línea para reconstruir los bits transmitidos.
+\item
+  Una vez recibidos todos los bits de la trama, convierte nuevamente la información de serie a paralelo y la entrega al sistema receptor.
+\end{enumerate}
+
+\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image14.png}
+
+\cite{ref84} En UART no se puede mandar una cantidad variable de bits de datos dentro de una misma configuración. La cantidad de bits de datos, la presencia o no de bit de paridad, la cantidad de bits de parada y el baud rate deben configurarse previamente en ambos extremos. Como no existe una señal de reloj ni información adicional que indique dónde terminan los datos y dónde comienzan los bits de paridad o parada, el receptor necesita conocer de antemano el formato exacto de cada trama \cite{ref83}.
+
+\section{Video digital}\label{video-digital}
+
+\subsection{Codificación de video}\label{codificaciuxf3n-de-video}
+
+La codificación de video es el proceso mediante el cual se comprime y se transforma el formato de un contenido de video sin procesar en un archivo digital, de modo que pueda reproducirse en distintos dispositivos y plataformas.
+
+\textbf{Input}: Video Crudo Digital (formato YUV)
+
+\textbf{Output}: Video Comprimido (formato H.264, H.265)
+
+El objetivo principal de este proceso es reducir el tamaño del archivo. Para lograrlo, se eliminan datos que no son esenciales. Al reproducirse, el video resultante no es una copia exacta del original, sino una aproximación suficientemente fiel. En el caso del streaming en vivo, es especialmente importante, ya que al comprimir el video se disminuye el uso de ancho de banda, facilitando su transmisión desde la fuente hasta el reproductor, sin sacrificar la calidad percibida por los usuarios \cite{ref24}.
+
+El códec H.264 (AVC) destaca por su buena eficiencia de compresión, permitiendo reducir significativamente el tamaño del video manteniendo una calidad aceptable, además de requerir un bajo costo computacional y ofrecer alta velocidad de codificación, lo que lo hace ideal para aplicaciones en tiempo real. Su principal limitación es que es menos eficiente que códecs más modernos, por lo que necesita mayores tasas de bits para lograr la misma calidad. A pesar de esto, sigue siendo ampliamente utilizado debido a su compatibilidad casi universal con dispositivos.
+
+El códec H.265 (HEVC) presenta como principal ventaja su alta eficiencia de compresión, ya que permite obtener la misma calidad de video utilizando aproximadamente un 40--50\% menos de bitrate que H.264, lo que reduce significativamente el consumo de ancho de banda y el tamaño de los archivos. Sin embargo, requiere una mayor capacidad de procesamiento, lo que implica tiempos de codificación más largos y mayores exigencias de hardware.
+
+\subsection{Encapsulamiento}\label{encapsulamiento}
+
+La encapsulación es el proceso de envolver datos de video codificados en unidades estructuradas y paquetizadas para facilitar su transmisión, almacenamiento y sincronización en distintos sistemas multimedia. En el caso de los estándares HEVC (H.265) y AVC (H.264), ambos utilizan una capa de abstracción, llamada Network Abstraction Layer, para cumplir esta función \cite{ref26}.
+
+\textbf{Input}: Video Comprimido (formato H.264, H.265)
+
+\textbf{Output}: Paquetes Transport Stream
+
+El MPEG-2 Transport Stream (TS) es un estándar global utilizado para la difusión de televisión digital (vía satélite, cable y terrestre), el almacenamiento en discos ópticos (como Blu-ray) y sistemas de IPTV gestionados. Su función principal es definir la multiplexación y sincronización de datos de audio y video comprimidos \cite{ref26}.
+
+Los datos codificados (unidades NAL) se empaquetan primero en PES (Packetized Elementary Stream). El encabezado PES contiene información de temporización esencial, como una base de reloj común y marcas de tiempo para indicar cuándo se deben decodificar (DTS) y presentar (PTS) los datos. Los paquetes PES se fragmentan en unidades de longitud fija de 188 bytes. Esta estructura de longitud fija es fundamental para entornos donde es probable que ocurran errores, ya que facilita que el receptor mantenga la sincronización en canales con pérdidas. Cada paquete TS incluye un PID en su encabezado para identificar a qué componente (video, audio o datos) pertenece, permitiendo al receptor demultiplexar los servicios \cite{ref26}.
+
+\section{Telecomunicaciones}\label{tecnologias-de-comunicacion}
+
+\subsection{Link budget}\label{link-budget-marco}
 
 El link budget permite estimar la potencia mínima que debe entregar el transmisor para que los datos se reciban correctamente en el receptor. Para estimar dicha potencia se utiliza la ecuación de Friis:
 \begin{equation}
@@ -563,11 +870,64 @@ En el caso de las antenas omnidireccionales, su área efectiva es inherentemente
 \item \textbf{Atenuación atmosférica y ruido.} Las frecuencias superiores sufren una mayor atenuación por gases atmosféricos y lluvia debido a la interacción física entre las ondas electromagnéticas de longitud de onda corta y las moléculas presentes en la atmósfera \cite{ref40}. 
 \end{enumerate}
 
+\subsection{Cadena de RF}\label{componentes-rf}
+
+\subsubsection{Radios definidos por software}\label{radios-definidos-por-software}
+
+Un SDR es un sistema de comunicación por radio donde los componentes que tradicionalmente se implementan en hardware (como filtros, amplificadores y moduladores) se definen mediante software \cite{ref49}.
+
+\hl{A diferencia de los dispositivos de radio convencionales, que son estrictamente de hardware y tienen especificaciones fijas (como rangos de frecuencia y filtros predeterminados), un SDR ofrece una gran flexibilidad. Esto nos permite ajustar parámetros como la frecuencia, el ancho de banda y el método de modulación o demodulación utilizando programas informáticos sin necesidad de cambiar o comprar más componentes físicos.}
+
+\subsubsection{Amplificador de potencia}\label{amplificador-de-potencia}
+
+Un amplificador de potencia (PA) convierte señales de baja potencia en una de mayor potencia \cite{ref88}. Los parámetros clave que se toman en cuenta para seleccionar amplificadores son los siguientes:
+
+\begin{itemize}
+\item
+  Ganancia: Mide cuánto aumenta la señal de entrada de un amplificador de potencia de RF, expresado en decibelios (dB) como la relación de salida a potencia de entrada \cite{ref89}.
+\item
+  Eficiencia: Refiere a la eficacia con la que la potencia de CC de entrada se convierte en potencia de salida de RF, expresada típicamente como un porcentaje. La alta eficiencia minimiza el desperdicio de energía, reduce la generación de calor y extiende la vida útil de la batería \cite{ref89}.
+\item
+  Linealidad (IPn): Si un amplificador se comporta linealmente, entonces la señal de salida cambiará proporcionalmente a la señal de entrada \cite{ref90}. La no linealidad tiene como producto armónicos e interferencia intermodulación. Los productos de orden par tienden a ser fáciles de filtrar. Los de orden impar son más difíciles de filtrar porque los términos caen mas cerca de la banda útil. Debido a esto, el parámetro IP3 es una medida fundamental al tomar en cuenta el producto de tercer orden. Es el impar más significativo a excepción del primer orden \cite{ref91}. \includegraphics[width=3.0489in,keepaspectratio]{./imagenes/image18.png}
+\item
+  P1dB: Es el punto de compresión de un amplificador en el que su potencia de salida es 1 dB menor que la que tendría si mantuviera un comportamiento lineal ideal. Esta especificación permite determinar el límite superior de la región de operación lineal del amplificador. A partir de este punto, la ganancia comienza a disminuir y la potencia de salida deja de aumentar proporcionalmente con la potencia de entrada \cite{ref92}.
+\end{itemize}
+
+\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image62.png}
+
+\cite{ref94}\begin{itemize}
+\item
+  Psat: Es la potencia máxima de salida de un amplificador. Corresponde al punto en el que el amplificador alcanza la saturación y ya no puede aumentar su potencia de salida, incluso si se continúa incrementando la potencia de entrada \cite{ref92}.
+\item
+  Frecuencia de operación: Define el espectro de frecuencias dentro del cual un amplificador de potencia de RF mantiene el rendimiento especificado \cite{ref93}.
+\end{itemize}
+
+\subsubsection{Construcción y materiales de antenas}\label{construcciuxf3n-y-materiales-antenas}
+
+La velocidad de propagación de la onda de radio a lo largo de un hilo conductor de cobre es ligeramente menor que la velocidad de la luz en el espacio libre. Debido al propio material y otros efectos capacitivos, la longitud del elemento radiador suele ser aproximadamente 5\% menor que la longitud teórica de un cuarto de onda \cite{ref70}.
+
+Materiales conductores para radiadores \cite{ref70}:
+
+\begin{itemize}
+\item
+  Cobre: Es el estándar para antenas de hilo, como dipolos y sistemas de radiales, debido a su conductividad superior, que minimiza las pérdidas por resistencia y maximiza la eficiencia del sistema.
+\item
+  Aluminio: El aluminio es el material predilecto para estructuras rígidas como antenas Yagi, mástiles y radiadores verticales, debido a su excelente relación resistencia-peso y su bajo costo. Su utilización en forma de tubos de mayor diámetro que un cable convencional permite que las antenas operen con un mayor ancho de banda. Además, el aluminio es fácil de mecanizar manualmente y no se oxida fácilmente.
+\end{itemize}
+
+\subsubsection{Amplificador de bajo ruido}\label{amplificador-de-bajo-ruido}
+
+Un Amplificador de Bajo Ruido (LNA) es un componente electrónico fundamental ubicado en la etapa inicial de un receptor. Su función es amplificar las señales débiles captadas por la antena, incorporando la menor cantidad posible de ruido interno. Se utiliza principalmente para minimizar la temperatura de ruido total del sistema. Reduce de forma efectiva la contribución de ruido de todas las etapas posteriores de la cadena de recepción. Al amplificar la señal desde el comienzo y disminuir el efecto del ruido térmico generado por los componentes subsiguientes, el LNA permite mantener una relación señal-ruido (SNR) suficientemente alta para que el receptor pueda recuperar correctamente los datos transmitidos del ruido de fondo \cite{ref40}.
+
+\subsubsection{Atenuadores}\label{atenuadores}
+
+Un atenuador es un componente pasivo que introduce una pérdida conocida y fija (en dB) entre el transmisor y el receptor. La idea es reemplazar el espacio libre por un atenuador calibrado que simule la atenuación que tendría la señal a esa distancia real. Primero se calcula la atenuación que se quiere simular con la fórmula de espacio libre (FSPL), que depende de la distancia y la frecuencia. Los atenuadores comerciales vienen en valores fijos (3, 6, 10, 20, 30 dB) y soportan una potencia determinada que el transmisor no puede superar. Se combinan varios en cascada para sumar el valor objetivo. Se prueba transmitiendo paquetes reales y revisando RSSI/SNR en el receptor, aumentando la atenuación gradualmente hasta encontrar el punto donde empieza a fallar. Esto da el margen de enlace real, útil para anticipar pérdidas adicionales en vuelo.
+
 \subsection{Enlaces de datos}\label{enlaces-de-datos}
 
 En esta sección se presentan las tecnologías de comunicación consideradas para el sistema. La modulación LoRa constituye el enlace principal de telemetría entre el \textit{payload} y la estación terrena durante el vuelo. El protocolo de radioaficionados APRS se analiza como alternativa, dado su uso extendido en globos estratosféricos. Por último, también se considera el estándar de comunicación celular Narrowband IoT (NB-IoT) para transmitir la localización del \textit{payload} a través de la red móvil después del aterrizaje. 
 
-\subsubsection{Enlace de telemetría: LoRa}\label{lora}
+\subsubsection{Telemetría: LoRa}\label{lora}
 
 Long Range, desarrollada por Semtech, es una tecnoloxgía de transmisión de paquetes de datos pequeños a largas distancias, con baja potencia, bajo consumo de energía y una baja tasa de transmisión de datos. Utiliza una modulación basada en Chirp Spread Spectrum (CSS). Esta técnica permite transmitir pequeños paquetes de datos a largas distancias con alta robustez frente al ruido y a señales débiles \cite{ref29,ref31}.
 
@@ -605,7 +965,6 @@ Cada transmisión puede transportar una carga útil de entre 2 y 255 octetos \ci
 \label{fig:lora-trama}
 \end{figure}
 
-\pendiente{Completar tiempo en el aire}
 
 \subsubsection{APRS}\label{aprs}
 
@@ -627,11 +986,13 @@ Es un estándar de comunicación inalámbrica diseñado para conectar dispositiv
 
 NB-IoT tiene un link budget de 164 dB, mientras que GPRS y LTE tienen 144 dB y 142.7 dB respectivamente. Esto permite mucho mayor capacidad de penetración y alcance \cite{ref69}. Por otro lado, Antel tiene una cobertura de casi el 80\% del territorio uruguayo de NB-IoT \cite{ref68}.
 
-\paragraph{Conexión a la red y protocolo MQTT}\label{nbiot-conexion-mqtt}
+\paragraph{Protocolo MQTT}\label{nbiot-conexion-mqtt}
 
-MQTT(Message Queuing Telemetry Transport) es un protocolo de mensajería pensado para redes con poco ancho de banda, alta latencia o conectividad inestable, y para dispositivos con recursos limitados de procesamiento y energía. Funciona sobre TCP/IP y se basa en un modelo de publicación/suscripción con tres roles. El publicador envía mensajes asociados a un tópico determinado. El suscriptor declara su interés en uno o más tópicos y recibe los mensajes que se publiquen en ellos. Por último, el broker es el servidor central que recibe todos los mensajes, los filtra por tópico y los distribuye a los suscriptores correspondientes.
+El protocolo MQTT (Message Queuing Telemetry Transport) es un protocolo de mensajería pensado para redes con poco ancho de banda, alta latencia o conectividad inestable, y para dispositivos con recursos limitados de procesamiento y energía. Funciona sobre TCP/IP y se basa en un modelo de publicación/suscripción con tres roles. El publicador envía mensajes asociados a un tópico determinado. El suscriptor declara su interés en uno o más tópicos y recibe los mensajes que se publiquen en ellos. Por último, el broker es el servidor central que recibe todos los mensajes, los filtra por tópico y los distribuye a los suscriptores correspondientes.
 
-El establecimiento de la sesión se da en dos etapas. Primero se establece la conexión de transporte: el cliente abre una conexión TCP con el broker, por convención en el puerto 1883 sin cifrado o en el 8883 con TLS. Luego se establece la conexión MQTT propiamente dicha. El cliente envía un paquete CONNECT con su Client ID, que es su identificador único ante el broker, y también usuario y contraseña si el broker requiere autenticación. El broker responde con un paquete CONNACK con un código de retorno, donde el valor 0 indica que la conexión fue aceptada.
+El establecimiento de la sesión se da en dos etapas. Primero se establece la conexión de transporte: el cliente abre una conexión TCP con el broker, por convención en el puerto 1883 sin cifrado o en el 8883 con TLS. Luego se establece la conexión MQTT propiamente dicha. El cliente envía un paquete CONNECT, que incluye un identificador único ante el broker (Client ID) y, si el broker requiere autenticación, usuario y contraseña. El broker responde con un paquete CONNACK, cuyo código de retorno indica si aceptó la conexión o la rechazó. 
+
+Una vez establecida la sesión, el cliente puede enviar mensajes al broker con el paquete PUBLISH, que contiene el tópico, el mensaje (payload) y el nivel de QoS. El broker reenvía el mensaje a todos los clientes que se hayan suscrito a ese tópico mediante un paquete SUBSCRIBE.
 
 \subsection{Enlace de video}\label{enlace-video}
 
@@ -643,11 +1004,11 @@ Uruguay adoptó la versión brasileña del estándar ISDB-T (Japonés), llamado 
 \centering
 \includegraphics[height=0.505\linewidth,keepaspectratio]{./imagenes/image4.png}\hfill
 \includegraphics[height=0.505\linewidth,keepaspectratio]{./imagenes/image1.png}
-\caption{Participación de los estándares de transmisión satelital en SDTV y HDTV por región entre 1996 y 2018: a) América del Norte, b) América del Sur, c) Europa, d) África, e) Rusia, f) Asia y g) Australia \cite{ref62}.}
+\caption{Participación de los estándares de transmisión satelital en SDTV (Standard Definition Television) y HDTV (High Definition Television) por región entre 1996 y 2018: a) América del Norte, b) América del Sur, c) Europa, d) África, e) Rusia, f) Asia y g) Australia \cite{ref62}.}
 \label{fig:estandares-dtv-region}
 \end{figure}
 
-\subsubsection{DVB-S2 (Europeo)}\label{dvb-s2-europeo}
+\subsubsection{DVB-S2}\label{dvb-s2-europeo}
 
 DVB-S2 (\emph{Digital Video Broadcasting} - Segunda Generación) es un sistema flexible de modulación y codificación de canal diseñado para aplicaciones de banda ancha por satélite. Fue desarrollado como sucesor de los estándares DVB-S y DVB-DSNG originales, aprovechando los avances tecnológicos para ofrecer aproximadamente un 30\% más de capacidad bajo las mismas condiciones de ancho de banda y potencia del transpondedor \cite{ref27}.
 
@@ -657,7 +1018,7 @@ El estándar incluye \cite{ref27}:
 \item
   Corrección de Errores (FEC): Utiliza un sistema potente basado en códigos LDPC (\emph{Low-Density Parity Check}) concatenados con códigos BCH. Esto permite que el sistema opere muy cerca del límite de Shannon.
 \item
-  Modulación Flexible: DVB-S2 soporta cuatro constelaciones: QPSK, 8PSK, 16APSK y 32APSK. Mientras que QPSK y 8PSK son ideales para aplicaciones limitadas por potencia, como la radiodifusión. 16APSK y 32APSK están optimizadas para servicios limitados por ancho de banda. A diferencia de QPSK y 8PSK, ofrecen una eficiencia espectral mucho mayor, pero son más sensibles a distorsiones no lineales.
+  Modulación Flexible: DVB-S2 soporta cuatro constelaciones: QPSK, 8PSK, 16APSK y 32APSK. Mientras que QPSK y 8PSK son ideales para aplicaciones limitadas por potencia, como la radiodifusión, 16APSK y 32APSK están optimizadas para servicios limitados por ancho de banda. A diferencia de QPSK y 8PSK, ofrecen una eficiencia espectral mucho mayor, pero son más sensibles a distorsiones no lineales.
 \item
   Herramientas Avanzadas de Adaptación:
 
@@ -676,408 +1037,12 @@ El estándar incluye \cite{ref27}:
 
 DVB-S2 es compatible con servicios de televisión codificados MPEG-2 y MPEG-4 \cite{ref27,ref42}.
 
+\begin{figure}[H]
+\centering
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image15.png}
-
-\section{Video digital}\label{video-digital}
-
-\subsection{Codificación de video}\label{codificaciuxf3n-de-video}
-
-La codificación de video es el proceso mediante el cual se comprime y se transforma el formato de un contenido de video sin procesar en un archivo digital, de modo que pueda reproducirse en distintos dispositivos y plataformas.
-
-\textbf{Input}: Video Crudo Digital (formato YUV)
-
-\textbf{Output}: Video Comprimido (formato H.264, H.265)
-
-El objetivo principal de este proceso es reducir el tamaño del archivo. Para lograrlo, se eliminan datos que no son esenciales. Al reproducirse, el video resultante no es una copia exacta del original, sino una aproximación suficientemente fiel. En el caso del streaming en vivo, es especialmente importante, ya que al comprimir el video se disminuye el uso de ancho de banda, facilitando su transmisión desde la fuente hasta el reproductor, sin sacrificar la calidad percibida por los usuarios \cite{ref24}.
-
-El códec H.264 (AVC) destaca por su buena eficiencia de compresión, permitiendo reducir significativamente el tamaño del video manteniendo una calidad aceptable, además de requerir un bajo costo computacional y ofrecer alta velocidad de codificación, lo que lo hace ideal para aplicaciones en tiempo real. Su principal limitación es que es menos eficiente que códecs más modernos, por lo que necesita mayores tasas de bits para lograr la misma calidad. A pesar de esto, sigue siendo ampliamente utilizado debido a su compatibilidad casi universal con dispositivos.
-
-El códec H.265 (HEVC) presenta como principal ventaja su alta eficiencia de compresión, ya que permite obtener la misma calidad de video utilizando aproximadamente un 40--50\% menos de bitrate que H.264, lo que reduce significativamente el consumo de ancho de banda y el tamaño de los archivos. Sin embargo, requiere una mayor capacidad de procesamiento, lo que implica tiempos de codificación más largos y mayores exigencias de hardware.
-
-\subsection{Encapsulamiento}\label{encapsulamiento}
-
-La encapsulación es el proceso de envolver datos de video codificados en unidades estructuradas y paquetizadas para facilitar su transmisión, almacenamiento y sincronización en distintos sistemas multimedia. En el caso de los estándares HEVC (H.265) y AVC (H.264), ambos utilizan una capa de abstracción, llamada Network Abstraction Layer, para cumplir esta función \cite{ref26}.
-
-\textbf{Input}: Video Comprimido (formato H.264, H.265)
-
-\textbf{Output}: Paquetes Transport Stream
-
-El MPEG-2 Transport Stream (TS) es un estándar global utilizado para la difusión de televisión digital (vía satélite, cable y terrestre), el almacenamiento en discos ópticos (como Blu-ray) y sistemas de IPTV gestionados. Su función principal es definir la multiplexación y sincronización de datos de audio y video comprimidos \cite{ref26}.
-
-Los datos codificados (unidades NAL) se empaquetan primero en PES (Packetized Elementary Stream). El encabezado PES contiene información de temporización esencial, como una base de reloj común y marcas de tiempo para indicar cuándo se deben decodificar (DTS) y presentar (PTS) los datos. Los paquetes PES se fragmentan en unidades de longitud fija de 188 bytes. Esta estructura de longitud fija es fundamental para entornos donde es probable que ocurran errores, ya que facilita que el receptor mantenga la sincronización en canales con pérdidas. Cada paquete TS incluye un PID en su encabezado para identificar a qué componente (video, audio o datos) pertenece, permitiendo al receptor demultiplexar los servicios \cite{ref26}.
-
-\section{Cadena de RF}\label{componentes-rf}
-
-\subsection{Radios definidos por software}\label{radios-definidos-por-software}
-
-Un SDR es un sistema de comunicación por radio donde los componentes que tradicionalmente se implementan en hardware (como filtros, amplificadores y moduladores) se definen mediante software \cite{ref49}.
-
-\hl{A diferencia de los dispositivos de radio convencionales, que son estrictamente de hardware y tienen especificaciones fijas (como rangos de frecuencia y filtros predeterminados), un SDR ofrece una gran flexibilidad. Esto nos permite ajustar parámetros como la frecuencia, el ancho de banda y el método de modulación o demodulación utilizando programas informáticos sin necesidad de cambiar o comprar más componentes físicos.}
-
-\subsection{Amplificador de potencia}\label{amplificador-de-potencia}
-
-Un amplificador de potencia (PA) convierte señales de baja potencia en una de mayor potencia \cite{ref88}. Los parámetros clave que se toman en cuenta para seleccionar amplificadores son los siguientes:
-
-\begin{itemize}
-\item
-  Ganancia: Mide cuánto aumenta la señal de entrada de un amplificador de potencia de RF, expresado en decibelios (dB) como la relación de salida a potencia de entrada \cite{ref89}.
-\item
-  Eficiencia: Refiere a la eficacia con la que la potencia de CC de entrada se convierte en potencia de salida de RF, expresada típicamente como un porcentaje. La alta eficiencia minimiza el desperdicio de energía, reduce la generación de calor y extiende la vida útil de la batería \cite{ref89}.
-\item
-  Linealidad (IPn): Si un amplificador se comporta linealmente, entonces la señal de salida cambiará proporcionalmente a la señal de entrada \cite{ref90}. La no linealidad tiene como producto armónicos e interferencia intermodulación. Los productos de orden par tienden a ser fáciles de filtrar. Los de orden impar son más difíciles de filtrar porque los términos caen mas cerca de la banda útil. Debido a esto, el parámetro IP3 es una medida fundamental al tomar en cuenta el producto de tercer orden. Es el impar más significativo a excepción del primer orden \cite{ref91}. \includegraphics[width=3.0489in,keepaspectratio]{./imagenes/image18.png}
-\item
-  P1dB: Es el punto de compresión de un amplificador en el que su potencia de salida es 1 dB menor que la que tendría si mantuviera un comportamiento lineal ideal. Esta especificación permite determinar el límite superior de la región de operación lineal del amplificador. A partir de este punto, la ganancia comienza a disminuir y la potencia de salida deja de aumentar proporcionalmente con la potencia de entrada \cite{ref92}.
-\end{itemize}
-
-\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image62.png}
-
-\cite{ref94}\begin{itemize}
-\item
-  Psat: Es la potencia máxima de salida de un amplificador. Corresponde al punto en el que el amplificador alcanza la saturación y ya no puede aumentar su potencia de salida, incluso si se continúa incrementando la potencia de entrada \cite{ref92}.
-\item
-  Frecuencia de operación: Define el espectro de frecuencias dentro del cual un amplificador de potencia de RF mantiene el rendimiento especificado \cite{ref93}.
-\end{itemize}
-
-\subsection{Construcción y materiales de antenas}\label{construcciuxf3n-y-materiales-antenas}
-
-La velocidad de propagación de la onda de radio a lo largo de un hilo conductor de cobre es ligeramente menor que la velocidad de la luz en el espacio libre. Debido al propio material y otros efectos capacitivos, la longitud del elemento radiador suele ser aproximadamente 5\% menor que la longitud teórica de un cuarto de onda \cite{ref70}.
-
-Materiales conductores para radiadores \cite{ref70}:
-
-\begin{itemize}
-\item
-  Cobre: Es el estándar para antenas de hilo, como dipolos y sistemas de radiales, debido a su conductividad superior, que minimiza las pérdidas por resistencia y maximiza la eficiencia del sistema.
-\item
-  Aluminio: El aluminio es el material predilecto para estructuras rígidas como antenas Yagi, mástiles y radiadores verticales, debido a su excelente relación resistencia-peso y su bajo costo. Su utilización en forma de tubos de mayor diámetro que un cable convencional permite que las antenas operen con un mayor ancho de banda. Además, el aluminio es fácil de mecanizar manualmente y no se oxida fácilmente.
-\end{itemize}
-
-\subsection{Amplificador de bajo ruido}\label{amplificador-de-bajo-ruido}
-
-Un Amplificador de Bajo Ruido (LNA) es un componente electrónico fundamental ubicado en la etapa inicial de un receptor. Su función es amplificar las señales débiles captadas por la antena, incorporando la menor cantidad posible de ruido interno. Se utiliza principalmente para minimizar la temperatura de ruido total del sistema. Reduce de forma efectiva la contribución de ruido de todas las etapas posteriores de la cadena de recepción. Al amplificar la señal desde el comienzo y disminuir el efecto del ruido térmico generado por los componentes subsiguientes, el LNA permite mantener una relación señal-ruido (SNR) suficientemente alta para que el receptor pueda recuperar correctamente los datos transmitidos del ruido de fondo \cite{ref40}.
-
-\subsection{Atenuadores}\label{atenuadores}
-
-Un atenuador es un componente pasivo que introduce una pérdida conocida y fija (en dB) entre el transmisor y el receptor. La idea es reemplazar el espacio libre por un atenuador calibrado que simule la atenuación que tendría la señal a esa distancia real. Primero se calcula la atenuación que se quiere simular con la fórmula de espacio libre (FSPL), que depende de la distancia y la frecuencia. Los atenuadores comerciales vienen en valores fijos (3, 6, 10, 20, 30 dB) y soportan una potencia determinada que el transmisor no puede superar. Se combinan varios en cascada para sumar el valor objetivo. Se prueba transmitiendo paquetes reales y revisando RSSI/SNR en el receptor, aumentando la atenuación gradualmente hasta encontrar el punto donde empieza a fallar. Esto da el margen de enlace real, útil para anticipar pérdidas adicionales en vuelo.
-
-\section{Interfaces de comunicación}\label{interfaces-comunicacion}
-
-\subsection{SPI}\label{spi}
-
-SPI (Serial Peripheral Interface) es un protocolo de comunicación digital utilizado para conectar un microcontrolador con sensores, memorias, pantallas y otros periféricos.
-
-\begin{itemize}
-\item
-  Serial: Los bits se envían uno detrás de otro.
-\item
-  Peripheral: Permite la comunicación entre un dispositivo principal y periféricos.
-\item
-  Interface: Define la forma en que se conectan y comunican los componentes.
-\end{itemize}
-
-\textbf{Características}
-
-\begin{itemize}
-\item
-  Síncrono: utiliza una señal de reloj para sincronizar la comunicación.
-\item
-  Full Duplex: permite enviar y recibir datos al mismo tiempo.
-\item
-  Main - Subnode: existe un dispositivo principal (Main) y uno o varios dispositivos subordinados (Subnodes). También conocido como Master-Slave.
-\end{itemize}
-
-\includegraphics[width=3.2135in,keepaspectratio]{./imagenes/image68.png}
-
-\textbf{Lineas}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  SCLK (Serial Clock): Es la señal de reloj generada por el Main. Esta señal sincroniza la transmisión y recepción de datos entre el Main y el Subnode. Se le llama Serial Clock porque sincroniza la transmisión serial de los datos, es decir, bit a bit.
-\item
-  CS (Chip Select): Es la señal utilizada por el Main para seleccionar con qué Subnode desea comunicarse. Normalmente esta señal permanece en 1. Cuando el Main quiere comunicarse con un Subnode específico, coloca su línea CS en nivel 0. Cada Subnode posee una línea CS independiente.
-\item
-  Líneas de Datos: SPI utiliza dos líneas de datos independientes, lo que permite la comunicación Full Duplex.
-
-  \begin{enumerate}
-  \def\labelenumii{\alph{enumii}.}
-  \item
-    MOSI (Main Out, Subnode In): Línea utilizada para transmitir datos desde el Main hacia el Subnode.
-  \item
-    MISO (Main In, Subnode Out): Línea utilizada para transmitir datos desde el Subnode hacia el Main.
-  \end{enumerate}
-\end{enumerate}
-
-\cite{ref80}\textbf{Funcionamiento}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Shifting: Consiste en desplazar los bits dentro de un registro para transmitir el siguiente bit por la línea de comunicación. (Cambiar el bit a enviar)
-\item
-  Sampling Consiste en leer o capturar el valor presente en la línea de datos en un instante determinado por el reloj.
-\end{enumerate}
-
-\cite{ref80}\textbf{Secuencia de comunicación}
-
-\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image53.png}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  El Main coloca la señal CS pasa a 0, seleccionando el Subnode.
-\item
-  El Main comienza a generar la señal de reloj (SCLK).
-\item
-  MOSI (Main → Subnode): En cada flanco de subida del reloj (línea naranja), el Subnode lee (samplea) el bit enviado por el Main. En cada flanco de bajada (línea azul), el Main actualiza la línea MOSI con el siguiente bit a transmitir (shift).
-\item
-  MISO (Subnode → Main): En cada flanco de subida del reloj (línea naranja), el Main lee (samplea) el bit enviado por el Subnode. En cada flanco de bajada (línea azul), el Subnode actualiza la línea MISO con el siguiente bit a transmitir (shift).
-\end{enumerate}
-
-\cite{ref80} La configuración de si se lee en la subida o bajada del clock depende de los parámetros CPOL (Clock Polarity) y CPHA (Clock Phase) que tanto el Main como el Subnode deben configurarse previamente con el mismo modo SPI para que la comunicación funcione. Hay 4 modos diferentes \cite{ref80}.
-
-\textbf{Múltiples subnodos SPI}
-
-\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image46.png}
-
-Todos los dispositivos comparten:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  MOSI
-\item
-  MISO
-\item
-  SCLK
-\end{enumerate}
-
-Sin embargo, cada dispositivo posee una línea CS independiente. El Main selecciona el dispositivo con el que desea comunicarse colocando su señal CS correspondiente en 0, mientras mantiene las demás en 1 \cite{ref80}.
-
-\subsection{I2C}\label{i2c}
-
-I2C (Inter-Integrated Circuit) es un protocolo de comunicación digital utilizado para conectar un microcontrolador con sensores, memorias, pantallas y otros periféricos utilizando únicamente dos líneas principales.
-
-\textbf{Características}
-
-\begin{itemize}
-\item
-  Síncrono: utiliza una señal de reloj para sincronizar la comunicación.
-\item
-  Half Duplex: no transmite y recibe datos al mismo tiempo por líneas separadas, sino que ambos sentidos usan la misma línea SDA.
-\item
-  Multi-main y multi-node: puede haber uno o varios dispositivos principales y varios sub nodos conectados al mismo bus.
-\item
-  Direccional por dirección: cada subnodo tiene una dirección propia de 7 bits o 10 bits.
-\end{itemize}
-
-\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image27.png}
-
-\textbf{Lineas}
-
-\begin{itemize}
-\item
-  SDA (Serial Data): línea bidireccional usada para enviar y recibir datos.
-\item
-  SCL (Serial Clock): línea de reloj generada normalmente por el Main. Sirve para sincronizar cuándo se leen los bits.
-\end{itemize}
-
-\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image76.png}
-
-\textbf{Resistencias Pull-Up}
-
-En I2C, las líneas SDA y SCL usan resistencias de pull-up (Rp). Estas resistencias hacen que las líneas estén por defecto en HIGH.
-
-\begin{itemize}
-\item
-  Para enviar un 0, el dispositivo baja la línea a LOW.
-\item
-  Para enviar un 1, el dispositivo libera la línea y la resistencia la vuelve a subir a HIGH.
-\end{itemize}
-
-Esto permite que varios dispositivos compartan el mismo bus sin que uno fuerce HIGH mientras otro fuerza LOW.
-
-\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image32.png}
-
-\cite{ref81}\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image86.png}
-
-\cite{ref82}\textbf{Proceso de Transmisión \cite{ref81}}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  El Main genera una condición de START, bajando SDA de HIGH a LOW mientras SCL está en HIGH. (La señal de clock estaba ``apagada'' y ahora arranca)
-\item
-  El Main envía la dirección del subnodo con el que quiere comunicarse.
-\item
-  También envía un bit que indica si quiere escribir o leer.
-\item
-  El subnodo que reconoce su dirección responde con un ACK, bajando SDA.
-\item
-  Se transmite el frame de datos.
-\item
-  Después de cada dato recibido, el receptor correspondiente envía otro ACK.
-\item
-  Para terminar, el Main genera una condición de STOP, subiendo SDA a HIGH mientras SCL está en HIGH.
-\end{enumerate}
-
-\textbf{Múltiples subnodos I2C}
-
-Todos los dispositivos comparten \cite{ref81}:
-
-\begin{itemize}
-\item
-  SDA
-\item
-  SCL
-\end{itemize}
-
-A diferencia de SPI, no hace falta una línea CS para cada dispositivo. El Main selecciona con quién comunicarse enviando la dirección del subnodo.
-
-\subsection{UART}\label{uart}
-
-UART (Universal Asynchronous Receiver-Transmitter) es un protocolo de comunicación serie asíncrono que utiliza dos líneas principales: Transmitter (Tx) y Receiver (Rx). Al ser asíncrono, no existe una señal de reloj compartida entre los dispositivos.
-
-\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image19.png}
-
-\cite{ref83} El Databus quiere enviar los bits en paralelo y la interfaz UART se encarga de transmitirlos de forma serial (uno atrás del otro). Este protocolo es entre dos dispositivos y no más. El TX de uno está conectado al RX del otro \cite{ref83}.
-
-Para que la comunicación funcione correctamente, ambos dispositivos deben configurarse previamente con el mismo baud rate. El baud rate indica la velocidad a la que se transmiten los bits por segundo. Cada dispositivo utiliza su propio reloj interno para enviar y muestrear los datos, por lo que la clave es que ambos tengan configuraciones compatibles para minimizar errores \cite{ref83}.
-
-La línea UART permanece en estado HIGH por defecto. Cuando el transmisor desea enviar información, lleva la línea a LOW durante un tiempo de bit, generando el bit de arranque (Start Bit). Este cambio de HIGH a LOW le indica al receptor que comienza una nueva trama de datos \cite{ref83}.
-
-\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image57.png}
-
-\cite{ref83} La estructura de una trama UART se divide de la siguiente manera \cite{ref83}:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  \textbf{Bit de arranque}
-
-  \begin{itemize}
-  \item
-    Se mantiene siempre en nivel 0 (LOW).
-  \item
-    Su función es notificar al receptor el inicio de una nueva transmisión de datos.
-  \end{itemize}
-\item
-  \textbf{Bits de datos}
-
-  \begin{itemize}
-  \item
-    Representan la información útil o carga útil (payload) a transmitir.
-  \item
-    Dependiendo de la configuración previa, suelen ser 5, 6, 7, 8 o hasta 9 bits.
-  \item
-    Por lo general, el envío se realiza comenzando por el bit menos significativo (LSB).
-  \end{itemize}
-\item
-  \textbf{Bit de paridad}
-
-  \begin{itemize}
-  \item
-    Permite implementar un mecanismo básico para la detección de errores simples.
-  \item
-    Las opciones incluyen paridad par (Even), impar (Odd) o puede omitirse según se requiera.
-  \end{itemize}
-\item
-  \textbf{Bit(s) de parada}
-
-  \begin{itemize}
-  \item
-    Puede consistir en uno, uno y medio o dos bits de duración.
-  \item
-    Estos bits permanecen siempre en estado 1 (HIGH).
-  \item
-    Señalan la conclusión de la trama actual, permitiendo que el receptor se sincronice para la próxima ráfaga.
-  \end{itemize}
-\end{enumerate}
-
-\textbf{Proceso de Transmisión} \cite{ref83}\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Los datos suelen existir inicialmente en paralelo dentro del dispositivo.
-\item
-  La interfaz UART transmisora convierte esos bits paralelos a una tira de bits serial (uno atrás del otro).
-\item
-  Luego coloca el Start Bit (LOW), transmite los bits de datos uno tras otro, opcionalmente agrega un bit de paridad para detección de errores y finalmente envía uno o más bits de parada (Stop Bits) en estado HIGH.
-\item
-  Durante la recepción, la UART receptora detecta el Start Bit y, utilizando su propio reloj interno, comienza a muestrear la línea para reconstruir los bits transmitidos.
-\item
-  Una vez recibidos todos los bits de la trama, convierte nuevamente la información de serie a paralelo y la entrega al sistema receptor.
-\end{enumerate}
-
-\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image14.png}
-
-\cite{ref84} En UART no se puede mandar una cantidad variable de bits de datos dentro de una misma configuración. La cantidad de bits de datos, la presencia o no de bit de paridad, la cantidad de bits de parada y el baud rate deben configurarse previamente en ambos extremos. Como no existe una señal de reloj ni información adicional que indique dónde terminan los datos y dónde comienzan los bits de paridad o parada, el receptor necesita conocer de antemano el formato exacto de cada trama \cite{ref83}.
-
-\section{Energía: baterías y conversores}\label{energia-fundamentos}
-
-\subsection{Baterías}\label{baterias}
-
-La energía solar no siempre está disponible durante las operaciones de una nave espacial. Para almacenar energía se utilizan baterías primarias y secundarias, las cuales se clasifican según su diferente composición electroquímica. Debido a que las baterías de tipo primario no son recargables, generalmente se utilizan en misiones de corta duración. Las baterías de plata-zinc (Ag-Zn) son utilizadas habitualmente debido a que son más fáciles de manipular y pueden descargarse a una mayor tasa. Sin embargo, también existe una variedad de baterías primarias basadas en litio que presentan una mayor densidad energética, entre ellas las de dióxido de azufre-litio (LiSO₂), monofluoruro de carbono-litio (LiCF\textsubscript{x}) y cloruro de tionilo-litio (LiSOCl₂) \cite{ref39}.
-
-Las baterías de tipo secundario incluyen las de níquel-cadmio (NiCd), níquel-hidrógeno (NiH₂), polímero de litio (LiPo) e ion-litio (Li-ion), las cuales han sido ampliamente utilizadas en el pasado en pequeños satélites. Las baterías secundarias basadas en litio son utilizadas habitualmente en dispositivos electrónicos portátiles debido a su capacidad de recarga, bajo peso y alta densidad energética, y se han vuelto ampliamente utilizadas en misiones espaciales. Generalmente, se conectan a una fuente de energía primaria (por ejemplo, un panel solar) y pueden proporcionar energía recargable bajo demanda \cite{ref39}.
-
-En general, existen dos grupos de celdas: de alta energía y de alta potencia. Las celdas de alta potencia utilizan un diseño de baja resistencia, por ejemplo, mediante el aumento del área superficial del recubrimiento o mediante múltiples puntos de contacto entre el colector de corriente y la celda. Esto permite reducir la resistencia total y alcanzar una mayor tasa de descarga. Por otro lado, las celdas de alta energía buscan optimizar la densidad energética gravimétrica para obtener la mayor cantidad de energía posible de la celda. En general, para aplicaciones espaciales es importante contar con una alta densidad energética, ya que una batería con una elevada densidad energética gravimétrica permite reducir el costo de lanzamiento a órbita al proporcionar una mayor capacidad de almacenamiento por unidad de masa \cite{ref39}.
-
-Las baterías típicas de Li-ion presentan un rango de temperatura de operación de -20 °C a 60 °C. Esto puede no cumplir con los requisitos de misiones que requieren operar a temperaturas más bajas. Entre las baterías destinadas a aplicaciones de baja temperatura se encuentran \cite{ref39}:
-
-\includegraphics[width=2.1875in,keepaspectratio]{./imagenes/image33_1.png}\includegraphics[width=1.2917in,keepaspectratio]{./imagenes/image33_2.png}\cite{ref39} En proyectos anteriores, \cite{ref2,ref3,ref99} se prefirieron las baterías de ion-litio. El equipo del proyecto Zephyrus X utilizó baterías de ion-litio 18650 como fuente de energía principal debido a su bajo peso, alta capacidad de potencia, posibilidad de recarga y amplio rango de temperatura de operación. Sin embargo, experiencias anteriores indicaron que el uso de baterías recargables no era la mejor opción. Si la batería se descargaba excesivamente, no podía volver a cargarse y, en algunos casos, llegaba a explotar {[}citar experiencia John{]}.
-
-\subsection{Conversor de voltaje}\label{conversor-de-voltaje}
-
-Dos tipos de conversores \cite{ref105}:
-
-\begin{itemize}
-\item
-  Un conversor reductor disminuye el voltaje. Utiliza un interruptor electrónico que conecta y desconecta rápidamente la tensión de entrada. Un inductor y un capacitor suavizan esta señal para obtener una salida estable de menor voltaje. El voltaje de salida es una fracción del voltaje de entrada, determinada por el tiempo durante el cual el interruptor permanece encendido, conocido como ciclo de trabajo.
-\item
-  Un conversor elevador aumenta el voltaje. Utiliza un inductor para almacenar energía proveniente de la fuente de entrada. Cuando el interruptor se apaga, el inductor libera la energía almacenada. Esta energía se suma al voltaje de entrada, generando un voltaje de salida superior al de entrada.
-\end{itemize}
-
-Un conversor reductor es conocido por su excelente eficiencia en la conversión de potencia.
-
-Es capaz de alcanzar de forma consistente eficiencias superiores al 95 \%. Esta elevada eficiencia implica que se desperdicia menos energía, lo que resulta fundamental para prolongar la duración de las baterías y reducir la generación de calor en dispositivos compactos \cite{ref105}.
-
-Un conversor elevador también presenta una alta eficiencia, con valores que comúnmente superan el 90 \%. Un circuito bien diseñado puede alcanzar eficiencias máximas superiores al 95 \%. Sin embargo, generalmente opera en un rango de 85 \% a 95 \%. El proceso de aumentar el voltaje es ligeramente más complejo, lo que puede provocar mayores pérdidas de energía en comparación con un conversor reductor \cite{ref105}.
-
-\section{Materiales y control térmico}\label{materiales-termico}
-
-\subsection{Aluminio}\label{aluminio}
-
-La conductividad térmica representa la capacidad de un material para transmitir calor. Se define como la cantidad de energía térmica que atraviesa una unidad de espesor del material, por unidad de área y por cada unidad de diferencia de temperatura. La elevada conductividad térmica del aluminio puro se debe principalmente al movimiento eficaz de los electrones libres \cite{ref85}.
-
-La capacidad calorífica específica es una propiedad física que indica la cantidad de energía térmica requerida para aumentar en un grado Celsius (o un Kelvin) la temperatura de una unidad de masa de una sustancia. Esta propiedad es fundamental para la gestión térmica de los materiales, ya que determina la velocidad con la que estos absorben o liberan calor durante su operación. El aluminio puro destaca por su capacidad calorífica específica relativamente alta, que es de aproximadamente 0,900 kJ/(kg.K) a temperatura ambiente \cite{ref85} es decir, requiere una gran cantidad de energía térmica (calor) para elevar su temperatura en un grado Kelvin o Celsius.
-
-\includegraphics[width=3.3071in,keepaspectratio]{./imagenes/image90.png}
-
-\cite{ref86} Si bien el aluminio es ampliamente reconocido por su alta capacidad para conducir el calor, también puede actuar como un excelente aislante frente a la radiación térmica gracias a su elevada reflectividad. En particular, es capaz de reflejar entre el 90 \% y el 95 \% de la radiación infrarroja incidente, reduciendo considerablemente la cantidad de energía térmica absorbida por el material \cite{ref85}.
-
-Comparación de la conductividad térmica entre el cobre y el aluminio: El cobre y el aluminio son materiales ampliamente utilizados en aplicaciones de transferencia de calor, como radiadores e intercambiadores térmicos. Aunque el cobre presenta una conductividad térmica superior, el aluminio suele ser la opción preferida debido a su menor costo, menor densidad y mayor facilidad de fabricación y mecanizado \cite{ref85}.
-
-\subsection{EPS}\label{eps}
-
-El EPS tiene una conductividad térmica muy baja. Esto se debe a su estructura de celda cerrada, compuesta en un 98 \% de aire. Este aire atrapado dentro de las celdas es un conductor de calor muy deficiente, lo que le confiere a la espuma excelentes propiedades de aislamiento térmico \cite{ref87}.
-
-\subsection{Control térmico}\label{control-termico}
-
-El control térmico de una nave espacial tiene como objetivo principal mantener todos sus componentes dentro de los rangos de temperatura permitidos para sus requisitos operativos y de supervivencia en todas las fases de la misión. El comportamiento térmico de un satélite se rige por un balance de energía fundamentado en la cantidad de calor absorbido, almacenado, generado y disipado \cite{ref39}.
-
-\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image82.png}
-
-Los fundamentos de cada término son los siguientes \cite{ref39}:
-
-\begin{itemize}
-\item
-  Fuentes de calor externas: Incluyen el calentamiento solar directo (q solar), el calentamiento solar reflejado por el planeta (q albedo) y el calentamiento por radiación infrarroja proveniente del planeta (q planetshine).
-\item
-  Generación de calor interna (Q gen): Depende de la disipación de energía de los componentes electrónicos y de carga útil de la nave espacial.
-\item
-  Almacenamiento de calor (Q stored): Se basa en la capacitancia térmica o masa térmica de la nave espacial.
-\item
-  Rechazo de calor (Q out,rad): En el vacío del espacio, el calor sólo puede disiparse mediante radiación infrarroja ya que no hay aire ni fluidos que permitan la transferencia de calor por convección.
-\end{itemize}
+\caption{Arquitectura del subsistema de transmisión DVB-S2 \cite{ref27}.}
+\label{fig:dvb-s2-transmision}
+\end{figure}
 
 \parte{Parte III: Diseño general del sistema}
 
@@ -1171,7 +1136,7 @@ El examen teórico consta de 3 partes. La primera parte es sobre la Reglamentaci
 
 Se obtuvo el Permiso de Radioaficionado de Categoría ``General'', con el Distintivo de Llamada ``CX1DPH''. Con este permiso se está habilitado a transmitir en las bandas asignadas a este servicio, entre ellas la banda de 433 mHz utilizada para la telemetría y la banda de ATV 1240 mHz para la transmisión de video.
 
-\subsection{Link budget}\label{link-budget}
+\subsection{Link budget}\label{link-budget-diseno}
 
 Consideraciones:
 \begin{itemize}
@@ -1481,7 +1446,7 @@ El módulo EBYTE LoRa E77-400M22S fue utilizado por el equipo SF-HAB \cite{ref19
 
 \hl{Se prefirió el EBYTE LoRa E22-400T22S sobre el E22-400T33S por su menor consumo energético a la hora de transmitir. Se optó por tener menos potencia de transmisión, ahorrando energía, y tener mejor sensibilidad en el receptor para compensar por la pérdida de potencia. Además, se prefirió por sobre el RAK5205 ya que tiene menor consumo energético y mayor potencia de transmisión.}
 
-Otras tecnologías para transmitir telemetría, como APRS \cite{ref3,ref32,ref34} RTTY \cite{ref2,ref22} Sigfox \cite{ref35} son muy utilizadas en globos estratosféricos. Seleccionamos LoRa por ser una tecnología nueva y muy relevante en el mundo creciente de IoT. Además, fue muy utilizada en los proyectos estratosféricos Zephyrus \cite{ref2,ref33} respaldado por el programa Innovation to Flight del Laboratorio de Propulsión de la NASA.
+Otras tecnologías para transmitir telemetría, como APRS \cite{ref3,ref32,ref34} RTTY \cite{ref2,ref22} Sigfox \cite{ref35} son muy utilizadas en globos estratosféricos. Seleccionamos LoRa por ser una tecnología nueva y muy relevante en el mundo creciente de IoT. Además, fue muy utilizada en los proyectos estratosféricos Zephyrus \cite{ref2,ref33} respaldado por el programa Innovation to Flight del Laboratorio de Propulsión de la NASA. APRS se decidió usar como enlace complementario para aprovechar la infraestructura de radioaficionados que ya existe en Uruguay.
 
 \subsection{E22-400T22S}\label{e22-400t22s}
 
@@ -1502,6 +1467,12 @@ Cuando se adquirió el módulo \hl{E22-400T22S, al no tener} pines para conectar
 \cite{ref60}\includegraphics[width=3.2161in,keepaspectratio]{./imagenes/image81.png}
 
 \includegraphics[width=2.5177in,keepaspectratio]{./imagenes/image38.png}
+
+\subsection{APRS}\label{aprs}
+
+Reutilizamos una radiosonda Vaisala RS41-SG que nos prestaron para hacer seguimiento del globo. Reemplazamos el firmware original por RS41ng, un firmware de código abierto que la hace transmitir APRS. Lo grabamos con un programador ST-Link conectado por SWD, después de desbloquear la memoria del microcontrolador. La configuramos para transmitir en 439.000~MHz, dentro de la banda de radioaficionados, con modulación APRS a 1200~baud, el indicativo CX1DPH-11 y la potencia máxima del transmisor.
+
+Se decidió agregar APRS para aprovechar la infraestructura de receptores que ya tienen los radioaficionados en Uruguay. Las estaciones que actúan como iGate reciben la señal y suben la posición a aprs.fi. Por lo tanto se reciben datos del globo a través de esa red además del enlace LoRa.
 
 \section{Sistema de video}\label{video}
 
@@ -2222,6 +2193,11 @@ Placa Payload V2:
 
 \subsection{Weight budget}\label{weight-budget}
 
+Desde las primeras etapas del proyecto llevamos un presupuesto de peso (weight budget). Se hizo una lista de todos los componentes que iban a formar parte del payload, con una estimación del peso de cada uno. La fuimos armando incluso antes de tener los dispositivos, porque el peso total era un dato que necesitábamos temprano para dimensionar el resto del sistema como el tamaño del globo, la cantidad de helio y el paracaídas. Para cada componente registramos un peso mínimo, uno máximo y un valor de referencia típico. Esto fue especialmente útil cuando la hoja de datos del fabricante no informaba el peso, porque nos permitía trabajar con un rango razonable en lugar de un único valor incierto. Con este criterio, la estimación total quedó entre 1,54 y 1,82 kg, con un valor de referencia de 1,67 kg.
+
+Si se agrupa por subsistema, la mayor parte del peso corresponde a la estructura del payload, con unos 630 g (cerca del 38~\% del total). Esto incluye la caja de foam con recubrimiento de aluminio, los soportes interiores, la tornillería, el cableado, las placas y el separador de tanzas. Le siguen la energía, con unos 300 g (18~\%), dominada por el pack de baterías y su soporte. La transmisión, con unos 290 g (17~\%), donde los componentes más pesados son el ADALM-PLUTO, el amplificador y el APRS. El sistema de descenso, compuesto por el paracaídas, la tanza y el sistema de corte, suma unos 140 g (9~\%). Las antenas y su tubo de soporte suman unos 100 g, igual que los sensores. El procesamiento (la Raspberry Pi y sus extensores) aporta unos 95 g, y la cámara apenas 10 g. Una vez integrado, el payload completo con el paracaídas pesó 1,7 kg, un valor dentro del rango estimado y muy cercano a la referencia típica. Esto confirma que la estimación fue adecuada para dimensionar el globo, el helio y el sistema de recuperación.
+
+
 \subsection{Selección del globo}\label{seleccion-globo-cap}
 
 \subsubsection{Opciones de globos}\label{opciones-de-globos}
@@ -2301,7 +2277,7 @@ Para mantener la precisión de los sensores y minimizar los daños causados a la
 
 \subsection{Paracaídas}\label{paracaidas}
 
-Para poder recuperar el payload se definió la velocidad de descenso de aproximadamente 5 m/s. Es importante que las líneas del paracaídas no se enreden entre sí para que pueda abrirse completamente. Con un payload de \hl{1.6 kg (ajustar cuando estemos seguros)}, se evaluaron dos alternativas. Rocketman High Altitude Balloon Parachute tiene un paracaídas de 4 ft (1,2 m) que es ideal para las características del proyecto. También el paracaídas de 58'\,' (1,5 m) de High Altitude Science puede servir.
+Para poder recuperar el payload se definió la velocidad de descenso de aproximadamente 5 m/s. Es importante que las líneas del paracaídas no se enreden entre sí para que pueda abrirse completamente. Con un payload de 1.6 kg, se evaluaron dos alternativas. Rocketman High Altitude Balloon Parachute tiene un paracaídas de 4 ft (1,2 m) que es ideal para las características del proyecto. También el paracaídas de 58'\,' (1,5 m) de High Altitude Science puede servir.
 
 Los dos alcanzan una velocidad de descenso de entre 5 y 5,5 m/s para un payload de entre 1,5 y 1,8 kg. La mayor diferencia está en la eficiencia y el peso del paracaídas. El Rocketman logra lo mismo pero con menos de la mitad del peso y del area de tela que el modelo de High Altitude Science (99 kg vs 190 kg y 0,95 \(m^{2}\) vs 1,77 \(m^{2}\) respectivamente). Por otro lado, el de Rocketman cuesta la mitad de precio que el de High Altitude Science \cite{ref97,ref98}.
 
@@ -2515,6 +2491,40 @@ Para el enlace de video, se tenían 112.58 dB de atenuación de espacio libre. S
 \section{Vuelo y resultados}\label{vuelo-resultados}
 
 \pendiente{Vuelo y resultados.}
+
+\subsection{Trámites}\label{tramites}
+
+\subsubsection{Trámites DINACIA}\label{tramites-dinacia}
+
+Para el lanzamiento se necesitaron permisos de la DINACIA. En Uruguay, el lanzamiento de un globo libre no tripulado está regulado por el Reglamento Aeronáutico Latinoamericano LAR 91, adoptado por la Dirección Nacional de Aviación Civil e Infraestructura Aeronáutica (DINACIA). Su Apéndice P clasifica estos globos en ligeros, medianos y pesados según la masa de la carga útil, y establece que ninguno puede lanzarse sin autorización del Estado, independientemente de su categoría. Por eso se presentó una solicitud formal dirigida al Director Nacional de Aviación Civil, acompañada del aval institucional de la Facultad de Ingeniería y de una descripción técnica del sistema. Con esta solicitud se inició un expediente administrativo. La primera ubicación propuesta, en el departamento de Río Negro, recibió una opinión técnica desfavorable, porque la trayectoria del globo atravesaría uno de los principales flujos de tránsito aéreo comercial del país. Se hizo una nueva propuesta, desde el Campo Militar La Calera (Lavalleja). DINACIA otorgó su conformidad técnica con tres requisitos. Se tuvo que brindar acceso a un sistema de seguimiento en tiempo real del globo, comunicarse con el Centro de Control de Tránsito Aéreo antes del lanzamiento para obtener la autorización operativa, y notificar el aterrizaje al finalizar la operación. Por lo tanto, la DINACIA emitió un NOTAM que habilitó el lanzamiento el día y la franja horaria específicos para desarrollar todo el vuelo.
+
+\subsubsection{Trámites Fuerza Aérea}\label{tramites-fuerza-aerea}
+
+El lanzamiento se hizo en el Campo Militar La Calera, cercano a Minas, Lavalleja. Es una zona en la que no hay mucho tráfico aéreo y la DINACIA permite el lanzamiento. Como el Campo depende de la Brigada Aérea I de la Fuerza Aérea Uruguaya, fue necesario gestionar una autorización ante su Comandante. Para ello, se presentó una nota formal en la que se describía el proyecto y se solicitaba el uso del predio en las fechas previstas. Se adjuntó la documentación del expediente de DINACIA como respaldo de la autorización aeronáutica. La Brigada autorizó el uso del campo exclusivamente para los fines académicos descritos. Se tuvo que enviar previamente la lista de todas las personas que concurrirían al predio, con sus datos, para coordinar su acceso. Esto implicó que, cada vez que se reprogramó el lanzamiento, hubo que notificar a la Brigada y solicitar nuevamente el uso del predio para la nueva fecha.
+
+\section{Presupuesto final}\label{presupuesto-final}
+
+El costo total del proyecto fue de aproximadamente USD 2.352, incluyendo impuestos, comisiones y envíos. La mayor parte del presupuesto, unos USD 970 (cerca del 40~\%), se destinó al sistema de radiocomunicaciones. Esto incluye los módulos LoRa, el SDR ADALM-PLUTO, amplificadores, filtros, las antenas Yagi y el cableado y los conectores RF. Esta partida incluye además los impuestos de importación de esos equipos, que fueron considerables. El segundo gran rubro fueron los elementos de vuelo (helio, globo y paracaídas), que sumaron unos USD 750. El helio fue por sí solo el gasto individual más grande del proyecto, con USD 582. El resto, alrededor de USD 440, correspondió a la electrónica del payload (Raspberry Pi y accesorios, cámaras, sensores, baterías y pilas), a los materiales para la estructura del payload y de la estación terrena (comprados mayormente en ferreterías locales) y a trámites como el permiso de radioaficionado ante URSEC. Por último, los envíos internacionales a través de Exur sumaron unos USD 190. La mayoría de los componentes se compró en el exterior, principalmente en Amazon, AliExpress, Alibaba, eBay y Mini-Circuits. Se complementó con insumos de proveedores locales. El costo total se mantuvo dentro del límite de USD 2.500 planteado en las restricciones (Sección~\ref{restricciones}).
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}l r r@{}}
+\toprule
+\textbf{Rubro} & \textbf{Costo (USD)} & \textbf{Porcentaje} \\
+\midrule
+Sistema de radiocomunicaciones & 970 & 41~\% \\
+Elementos de vuelo (helio, globo y paracaídas) & 750 & 32~\% \\
+Electrónica, estructura y trámites & 440 & 19~\% \\
+Envíos internacionales & 190 & 8~\% \\
+\midrule
+\textbf{Total} & \textbf{2.352} & \textbf{100~\%} \\
+\bottomrule
+\end{tabular}
+\caption{Distribución del presupuesto final del proyecto por rubro.}
+\label{tab:presupuesto-final}
+\end{table}
 
 \section{Conclusiones y trabajo futuro}\label{conclusiones}
 
