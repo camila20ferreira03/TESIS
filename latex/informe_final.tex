@@ -252,19 +252,22 @@ El/Los autor/autores de este trabajo final de carrera declara(n) que es/son el/l
 \section*{Agradecimientos}
 \begingroup\raggedright
 \begin{itemize}
-\item Richard Corbo (Frio antartida)
-\item Fernando (Lab)
-\item Fernando Hernandez (URSEC, poquito)
-\item Fernando Manacorda (URSEC)
-\item Charlie Pechiar (equipos y radio club uruguay)
-\item Pablo Vidal (radio club uruguay)
-\item Diego Belotti (IoT)
-\item Antel (IoT y Optim)
-\item Elvis Ramos (Faro)
-\item Marcelo Barglavaz (Helio)
-\item Carlos Marx
-\item Linde (Descuento Helio)
+\item Juan Pechiar
+\item Marcelo Abreu
+\item Fernando Angeloro
 \item Ricardo Pereyra
+\item Pablo Vidal 
+\item Fernando Manacorda 
+\item Charlie Pechiar
+\item Radio Club Uruguay
+\item Linde 
+\item Marcelo Barglavaz 
+\item Diego Belotti 
+\item Equipos de Optimizacion e IoT de Antel
+\item Carlos Marx
+\item Fernando Hernandez 
+\item Richard Corbo 
+\item Elvis Ramos
 \end{itemize}\endgroup
 
 % ================= Tabla de contenido =================
@@ -595,7 +598,6 @@ Un conversor reductor es conocido por su excelente eficiencia en la conversión 
 Es capaz de alcanzar de forma consistente eficiencias superiores al 95 \%. Esta elevada eficiencia implica que se desperdicia menos energía, lo que resulta fundamental para prolongar la duración de las baterías y reducir la generación de calor en dispositivos compactos \cite{ref105}.
 
 Un conversor elevador también presenta una alta eficiencia, con valores que comúnmente superan el 90 \%. Un circuito bien diseñado puede alcanzar eficiencias máximas superiores al 95 \%. Sin embargo, generalmente opera en un rango de 85 \% a 95 \%. El proceso de aumentar el voltaje es ligeramente más complejo, lo que puede provocar mayores pérdidas de energía en comparación con un conversor reductor \cite{ref105}.
-
 
 \newpage
 \section{Buses de comunicación a bordo}\label{interfaces-comunicacion}
@@ -2153,6 +2155,11 @@ En el laboratorio se verificó el correcto funcionamiento del reductor utilizand
 
 \includegraphics[width=2.8899in,keepaspectratio]{./imagenes/image72.png}\includegraphics[width=2.8975in,keepaspectratio]{./imagenes/image8.png}
 
+\subsection{Cambios despues del primer intento de liberación}\label{cambios-despues-del-primer-intento-de-liberacion}
+Durante el primer intento de liberación del payload, se apagaba la Raspberry un tiempo después de prender todo el sistema. En el momento se diagnosticó que el ADALM-PLUTO SDR, usado para transmitir el video, produce caídas de tensión suficientes para apagar la Raspberry. Para solucionar este problema, se decidió dividir el banco de baterías. Un sub banco para alimentar solo el PLUTO con su amplificador y los otros dos sub bancos para alimentar la Raspi, los sensores y la cámara. Para conectar el PLUTO a la Raspi sin que se entregue energía a través del cable USB, se cortó su 5V y se conectó al banco del PLUTO para que al SDR le sigan llegando 5V del USB. Con esta nueva configuración, se logró separar las alimentaciones para evitar que el SDR apague la Raspi. La única conexión restante es que la Raspi la manda solo datos al PLUTO.
+
+\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/banco-separado.jpg}
+
 \subsection{Arquitectura}\label{arquitectura}
 
 \section{Estructura e integración}\label{estructura-integracion}
@@ -2188,6 +2195,26 @@ Placa Payload V1:
 Placa Payload V2:
 
 \includegraphics[width=2.0807in,keepaspectratio]{./imagenes/image95.jpg}\includegraphics[width=2.0677in,keepaspectratio]{./imagenes/image74.jpg}
+
+\subsection{Armado de payload}\label{armado-de-payload}
+Para facilitar el armado y desarmado de la carcasa de aluminio, se construyó una caja a medida  para que lo de adentro entre justo y se deslice. Incluyendo ranuras para pasar los cables que salen de la Espuma Plast. Una vez puesta la carcasa principal, se pone una tapa inferior para cerrar y fijar las antenas. 
+
+\noindent
+\includegraphics[width=0.49\linewidth]{./imagenes/carcasa-arriba.jpeg}\hfill
+\includegraphics[width=0.49\linewidth]{./imagenes/carcasa.jpg}
+
+\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/tapa.jpg}
+
+\subsection{Cambios después del primer intento de liberacion}\label{cambios-despues-del-primer-intento-de-liberacion}
+En el diseño del primer intento, el interruptor utilizado para encender todo el sistema se colocó en la parte de adentro. Al ser el componente que corta y permite la circulación de energía, no se quiso tener expuesto al frío. Cuando surgió el problema de que se apagaba la Raspi, se tenía que armar y desarmar constantemente. Lo que consumía mucho tiempo. Además, el armado y desarmado produjo que se rompiera uno de los puertos micro USB del PLUTO SDR, debido a que era la tapa de espuma plast que se ponía y sacaba constantemente. En base a esto, se decidió lo siguiente:
+\begin{enumerate}
+  \item Colocar el interruptor mecánico en la parte de afuera para así poder llegar al lugar de lanzamiento y no desperdiciar tiempo armando. Lo que también minimiza los posibles errores. Solo la palanca sale para afuera, el resto del switch se colocó en la pared de adentro para protegerlos del frío.
+  \item Se cambió la pared de espuma plast que funciona como tapa para poder acceder adentro. Se cambió a una tapa con componentes menos críticos. La tapa inicial tenía el PLUTO, se eligió esa porque era la más cómoda para acceder al interruptor. En caso que se tenga que abrir, no se están moviendo componentes críticos constantemente.  
+\end{enumerate}
+
+\includegraphics[width=0.49\linewidth]{./imagenes/tapa-cambiada.jpg}
+
+
 
 \section{Globo, descenso y recuperación}\label{lanzamiento}
 
@@ -2527,6 +2554,38 @@ Envíos internacionales & 190 & 8~\% \\
 \end{table}
 
 \section{Conclusiones y trabajo futuro}\label{conclusiones}
+
+\subsection{Hitos del vuelo}\label{hitos-del-vuelo}
+\begin{enumerate}
+  \item Subir hasta los 30.400 metros de altura
+  \item Grabar video del horizonte
+  \item Recibir telemetría en la estación terrena hasta perder la línea de vista
+  \item Apertura del paracaídas y descenso controlado
+  \item Recuperción de la totalidad de lo liberado, a excepción del globo y algunos componentes como las antenas de afuera, previstas de que no se vayan a poder reutilizar
+\end{enumerate}
+
+\subsection{Observaciones basados en la información obtenida}\label{observaciones-basados-en-la-informaciuxf3n-obtenida}
+\begin{itemize}
+  \item La velocidad se mantuvo entre 4 y 5 m/s en toda la subida, con una leve aceleración por encima de los 22 km. El estallido fue a 30.433 m.
+  \item El paracaídas funcionó, pero más rápido de lo previsto. Tras el estallido cayó a más de -53,4 m/s y se fue frenando hasta -7,7 m/s por debajo de los 3 km. Se apuntó a unos 5 m/s al tocar tierra.
+  \item Las medidas del sensor de temperatura sufrieron por sesgo térmico. La tropopausa aparece cerca de 11,5 km, pero el mínimo medido fue -36,1 °C cuando debería de registrar temperaturas de entre -50 y -75 °C. La resistencia PT100 se pudo haber calentado por radiación solar y calor de los cables que estaban adentro de la carcasa. La poca densidad de aire también afecta las lecturas.
+  \item El aislamiento de la caja funcionó ya que la temperatura interior mínima registrada fue de -3.3 °C, aunque las muestras también pueden ser afectadas por la baja densidad de aire.
+  \item El RSSI en 433 mhz cae aproximadamente 20 dB por cada década de distancia, coherente con el modelo de espacio libre. Los puntos se apartan de la recta solo 2,4 dB, lo que indica visión directa limpia, casi sin rebotes ni desvanecimientos, es decir, la cadena de RF de telemetría (antenas, cables, conectores) funcionó bien. 
+  \begin{center}
+    \begin{tabular}{|l|c|c|}
+      \hline
+      \textbf{} & \textbf{Puntos} & \textbf{Pendiente (dB/década)} \\
+      \hline
+      $>$ 0,5 km & 787 & $-20{,}1$ \\
+      $>$ 1 km   & 780 & $-20{,}2$ \\
+      $>$ 2 km   & 765 & $-20{,}1$ \\
+      $>$ 5 km   & 734 & $-19{,}7$ \\
+      $>$ 10 km  & 672 & $-20{,}0$ \\
+      $>$ 20 km  & 595 & $-19{,}4$ \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{itemize}
 
 \pendiente{Conclusiones y trabajo futuro.}
 
