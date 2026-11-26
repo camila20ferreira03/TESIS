@@ -890,7 +890,8 @@ Un amplificador de potencia (PA) convierte señales de baja potencia en una de m
 \item
   Eficiencia: Refiere a la eficacia con la que la potencia de CC de entrada se convierte en potencia de salida de RF, expresada típicamente como un porcentaje. La alta eficiencia minimiza el desperdicio de energía, reduce la generación de calor y extiende la vida útil de la batería \cite{ref89}.
 \item
-  Linealidad (IPn): Si un amplificador se comporta linealmente, entonces la señal de salida cambiará proporcionalmente a la señal de entrada \cite{ref90}. La no linealidad tiene como producto armónicos e interferencia intermodulación. Los productos de orden par tienden a ser fáciles de filtrar. Los de orden impar son más difíciles de filtrar porque los términos caen mas cerca de la banda útil. Debido a esto, el parámetro IP3 es una medida fundamental al tomar en cuenta el producto de tercer orden. Es el impar más significativo a excepción del primer orden \cite{ref91}. \includegraphics[width=3.0489in,keepaspectratio]{./imagenes/image18.png}
+  Linealidad (IPn): Si un amplificador se comporta linealmente, entonces la señal de salida cambiará proporcionalmente a la señal de entrada \cite{ref90}. La no linealidad tiene como producto armónicos e interferencia intermodulación. Los productos de orden par tienden a ser fáciles de filtrar. Los de orden impar son más difíciles de filtrar porque los términos caen mas cerca de la banda útil. Debido a esto, el parámetro IP3 es una medida fundamental al tomar en cuenta el producto de tercer orden. Es el impar más significativo a excepción del primer orden \cite{ref91}. 
+  \includegraphics[width=3.0489in,keepaspectratio]{./imagenes/image18.png}
 \item
   P1dB: Es el punto de compresión de un amplificador en el que su potencia de salida es 1 dB menor que la que tendría si mantuviera un comportamiento lineal ideal. Esta especificación permite determinar el límite superior de la región de operación lineal del amplificador. A partir de este punto, la ganancia comienza a disminuir y la potencia de salida deja de aumentar proporcionalmente con la potencia de entrada \cite{ref92}.
 \end{itemize}
@@ -1454,9 +1455,13 @@ Otras tecnologías para transmitir telemetría, como APRS \cite{ref3,ref32,ref34
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image65.png}
 
-\cite{ref60}\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image42.png}
+\cite{ref60}
 
-\cite{ref60} El módulo E22-400T22S solo permite modificar el Air Data Rate y con esto automáticamente ajusta los parámetros de transmisión, como el Spreading Factor, para lograr la tasa determinada. Además, tiene tamaños de paquetes configurables 32/64/128/240 y un buffer de 1000 bytes que, en caso que los datos superen el largo configurado, parte la información en distintos paquetes y usa el buffer para almacenarlos momentáneamente \cite{ref60}.
+\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image42.png}
+
+\cite{ref60} 
+
+El módulo E22-400T22S solo permite modificar el Air Data Rate y con esto automáticamente ajusta los parámetros de transmisión, como el Spreading Factor, para lograr la tasa determinada. Además, tiene tamaños de paquetes configurables 32/64/128/240 y un buffer de 1000 bytes que, en caso que los datos superen el largo configurado, parte la información en distintos paquetes y usa el buffer para almacenarlos momentáneamente \cite{ref60}.
 
 \subsubsection{PCB Adaptador}\label{pcb-adaptador}
 
@@ -1466,9 +1471,9 @@ Cuando se adquirió el módulo \hl{E22-400T22S, al no tener} pines para conectar
 
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image45.png}
 
-\cite{ref60}\includegraphics[width=3.2161in,keepaspectratio]{./imagenes/image81.png}
+\cite{ref60}
 
-\includegraphics[width=2.5177in,keepaspectratio]{./imagenes/image38.png}
+\includegraphics[width=3.2161in,keepaspectratio]{./imagenes/image81.png}\includegraphics[width=2.5177in,keepaspectratio]{./imagenes/image38.png}
 
 \subsection{APRS}\label{aprs}
 
@@ -1553,7 +1558,9 @@ Debido a restricciones de tiempo, costo y conocimiento se decidió investigar Ra
 
 \hl{El equipo del Horus Project} \cite{ref44} \hl{construyó un Globo de Gran Altitud basado en el estándar DVB-S1. Utilizaron un Raspberry Pi Zero W para capturar y comprimir el video, seguidamente modulada y transmitida por un LimeSDR Mini y potenciada con un amplificador LDMOS. Logrando recibir video a casi 190 km.}
 
-Para transmitir el video, se adquirió un ADALM-PLUTO SDR\hl{. De los tres SDR, era el más económico y disponible para comprar.} \includegraphics[width=2.0469in,keepaspectratio]{./imagenes/image26.jpg}
+Para transmitir el video, se adquirió un ADALM-PLUTO SDR\hl{. De los tres SDR, era el más económico y disponible para comprar.} 
+
+\includegraphics[width=2.0469in,keepaspectratio]{./imagenes/image26.jpg}
 
 \subsubsection{Amplificador de Potencia}\label{amplificador-de-potencia-1}
 
@@ -1588,7 +1595,9 @@ Se adquirió el amplificador de potencia RF2126:
 
 En principio se decidió poner dos RF2126 en serie con 6 dBm de potencia de entrada para que salgan aproximadamente 30 dBm. Se utilizó un medidor de potencia para verificar la ganancia y resultó que para 1240 mhz, solo sumaba 10 dB de ganancia. Además, uno de los que recibió estaba roto. A partir de esto, se decidió invertir en un amplificador con una ganancia de aproximadamente 20 dB y P1dB de 20 dBm, de un proveedor confiable, para ponerlo antes del RF2126. Así llegar a transmitir con aproximadamente 30 dBm.
 
-Entonces, se adquirió el amplificador de potencia ZX60-V63+. En 1240 mhz:\includegraphics[width=2.2708in,keepaspectratio]{./imagenes/image78.png}
+Entonces, se adquirió el amplificador de potencia ZX60-V63+. En 1240 mhz:
+
+\includegraphics[width=2.2708in,keepaspectratio]{./imagenes/image78.png}
 
 \begin{itemize}
 \item
@@ -1643,7 +1652,9 @@ Para la antena de 433 mhz, se requirió una antena de aproximadamente 17 cm. Hac
 
 Para construir los radiales de la antena de 433 mhz se tuvo que realizar varias iteraciones. Para la primera se cortó una arandela de cobre y se le soldaron 4 radiales. Al usar cobre de 1 mm de diámetro, los radiales eran fáciles de flexionar y la soldadura no quedaba muy resistente, por lo que se rompía fácilmente. Para hacer los radiales más robustos, se cortó una arandela cuadrada y se le soldaron alambres de cobre de 2 mm de diámetro. Con esto resolvimos la flexibilidad de los radiales, pero las soldaduras seguían siendo poco resistentes.
 
-Para la última iteración se soldaron los segmentos de alambre de cobre de 2 mm con terminales de bronce. Después, se soldaron tornillos sobre las puntas de la arandela cuadrada de cobre y se colocaron los terminales con los radiales sobre y se reforzó con más estaño. De esta manera se logró construir radiales que no sean fáciles de desprender de la arandela.\includegraphics[width=1.7135in,keepaspectratio]{./imagenes/image3.png}
+Para la última iteración se soldaron los segmentos de alambre de cobre de 2 mm con terminales de bronce. Después, se soldaron tornillos sobre las puntas de la arandela cuadrada de cobre y se colocaron los terminales con los radiales sobre y se reforzó con más estaño. De esta manera se logró construir radiales que no sean fáciles de desprender de la arandela.
+
+\includegraphics[width=1.7135in,keepaspectratio]{./imagenes/image3.png}
 
 \includegraphics[width=2.0208in,keepaspectratio]{./imagenes/image61.png}\includegraphics[width=1.4870in,keepaspectratio]{./imagenes/image83.png}
 
@@ -2131,7 +2142,8 @@ Los equipos de los proyectos Horus y SF-HAB utilizaron pilas primarias Energizer
 
 Además, ofrecen una mayor capacidad energética por kilogramo que las baterías de ion-litio 18650 utilizadas por \cite{ref2} con valores de aproximadamente 300 Wh/kg y 180 Wh/kg, respectivamente \cite{ref101}.
 
-Por otro lado, si bien las baterías de cloruro de tionilo-litio (LiSOCl₂) ofrecen la mayor energía utilizable por kilogramo \cite{ref102} y permiten operar a temperaturas más bajas \cite{ref39} presentan el problema de la pasivación. Este fenómeno consiste en la formación de una película aislante sobre la superficie del ánodo de litio, producto de la reacción entre el cloruro de tionilo y el litio. En aplicaciones que requieren pulsos de corriente elevados, esta capa de pasivación puede limitar el desempeño de la batería \cite{ref103}.\includegraphics[width=3.3281in,keepaspectratio]{./imagenes/image34.png}
+Por otro lado, si bien las baterías de cloruro de tionilo-litio (LiSOCl₂) ofrecen la mayor energía utilizable por kilogramo \cite{ref102} y permiten operar a temperaturas más bajas \cite{ref39} presentan el problema de la pasivación. Este fenómeno consiste en la formación de una película aislante sobre la superficie del ánodo de litio, producto de la reacción entre el cloruro de tionilo y el litio. En aplicaciones que requieren pulsos de corriente elevados, esta capa de pasivación puede limitar el desempeño de la batería \cite{ref103}.
+\includegraphics[width=3.3281in,keepaspectratio]{./imagenes/image34.png}
 
 Hablando con Richard Corbo, quien tuvo varias expediciones a Antártida, nos comentó que la capacidad de la batería se reduce drásticamente a temperaturas muy bajas. Contó que su celular se quedaba sin batería mucho antes de lo normal, principalmente porque las temperaturas eran muy bajas. Viendo el datasheet de las baterías L91, se puede observar este comportamiento, a medida que baja la temperatura, baja la capacidad. Este fenómeno ocurre en las baterías en general porque, a temperaturas bajas, la actividad química disminuye \cite{ref104}.
 
@@ -2168,7 +2180,9 @@ Durante el primer intento de liberación del payload, se apagaba la Raspberry un
 
 En \cite{ref2} utilizaron una carcasa de aluminio 6061 para la disipación de calor que genera un transmisor de 5Ghz. Utilizaron el aluminio porque es ligero. Además, esqueletizaron algunas caras para disminuir aún más el peso del sistema. En las caras restantes, se fijaron los componentes utilizando separadores de aluminio. Proporcionando un camino directo de conducción para transferir el calor generado por los componentes hacia el aluminio.
 
-Adicionalmente, las caras de mayor superficie que no fueron esqueletizadas presentaban una superficie altamente reflectiva. De este modo, la carcasa no sólo disipa el calor generado internamente, sino que también reduce la absorción del calor incidente en forma de luz.\includegraphics[width=2.7267in,keepaspectratio]{./imagenes/image35.png}
+Adicionalmente, las caras de mayor superficie que no fueron esqueletizadas presentaban una superficie altamente reflectiva. De este modo, la carcasa no sólo disipa el calor generado internamente, sino que también reduce la absorción del calor incidente en forma de luz.
+
+\includegraphics[width=2.7267in,keepaspectratio]{./imagenes/image35.png}
 
 En \cite{ref32} utilizaron aluminio para el exterior y poliestireno expandido para el interior de la estructura. El aluminio les permitió tener un diseño fuerte y robusto, pero a costo sobre el presupuesto de peso. Por otro lado, les fue conveniente por lo liviano que es. Además, porque es barato y proporciona cierto aislamiento térmico que el aluminio no ofrece. \cite{ref2} no explica específicamente porque combina las dos, pero se supone que redujeron la cantidad de aluminio y adicionaron poliestireno para mantener la durabilidad y mejorar el aislamiento térmico que es importante para componentes como las baterías.
 
@@ -2465,21 +2479,17 @@ Además, proporciona la aplicación dvbs2-tx para la transmisión. Al igual que 
 
 \section{Pruebas del sistema}\label{pruebas-de-transmisiuxf3n-de-video-y-telemetruxeda}
 
-\subsection{Métricas de evaluación}\label{muxe9tricas-para-evaluar-calidad-de-video-y-desempeuxf1o-de-los-enlaces.}
-
 \subsection{Pruebas de laboratorio}\label{laboratorio}
 
 En primer lugar, después de varios intentos, se lograron las transmisiones de video y telemetría en el laboratorio, a menos de 10 metros de distancia.
 
-Telemetria:\includegraphics[width=3.0497in,keepaspectratio]{./imagenes/image88.png}
+Telemetria:
 
-\includegraphics[width=3.0473in,keepaspectratio]{./imagenes/image17.png}
-
-\includegraphics[width=2.7031in,keepaspectratio]{./imagenes/image96.png}
+\includegraphics[width=3.0497in,keepaspectratio]{./imagenes/image88.png}\includegraphics[width=3.0473in,keepaspectratio]{./imagenes/image17.png}
 
 Video:
 
-\includegraphics[width=2.9479in,keepaspectratio]{./imagenes/image39.png}
+\includegraphics[width=2.7031in,keepaspectratio]{./imagenes/image96.png}\includegraphics[width=2.9479in,keepaspectratio]{./imagenes/image39.png}
 
 \subsection{Pruebas a corta distancia}\label{corta-distancia}
 
@@ -2491,9 +2501,7 @@ Después, se verificó el funcionamiento de los enlaces en simultáneo a una dis
 
 Utilizando un medidor de potencia, se verificó la potencia con la que salía la señal de video. La prueba dio una potencia de entre 0 y 1 dBm. El ADALM-PLUTO SDR tiene una máxima potencia de salida de 7 dBm. Se puede variar la potencia de la señal alterando la escala de las muestras de los símbolos QPSK.
 
-\includegraphics[width=1.7656in,keepaspectratio]{./imagenes/image58.png}
-
-\includegraphics[width=3.7510in,keepaspectratio]{./imagenes/image44.png}
+\includegraphics[width=1.7656in,keepaspectratio]{./imagenes/image58.png}\includegraphics[width=3.7510in,keepaspectratio]{./imagenes/image44.png}
 
 Se realizó una prueba de larga distancia preliminar en el pasillo de la universidad con línea directa. La señal que salía del transmisor tenía una potencia de entre 0 y 1 dBm. Simulando una atenuación inicial de aproximadamente 30 dB. Entre el transmisor y el receptor habían aproximadamente 65 metros, por lo que en 1240 mhz suma 70 dB de atenuación. Del lado del receptor se conectaron atenuadores pasivos entre la antena y el LNA. Se tenía un atenuador de 10 dB y otros dos de 20 dB. Se logró recibir video teniendo una atenuación total de 150 dB, pero se observó una pérdida notoria en los fotogramas. A medida que se retiran los atenuadores, disminuyen las pérdidas.
 
