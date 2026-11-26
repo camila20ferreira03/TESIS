@@ -691,17 +691,17 @@ UART (Universal Asynchronous Receiver-Transmitter) es un protocolo de comunicaci
 
 Cada línea permanece en HIGH por defecto y, como se observa en la Figura~\ref{fig:uart-trama}, cada trama comienza con un bit de arranque en LOW que avisa al receptor el inicio de la transmisión. Le siguen entre 5 y 9 bits de datos, enviados desde el bit menos significativo (LSB). Luego se envia un bit de paridad opcional para detectar errores y uno o dos bits de parada en HIGH que cierran la trama. Al recibirla, la UART receptora muestrea la línea con su propio reloj, reconstruye los bits y los entrega nuevamente en paralelo. Ambos dispositivos deben configurarse previamente con el mismo \textit{baud rate} y el mismo formato de trama, ya que cada uno usa su propio reloj interno\cite{ref83}. 
 
+\newpage
+
 \section{Video digital}\label{video-digital}
 
 \subsection{Codificación de video}\label{codificaciuxf3n-de-video}
 
 La codificación de video es el proceso mediante el cual se comprime y se transforma el formato de un contenido de video sin procesar en un archivo digital, de modo que pueda reproducirse en distintos dispositivos y plataformas.
 
-\textbf{Input}: Video Crudo Digital (formato YUV)
-
-\textbf{Output}: Video Comprimido (formato H.264, H.265)
-
 El objetivo principal de este proceso es reducir el tamaño del archivo. Para lograrlo, se eliminan datos que no son esenciales. Al reproducirse, el video resultante no es una copia exacta del original, sino una aproximación suficientemente fiel. En el caso del streaming en vivo, es especialmente importante, ya que al comprimir el video se disminuye el uso de ancho de banda, facilitando su transmisión desde la fuente hasta el reproductor, sin sacrificar la calidad percibida por los usuarios \cite{ref24}.
+
+H.264 y H.265 siguen el mismo esquema de codificación híbrida por bloques. Cada cuadro se divide en bloques que se predicen a partir de píxeles del mismo cuadro (predicción intra) o de cuadros anteriores y posteriores (predicción inter). Solo se codifica el residuo, es decir, la diferencia entre el bloque real y el predicho. Ese residuo se transforma al dominio de la frecuencia, se cuantifica y se comprime.
 
 El códec H.264 (AVC) destaca por su buena eficiencia de compresión, permitiendo reducir significativamente el tamaño del video manteniendo una calidad aceptable, además de requerir un bajo costo computacional y ofrecer alta velocidad de codificación, lo que lo hace ideal para aplicaciones en tiempo real. Su principal limitación es que es menos eficiente que códecs más modernos, por lo que necesita mayores tasas de bits para lograr la misma calidad. A pesar de esto, sigue siendo ampliamente utilizado debido a su compatibilidad casi universal con dispositivos.
 
@@ -711,13 +711,12 @@ El códec H.265 (HEVC) presenta como principal ventaja su alta eficiencia de com
 
 La encapsulación es el proceso de envolver datos de video codificados en unidades estructuradas y paquetizadas para facilitar su transmisión, almacenamiento y sincronización en distintos sistemas multimedia. En el caso de los estándares HEVC (H.265) y AVC (H.264), ambos utilizan una capa de abstracción, llamada Network Abstraction Layer, para cumplir esta función \cite{ref26}.
 
-\textbf{Input}: Video Comprimido (formato H.264, H.265)
-
-\textbf{Output}: Paquetes Transport Stream
-
 El MPEG-2 Transport Stream (TS) es un estándar global utilizado para la difusión de televisión digital (vía satélite, cable y terrestre), el almacenamiento en discos ópticos (como Blu-ray) y sistemas de IPTV gestionados. Su función principal es definir la multiplexación y sincronización de datos de audio y video comprimidos \cite{ref26}.
 
 Los datos codificados (unidades NAL) se empaquetan primero en PES (Packetized Elementary Stream). El encabezado PES contiene información de temporización esencial, como una base de reloj común y marcas de tiempo para indicar cuándo se deben decodificar (DTS) y presentar (PTS) los datos. Los paquetes PES se fragmentan en unidades de longitud fija de 188 bytes. Esta estructura de longitud fija es fundamental para entornos donde es probable que ocurran errores, ya que facilita que el receptor mantenga la sincronización en canales con pérdidas. Cada paquete TS incluye un PID en su encabezado para identificar a qué componente (video, audio o datos) pertenece, permitiendo al receptor demultiplexar los servicios \cite{ref26}.
+
+
+\newpage
 
 \section{Telecomunicaciones}\label{tecnologias-de-comunicacion}
 
