@@ -666,81 +666,30 @@ La Figura~\ref{fig:i2c-transmision} muestra el proceso de transmisión. El Main 
 
 \subsection{UART}\label{uart}
 
-UART (Universal Asynchronous Receiver-Transmitter) es un protocolo de comunicación serie asíncrono que utiliza dos líneas principales: Transmitter (Tx) y Receiver (Rx). Al ser asíncrono, no existe una señal de reloj compartida entre los dispositivos.
+UART (Universal Asynchronous Receiver-Transmitter) es un protocolo de comunicación serial y asíncrono que utiliza dos líneas principales: Transmitter (Tx) y Receiver (Rx). Este protocolo es entre dos dispositivos donde el TX de uno está conectado al RX del otro \cite{ref83}.
 
-\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image19.png}
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}{\linewidth}
+\centering
+\includegraphics[width=0.85\linewidth,keepaspectratio]{./imagenes/image19_sin_pie.png}
+\caption{Conexión entre dos UART y sus buses de datos \cite{ref83}.}
+\label{fig:uart-conexion}
+\end{subfigure}
 
-\cite{ref83} El Databus quiere enviar los bits en paralelo y la interfaz UART se encarga de transmitirlos de forma serial (uno atrás del otro). Este protocolo es entre dos dispositivos y no más. El TX de uno está conectado al RX del otro \cite{ref83}.
+\vspace{0.5em}
 
-Para que la comunicación funcione correctamente, ambos dispositivos deben configurarse previamente con el mismo baud rate. El baud rate indica la velocidad a la que se transmiten los bits por segundo. Cada dispositivo utiliza su propio reloj interno para enviar y muestrear los datos, por lo que la clave es que ambos tengan configuraciones compatibles para minimizar errores \cite{ref83}.
-
-La línea UART permanece en estado HIGH por defecto. Cuando el transmisor desea enviar información, lleva la línea a LOW durante un tiempo de bit, generando el bit de arranque (Start Bit). Este cambio de HIGH a LOW le indica al receptor que comienza una nueva trama de datos \cite{ref83}.
-
-\includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image57.png}
-
-\cite{ref83} La estructura de una trama UART se divide de la siguiente manera \cite{ref83}:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  \textbf{Bit de arranque}
-
-  \begin{itemize}
-  \item
-    Se mantiene siempre en nivel 0 (LOW).
-  \item
-    Su función es notificar al receptor el inicio de una nueva transmisión de datos.
-  \end{itemize}
-\item
-  \textbf{Bits de datos}
-
-  \begin{itemize}
-  \item
-    Representan la información útil o carga útil (payload) a transmitir.
-  \item
-    Dependiendo de la configuración previa, suelen ser 5, 6, 7, 8 o hasta 9 bits.
-  \item
-    Por lo general, el envío se realiza comenzando por el bit menos significativo (LSB).
-  \end{itemize}
-\item
-  \textbf{Bit de paridad}
-
-  \begin{itemize}
-  \item
-    Permite implementar un mecanismo básico para la detección de errores simples.
-  \item
-    Las opciones incluyen paridad par (Even), impar (Odd) o puede omitirse según se requiera.
-  \end{itemize}
-\item
-  \textbf{Bit(s) de parada}
-
-  \begin{itemize}
-  \item
-    Puede consistir en uno, uno y medio o dos bits de duración.
-  \item
-    Estos bits permanecen siempre en estado 1 (HIGH).
-  \item
-    Señalan la conclusión de la trama actual, permitiendo que el receptor se sincronice para la próxima ráfaga.
-  \end{itemize}
-\end{enumerate}
-
-\textbf{Proceso de Transmisión} \cite{ref83}\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Los datos suelen existir inicialmente en paralelo dentro del dispositivo.
-\item
-  La interfaz UART transmisora convierte esos bits paralelos a una tira de bits serial (uno atrás del otro).
-\item
-  Luego coloca el Start Bit (LOW), transmite los bits de datos uno tras otro, opcionalmente agrega un bit de paridad para detección de errores y finalmente envía uno o más bits de parada (Stop Bits) en estado HIGH.
-\item
-  Durante la recepción, la UART receptora detecta el Start Bit y, utilizando su propio reloj interno, comienza a muestrear la línea para reconstruir los bits transmitidos.
-\item
-  Una vez recibidos todos los bits de la trama, convierte nuevamente la información de serie a paralelo y la entrega al sistema receptor.
-\end{enumerate}
-
+\begin{subfigure}{\linewidth}
+\centering
 \includegraphics[width=\linewidth,keepaspectratio]{./imagenes/image14.png}
+\caption{Trama UART: bit de arranque, bits de datos, bit de paridad y bit de parada \cite{ref84}.}
+\label{fig:uart-trama}
+\end{subfigure}
+\caption{Comunicación UART.}
+\label{fig:uart}
+\end{figure}
 
-\cite{ref84} En UART no se puede mandar una cantidad variable de bits de datos dentro de una misma configuración. La cantidad de bits de datos, la presencia o no de bit de paridad, la cantidad de bits de parada y el baud rate deben configurarse previamente en ambos extremos. Como no existe una señal de reloj ni información adicional que indique dónde terminan los datos y dónde comienzan los bits de paridad o parada, el receptor necesita conocer de antemano el formato exacto de cada trama \cite{ref83}.
+Cada línea permanece en HIGH por defecto y, como se observa en la Figura~\ref{fig:uart-trama}, cada trama comienza con un bit de arranque en LOW que avisa al receptor el inicio de la transmisión. Le siguen entre 5 y 9 bits de datos, enviados desde el bit menos significativo (LSB). Luego se envia un bit de paridad opcional para detectar errores y uno o dos bits de parada en HIGH que cierran la trama. Al recibirla, la UART receptora muestrea la línea con su propio reloj, reconstruye los bits y los entrega nuevamente en paralelo. Ambos dispositivos deben configurarse previamente con el mismo \textit{baud rate} y el mismo formato de trama, ya que cada uno usa su propio reloj interno\cite{ref83}. 
 
 \section{Video digital}\label{video-digital}
 
